@@ -1,0 +1,6 @@
+supprimer gradle.properties
+#compiler
+./gradlew build 
+#exécuter le tomcat embarqué
+java -jar build/libs/gs-messaging-stomp-websocket-0.1.0.jar
+l'ouvrir à localhost:8090
