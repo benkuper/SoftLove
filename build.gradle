@@ -13,7 +13,7 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'gs-messaging-stomp-websocket'
+    baseName = 'dataviz'
     version =  '0.1.0'
 }
 sourceCompatibility = 1.8
