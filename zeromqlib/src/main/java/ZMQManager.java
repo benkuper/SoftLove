@@ -50,11 +50,11 @@ public class ZMQManager {
     public void startSubscribers(){
         //Lance les threads
         rechercheWeb.start();
-        //detectionGeste.start();
-        //retranscriptionParole.start();
-        //analyseTweets.start();
-        //gestionDialogue.start();
-        //detectionEmotions.start();
+        detectionGeste.start();
+        retranscriptionParole.start();
+        analyseTweets.start();
+        gestionDialogue.start();
+        detectionEmotions.start();
     }
 
     public void terminateContext(){
