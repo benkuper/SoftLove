@@ -1,16 +1,16 @@
 {
     "RechercheWebAdresse": "tcp://127.0.0.1:5563",
     "RechercheWebTopic": "rechercheweb",
-    "DetectionGesteAdresse": "tcp://172.18.18.201:5555",
+    "DetectionGesteAdresse": "tcp://172.18.18.165:5555",
     "DetectionGesteTopic": "geste",
-    "RetranscriptionParoleAdresse": "tcp://172.18.18.201:5555",
-    "RetranscriptionParoleTopic": "parole",
+    "RetranscriptionParoleAdresse": "tcp://172.18.19.27:5656",
+    "RetranscriptionParoleTopic": "Parole",
     "AnalyseTweetsAdresse": "tcp://172.18.18.201:5555",
     "AnalyseTweetsTopic": "tweet",
-    "GestionDialogueAdresse": "tcp://172.18.18.201:5555",
-    "GestionDialogueTopic": "dialogue",
-    "DetectionEmotionsAdresse": "tcp://172.18.18.201:5555",
-    "DetectionEmotionsTopic": "emotions",
+    "GestionDialogueAdresse": "tcp://172.18.18.69:6667",
+    "GestionDialogueTopic": "Chatbot",
+    "DetectionEmotionsAdresse": "tcp://172.98.21.99:6665",
+    "DetectionEmotionsTopic": "emotion/details/mood/sentiment",
     "OscRecepteurAdresse": "127.0.0.1",
     "OscRecepteurPort": "12000"
 }
