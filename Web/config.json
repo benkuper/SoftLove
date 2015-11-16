@@ -1,0 +1,10 @@
+{
+    "IP_KEYWORDS_PUBLISHER": "tcp://localhost:6969",
+    "KEYWORDS_PUBLISHER_TOPIC": "keywords",
+    "IP_IMAGES_PUBLISHER": "tcp://localhost:6970",
+    "IMAGES_PUBLISHER_TOPIC": "images",
+    "IP_KEYWORDS_SUBSCRIBER": "tcp://localhost:5656",
+    "KEYWORDS_SUBSCRIBER_TOPIC": "Parole",
+    "IP_SOCIALNETWORK_SUBSCRIBER": "tcp://localhost:5563",
+    "SOCIALNETWORK_SUBSCRIBER_TOPIC": "fb/links"
+}

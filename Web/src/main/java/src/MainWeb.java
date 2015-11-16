@@ -2,12 +2,13 @@ package src;
 
 import java.io.IOException;
 
+import org.json.simple.parser.ParseException;
 
 public class MainWeb {
 
 	public static String profil = "animal";
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 		
 		String recherche = "cheval";
 		new ZMQConnector();
