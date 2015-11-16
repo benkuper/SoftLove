@@ -19,7 +19,7 @@ public class KeywordCounter {
 		try {
 				for(String motCle : motCles)
 				{
-					if(motCle.length() >= 3) {
+					if(motCle.length() > 3) {
 						String adresse = "http://www.synonymo.fr/synonyme/"+motCle;
 						Document doc = Jsoup.parse(WebContentManager.getPage(adresse));
 						Elements liens = doc.select(".fiche .synos a");
