@@ -1,0 +1,16 @@
+{
+    "RechercheWebAdresse": "tcp://172.18.23.217:6970",
+    "RechercheWebTopic": "images",
+    "DetectionGesteAdresse": "tcp://172.18.17.201:5555",
+    "DetectionGesteTopic": "position",
+    "RetranscriptionParoleAdresse": "tcp://172.18.19.27:5656",
+    "RetranscriptionParoleTopic": "Parole",
+    "AnalyseTweetsAdresse": "tcp://172.18.20.101:5563",
+    "AnalyseTweetsTopic": "fb/links",
+    "GestionDialogueAdresse": "tcp://172.18.18.69:8090",
+    "GestionDialogueTopic": "Chatbot",
+    "DetectionEmotionsAdresse": "tcp://172.18.21.99:6665",
+    "DetectionEmotionsTopic": "emotion/fusion/json",
+    "OscRecepteurAdresse": "127.0.0.1",
+    "OscRecepteurPort": "12000"
+}
