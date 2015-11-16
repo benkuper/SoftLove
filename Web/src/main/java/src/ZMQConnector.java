@@ -28,6 +28,11 @@ public class ZMQConnector {
 		FileReader reader = new FileReader("config.json");
 		JSONParser jsonParser = new JSONParser();
 		JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+
+		System.out.println("@ keywordsPub : "+(String) jsonObject.get("IP_KEYWORDS_PUBLISHER"));
+		System.out.println("@ imagesPub : "+(String) jsonObject.get("IP_IMAGES_PUBLISHER"));
+		System.out.println("keywordsSub : "+(String) jsonObject.get("IP_KEYWORDS_SUBSCRIBER")+" ; topic : "+((String) jsonObject.get("KEYWORDS_SUBSCRIBER_TOPIC")));
+		System.out.println("socialSub : "+(String) jsonObject.get("IP_SOCIALNETWORK_SUBSCRIBER")+" ; topic : "+((String) jsonObject.get("SOCIALNETWORK_SUBSCRIBER_TOPIC")));
         
 		Context context = ZMQ.context(1);
 
