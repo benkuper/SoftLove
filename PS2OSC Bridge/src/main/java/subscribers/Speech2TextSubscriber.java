@@ -1,15 +1,14 @@
 package subscribers;
 
+import config.subconfig.Config;
 import org.zeromq.ZMQ;
 
 /**
  * Created by pbesson on 02/11/15.
  */
-public class DetectionGesteSubscriber extends ThreadedSubscriber {
+public class Speech2TextSubscriber extends ThreadedSubscriber {
 
-    public DetectionGesteSubscriber(String topic, ZMQ.Context context, String addr){
-        super(topic, context, addr);
-    }
+    public Speech2TextSubscriber(Config aConfig, ZMQ.Context context) {super(aConfig, context);}
 
     public void run() {
         while (true){

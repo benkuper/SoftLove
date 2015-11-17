@@ -8,7 +8,7 @@ public class Main {
       manager.startSubscribers();
       AppConfig config = manager.getConfig();
 /*
-      OSCManager osc = new OSCManager(config);
+      OSCManagement.OSCManager osc = new OSCManagement.OSCManager(config);
       osc.sendOscMessage("/test","test OSC !");*/
 
       /*OSCConfig oscConf = new OSCConfig("127.0.0.1","12000","test");

@@ -1,15 +1,14 @@
 package subscribers;
 
+import config.subconfig.Config;
 import org.zeromq.ZMQ;
 
 /**
  * Created by pbesson on 02/11/15.
  */
-public class RechercheWebSubscriber extends ThreadedSubscriber {
+public class TrackingZoneSubscriber extends ThreadedSubscriber {
 
-    public RechercheWebSubscriber(String topic, ZMQ.Context context, String addr){
-        super(topic, context, addr);
-    }
+    public TrackingZoneSubscriber(Config aConfig, ZMQ.Context context) {super(aConfig, context);}
 
     public void run() {
         while (true){
