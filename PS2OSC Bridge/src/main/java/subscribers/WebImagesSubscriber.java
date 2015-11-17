@@ -13,7 +13,9 @@ public class WebImagesSubscriber extends ThreadedSubscriber {
     public void run() {
         while (true){
             System.out.println("topic: "+this.topic);
-            System.out.println(subscriber.recvStr().trim());
+            String links = subscriber.recvStr().trim();
+            System.out.println(links);
+            oscsender.sendOscMessage(config,links);
         }
     }
 }

@@ -17,6 +17,7 @@ public class TrackingPositionSubscriber extends ThreadedSubscriber {
             String delims = "[:]";
             String[] tokens = data.split(delims);
             for(String token: tokens) System.out.println(token);
+            oscsender.sendOscMessage(config,tokens[0],tokens[1]);
         }
     }
 }

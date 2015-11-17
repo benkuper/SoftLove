@@ -13,7 +13,9 @@ public class Speech2TextSubscriber extends ThreadedSubscriber {
     public void run() {
         while (true){
             System.out.println("topic: "+this.topic);
-            System.out.println(subscriber.recvStr().trim());
+            String speech = subscriber.recvStr().trim();
+            System.out.println(speech);
+            oscsender.sendOscMessage(config,speech);
         }
     }
 }

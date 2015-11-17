@@ -14,14 +14,16 @@ public class ThreadedSubscriber extends Thread {
     protected OSCManager oscsender;
 
     public ThreadedSubscriber(Config aConfig, ZMQ.Context context) {
+        System.out.println(aConfig.toString());
         this.config = aConfig;
         this.topic = aConfig.getSourceTopic();
         subscriber = context.socket(ZMQ.SUB);
         subscriber.connect(aConfig.getSourceAddress());
         subscriber.subscribe(topic.getBytes());
-        this.oscsender = new OSCManager(aConfig);
+        this.oscsender = OSCManager.getInstance();
     }
 
+    @Deprecated
     public ThreadedSubscriber(String topic, ZMQ.Context context, String addr) {
         this.topic = topic;
         subscriber = context.socket(ZMQ.SUB);

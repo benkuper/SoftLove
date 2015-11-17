@@ -13,7 +13,9 @@ public class EmotionSubscriber extends ThreadedSubscriber {
     public void run() {
         while (true){
             System.out.println("topic: "+this.topic);
-            System.out.println(subscriber.recvStr().trim());
+            String emotion = subscriber.recvStr().trim();
+            System.out.println(emotion);
+            oscsender.sendOscMessage(config,emotion);
         }
     }
 }
