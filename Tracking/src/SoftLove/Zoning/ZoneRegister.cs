@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.IO;
 using System.Threading;
+
 using Microsoft.Kinect;
 using SoftLove.Exceptions;
 
@@ -164,7 +165,7 @@ namespace SoftLove.Zoning
                     var skel = SkelData.Where(u => u.TrackingState == SkeletonTrackingState.Tracked).FirstOrDefault();
                     if(skel != null)
                     {
-                        _zone.AddPoint(skel.Position.X, skel.Position.Z);
+                        _zone.AddPoint(Math.Round(skel.Position.X,2), Math.Round(skel.Position.Z,2));
                     }    
                     else
                     {

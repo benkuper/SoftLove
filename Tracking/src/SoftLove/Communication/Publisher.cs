@@ -15,9 +15,9 @@ namespace SoftLove.Communication
     
     public class Publisher
     {
-        public static readonly string GESTE = "GESTE";
-        public static readonly string ZONE = "ZONE";
-        public static readonly string POSITION = "POSITION";
+        public static readonly string GESTE = "geste";
+        public static readonly string ZONE = "zone";
+        public static readonly string POSITION = "position";
 
         /// <summary>
         /// Socket du Publisher
@@ -73,7 +73,7 @@ namespace SoftLove.Communication
                 throw new IdPublisherException("Id must be in {" + GESTE + "," + ZONE + "," + POSITION + "}");
             }
             Socket.Send(new ZFrame(_id + " " + _info));
-            Console.WriteLine("Sent : " + _id + " " + _info);
+            //Console.WriteLine("Sent : " + _id + " " + _info);
         }
 
         /// <summary>
@@ -95,18 +95,11 @@ namespace SoftLove.Communication
             Publisher myPub = new Publisher();
             try
             {
-                myPub.SendInfo(Publisher.GESTE, "DEBOUT");
-
-                Thread.Sleep(10000);
-
-                myPub.SendInfo(Publisher.POSITION, "2:43");
-
-                Thread.Sleep(1000);
-                myPub.SendInfo(Publisher.GESTE, "ASSIS");
-
-                Thread.Sleep(2000);
-                myPub.SendInfo(Publisher.GESTE, "ALLONGE");
-
+                while (true)
+                {
+                    myPub.SendInfo(Publisher.GESTE, "DEBOUT");
+                    Thread.Sleep(500);
+                }
             }
             catch (Exception ex)
             {

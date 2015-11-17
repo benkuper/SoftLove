@@ -39,8 +39,9 @@ namespace SoftLove
                     reg.Launch();
                     break;
 
-                case "2": //TODO
-                    Console.WriteLine("Lancement du programme...TODO");
+                case "2":
+                    Localisation local = new Localisation("sallePAO2.xml", "Y", new Publisher());
+                    local.Launch();
                     break;
 
                 case "3":

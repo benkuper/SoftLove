@@ -58,18 +58,32 @@ namespace SoftLove.Zoning
             XmlDoc = _xmlDoc;
         }
 
+        public Zone(XmlNode _xmlZone)
+        {
+            Points = new List<Point>(2);
+            CreateZoneFromXml(_xmlZone);
+        }
+
         /// <summary>
         /// Ajout d'un point dans la zone
         /// </summary>
         /// <param name="_x"></param>
-        /// <param name="_y"></param>
-        public void AddPoint(double _x, double _y)
+        /// <param name="_z"></param>
+        public void AddPoint(double _x, double _z)
         {
-            Points.Add(new Point(_x, _y));
+            Points.Add(new Point(_x, _z));
         }
 
         /// <summary>
-        /// Sauvegarde de la zone dans le fichier XML
+        /// Sauvegarde de la zone dans le fichier 
+        ///         Y 
+        ///         |
+        ///         |
+        /// ________|________ X
+        ///         |\
+        ///         | \
+        ///         |  \
+        ///             Z
         /// </summary>
         public void Store()
         {
@@ -88,15 +102,36 @@ namespace SoftLove.Zoning
                 var xmlPointX = XmlDoc.CreateElement("x");
                 xmlPointX.AppendChild(XmlDoc.CreateTextNode(point.X.ToString()));
                 xmlPoint.AppendChild(xmlPointX);
-                var xmlPointY = XmlDoc.CreateElement("y");
-                xmlPointY.AppendChild(XmlDoc.CreateTextNode(point.Y.ToString()));
-                xmlPoint.AppendChild(xmlPointY);
+                var xmlPointZ = XmlDoc.CreateElement("z");
+                xmlPointZ.AppendChild(XmlDoc.CreateTextNode(point.Z.ToString()));
+                xmlPoint.AppendChild(xmlPointZ);
             }
+        }
+
+        private void CreateZoneFromXml(XmlNode _xmlNode)
+        {
+            ID = _xmlNode.Attributes["id"].Value;
+            foreach (XmlNode point in _xmlNode.ChildNodes)
+            {
+                Points.Add(new Point(Convert.ToDouble(point.ChildNodes[0].InnerXml), Convert.ToDouble(point.ChildNodes[1].InnerXml)));
+            }
+        }
+
+        public bool InZone(double x, double z)
+        {
+            Console.WriteLine("Zone:" + ID);
+            Console.WriteLine("X:" + x + " Z:" + z);
+            Console.WriteLine("X1:" + Points[0].X + " Z1:" + Points[0].Z);
+            Console.WriteLine("X2:" + Points[1].X + " Z2:" + Points[1].Z);
+            return ( (x <= Math.Max(Points[0].X,Points[1].X))
+                && (x >= Math.Min(Points[0].X, Points[1].X))
+                && (z <= Math.Max(Points[0].Z, Points[1].Z))
+                && (z >= Math.Min(Points[0].Z, Points[1].Z)) );
         }
     }
 
     /// <summary>
-    /// Un Point est defini par une valeur X et une valeur Y
+    /// Un Point est defini par une valeur X et une valeur Z
     /// </summary>
     internal class Point
     {
@@ -114,23 +149,23 @@ namespace SoftLove.Zoning
         /// <summary>
         /// y value
         /// </summary>
-        private double y;
+        private double z;
 
-        public double Y
+        public double Z
         {
-            get { return y; }
-            set { y = value; }
+            get { return z; }
+            set { z = value; }
         }
 
         /// <summary>
         /// Creation d'un Point
         /// </summary>
         /// <param name="_x"></param>
-        /// <param name="_y"></param>
-        public Point(double _x, double _y)
+        /// <param name="_z"></param>
+        public Point(double _x, double _z)
         {
             X = _x;
-            Y = _y;
+            Z = _z;
         }
     }
 }
