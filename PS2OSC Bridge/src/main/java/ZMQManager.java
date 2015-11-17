@@ -1,4 +1,4 @@
-import config.Config;
+import config.AppConfig;
 import config.ConfigManager;
 import org.zeromq.ZMQ;
 import subscribers.*;
@@ -9,7 +9,7 @@ import subscribers.*;
 public class ZMQManager {
 
     private ZMQ.Context context;
-    private Config config;
+    private AppConfig config;
 
     public RechercheWebSubscriber rechercheWeb;
     public DetectionGesteSubscriber detectionGeste;
@@ -28,9 +28,10 @@ public class ZMQManager {
         context = ZMQ.context(1);
 
         //Initialise les threads subscribers pour chacun des topics
-        System.out.println("Recherche Web : "+config.RechercheWebAdresse+" / "+config.RechercheWebTopic);
-        rechercheWeb = new RechercheWebSubscriber(config.RechercheWebTopic, context,config.RechercheWebAdresse);
+        System.out.println("Recherche Web : "+ config.getConfig("Web-images").getSourceAddress() +" / "+config.getConfig("Web-images").getSourceTopic());
+        //rechercheWeb = new RechercheWebSubscriber(config.getConfig("Web-images").getSourceTopic(),context, config.getConfig("Web").getSourceAddress());
 
+        /*
         System.out.println("DetectionGeste : "+config.DetectionGesteAdresse+" / "+config.DetectionGesteTopic);
         detectionGeste = new DetectionGesteSubscriber(config.DetectionGesteTopic, context,config.DetectionGesteAdresse);
 
@@ -45,16 +46,17 @@ public class ZMQManager {
 
         System.out.println("DetectionEmotions : "+config.DetectionEmotionsAdresse+" / "+config.DetectionEmotionsTopic);
         detectionEmotions = new DetectionEmotionsSubscriber(config.DetectionEmotionsTopic, context,config.DetectionEmotionsAdresse);
+        */
     }
 
     public void startSubscribers(){
         //Lance les threads
-        rechercheWeb.start();
+        /*rechercheWeb.start();
         detectionGeste.start();
         retranscriptionParole.start();
         analyseTweets.start();
         gestionDialogue.start();
-        detectionEmotions.start();
+        detectionEmotions.start();*/
     }
 
     public void terminateContext(){
@@ -66,7 +68,7 @@ public class ZMQManager {
         return config.toString();
     }
 
-    public Config getConfig(){
+    public AppConfig getConfig(){
         return config;
     }
 }
