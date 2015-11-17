@@ -22,7 +22,7 @@ public class MainWeb {
 			System.out.println("begin loop");
 			
 			//recherche = ZMQConnector.receiveKeywords();
-			System.out.println("recherche : " + recherche);
+			System.out.println("recherche : " + recherche+"\t"+"profil : "+profil);
 		
 			MainThread t = new MainThread(recherche, profil);
 			t.start();

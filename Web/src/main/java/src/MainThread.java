@@ -17,7 +17,7 @@ public class MainThread extends Thread {
 		ArrayList<String> res;
 		try {
 			//res = WebContentManager.googleRequest(recherche, 2);
-		
+			
 			res = new ArrayList<String>();
 			res.add("https://fr.wikipedia.org/wiki/Cheval");
 			res.add("https://www.youtube.com/watch?v=9pMGG0CgAD0");
@@ -69,7 +69,7 @@ public class MainThread extends Thread {
 		    if(!wikiImg.isEmpty())
 		    	imgDownload.add(wikiImg);
 		    imgDownload.add(tfidfImg);
-		    System.out.println("site pour img"+imgDownload);
+		    System.out.println("sites retenu pour extraction d'images : "+imgDownload);
 		    System.out.println("reponse : " + answer);
 			ImageManager.imageDownloader(imgDownload);
 			ZMQConnector.sendKeywords(recherche+"|"+answer);

@@ -53,25 +53,26 @@ public class ZMQConnector {
 	}
 
 	public static void sendImage(String message) {
-		System.out.println(message);
 		images_publisher.sendMore("images");
 		images_publisher.send(message);
+		System.out.println("image envoyé : " + message);
 	}
 
 
 	public static void sendKeywords(String message) {
 		keywords_publisher.sendMore("keywords");
 		keywords_publisher.send(message);
+		System.out.println("keywords envoyé : " + message);
 	}
 
 	public static String receiveKeywords() {
 		String debug;
 		// Read envelope with address
 		debug = keywords_subscriber.recvStr();
-		System.out.println("keywords recu " + debug);
+		System.out.println("keywords recu : " + debug);
         // Read message contents
         debug = keywords_subscriber.recvStr();
-        System.out.println("keywords recu " + debug);
+        System.out.println("keywords recu : " + debug);
         return debug;
 		//return keywords_subscriber.recvStr();
 	}
@@ -80,10 +81,10 @@ public class ZMQConnector {
 		String debug;
 		// Read envelope with address
 		debug = socialNetwork_subscriber.recvStr();
-		System.out.println("socialNetwork recu " + debug);
+		System.out.println("socialNetwork recu : " + debug);
         // Read message contents
 		debug = socialNetwork_subscriber.recvStr();
-		System.out.println("socialNetwork recu " + debug);
+		System.out.println("socialNetwork recu : " + debug);
 		return debug;
 	}
 	
