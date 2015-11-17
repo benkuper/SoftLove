@@ -20,26 +20,35 @@ public class FinalClient {
 	private final static Logger LOGGER = Logger.getLogger(FinalClient.class.getName()); 
 	
 	public static void main(String[] args) {
-		try {
-			Properties properties = new Properties();	
-			InputStream is = ClassLoader.getSystemResourceAsStream("keys.properties");
-			if(is == null) 
-				throw new IOException("Cannot open key.properties file");
-			properties.load(is);		
 
-			final String mashapeKey = properties.getProperty("api.mashape.key");
-			final String bingKey = properties.getProperty("api.bing.key");
-			final String bingAppId = properties.getProperty("api.bing.id");
+        final String mashapeKey = "";
+        final String bingKey = "";
+        final String bingAppId = "";
 
-			Properties ipProperties = new Properties();	
-			is = ClassLoader.getSystemResourceAsStream("ip.properties");
-			if(is == null) 
-				throw new IOException("Cannot open ip.properties file");
-			ipProperties.load(is);		
+        final String ipSpeechToText = "";
+        final String portSpeechToText = "";
+        final String topicSpeechToText = "";
 
-			final String ipSpeechToText = ipProperties.getProperty("textToSpeech.ip");
-			final String portSpeechToText = ipProperties.getProperty("textToSpeech.port");
-			final String topicSpeechToText = ipProperties.getProperty("textToSpeech.topic");
+		// try {
+		// 	Properties properties = new Properties();	
+		// 	InputStream is = ClassLoader.getSystemResourceAsStream("keys.properties");
+		// 	if(is == null) 
+		// 		throw new IOException("Cannot open key.properties file");
+		// 	properties.load(is);		
+
+		// 	final String mashapeKey = properties.getProperty("api.mashape.key");
+		// 	final String bingKey = properties.getProperty("api.bing.key");
+		// 	final String bingAppId = properties.getProperty("api.bing.id");
+
+		// 	Properties ipProperties = new Properties();	
+		// 	is = ClassLoader.getSystemResourceAsStream("ip.properties");
+		// 	if(is == null) 
+		// 		throw new IOException("Cannot open ip.properties file");
+		// 	ipProperties.load(is);		
+
+		// 	final String ipSpeechToText = ipProperties.getProperty("textToSpeech.ip");
+		// 	final String portSpeechToText = ipProperties.getProperty("textToSpeech.port");
+		// 	final String topicSpeechToText = ipProperties.getProperty("textToSpeech.topic");
 			
 			PublisherEmotion publisher = new PublisherEmotionImpl();
 			publisher.init(1, "tcp://*:6665");
@@ -120,10 +129,10 @@ public class FinalClient {
 			//context.term();
 
 
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "The file keys.propeties is needed to read API keys :\napi.mashape\napi.bing");
-			e.printStackTrace();
-		}
+		// } catch (IOException e) {
+		// 	LOGGER.log(Level.SEVERE, "The file keys.propeties is needed to read API keys :\napi.mashape\napi.bing");
+		// 	e.printStackTrace();
+		// }
 	}
 }
 
