@@ -1,4 +1,4 @@
-import config.Config;
+import config.AppConfig;
 
 public class Main {
 
@@ -6,10 +6,7 @@ public class Main {
 
       ZMQManager manager = new ZMQManager();
       manager.startSubscribers();
-      Config config = manager.getConfig();
 
-      OSCManager osc = new OSCManager(config);
-      osc.sendOscMessage("/test","test OSC !");
   }
 
 }
