@@ -25,5 +25,6 @@ Les API de [mashape](mashape.com)
  * [moodpatrol](https://market.mashape.com/soulhackerslabs/moodpatrol-emotion-detection-from-text)
  * [sentiment](https://market.mashape.com/vivekn/sentiment-3)
  * [loudelement](https://market.mashape.com/loudelement/free-natural-language-processing-service)
- * 
- L'api BING :
+
+L'api BING :
+ * []()
