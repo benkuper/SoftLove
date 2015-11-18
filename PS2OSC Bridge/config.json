@@ -105,12 +105,12 @@
       ]
     },
     "Emotion": {
-      "SourceAddress": "tcp://172.18.21.99:6665",
+      "SourceAddress": "tcp://127.0.0.1:6665",
       "SourceTopic": "emotion/fusion/json",
       "OSC": [
         {
           "OSCAddress": "127.0.0.1",
-          "OSCPort": "12000",
+          "OSCPort": "7000",
           "OSCAdressPattern": "/test1"
         }
       ]

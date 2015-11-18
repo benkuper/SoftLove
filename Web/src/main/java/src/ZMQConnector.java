@@ -92,17 +92,6 @@ public class ZMQConnector {
 		return debug;
 	}
 	
-	public static void main (String[] args) throws Exception {
-        // Prepare our context and publisher
-        int i=0;
-		while(i<20) {
-			ZMQConnector.sendKeywords("keywords to send !");
-			i++;
-			//System.out.println("send");
-			Thread.sleep(3000);
-        }
-        System.out.println("finish");
-    }
 
 	public static void sendAmazon(String message) {
 		amazon_publisher.sendMore("amazon");

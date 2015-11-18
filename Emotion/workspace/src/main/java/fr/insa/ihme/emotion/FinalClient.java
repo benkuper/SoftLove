@@ -25,9 +25,9 @@ public class FinalClient {
         final String bingKey = "";
         final String bingAppId = "";
 
-        final String ipSpeechToText = "";
-        final String portSpeechToText = "";
-        final String topicSpeechToText = "";
+        final String ipSpeechToText = "127.0.0.1";
+        final String portSpeechToText = "5656";
+        final String topicSpeechToText = "Parole";
 
 		// try {
 		// 	Properties properties = new Properties();	
@@ -60,9 +60,9 @@ public class FinalClient {
 					Language.ENGLISH,
 					publisher,
 					"emotion/translator");
-			System.out.println("tcp://" + ipSpeechToText + ":" + portSpeechToText + " " + topicSpeechToText);
-			//translator.connectAndSubscribe("tcp://" + ipSpeechToText + ":" + portSpeechToText, topicSpeechToText, 1);
-			translator.connectAndSubscribe("tcp://localhost:6666", "emotion/mockText", 1); //le seul pub en port 6666 car mock, les autres 6665
+			System.out.println("tcp://" + ipSpeechToText + ":" + portSpeechToText + " / topic : " + topicSpeechToText);
+			translator.connectAndSubscribe("tcp://" + ipSpeechToText + ":" + portSpeechToText, topicSpeechToText, 1);
+			//translator.connectAndSubscribe("tcp://localhost:6666", "emotion/mockText", 1); //le seul pub en port 6666 car mock, les autres 6665
 			//translator.connectAndSubscribe("tcp://172.18.19.27:5656", "Parole", 1);
 			
 			AbstractAPIExecutor posNeg = new PositiveNegativeAnalyse(mashapeKey,
