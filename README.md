@@ -14,5 +14,7 @@ Chaque projet dans un dossier au nom du groupe :
 Mettre un README.md dans chaque dossier, contenant :
  - explications du fonctionnement du logiciel (paramétrage / lancement)
  - explications du code, dépendances, etc.
+
+*_Si votre projet contient des dépendances externes légères (librairies, frameworks, etc.) , merci de les placer dans /tools/dependencies/<ide>_*
  
 Compléter sur le spreadsheet (drive) pour les infos d'avancement du projet

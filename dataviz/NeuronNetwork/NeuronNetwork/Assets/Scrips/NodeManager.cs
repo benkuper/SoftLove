@@ -10,15 +10,18 @@ public class NodeManager : MonoBehaviour {
     public GameObject connectionPrefab;
     List<Node> nodes;
     List<Connection> connections;
+    List<Connection> focusConnections;
 
     Transform nodeContainer;
     Transform connectionContainer;
 
     int numStartNodes = 20;
-    float connectionProba = .1f;
+    float connectionProba = .8f;
 
 
     Node currentNode;
+
+    DataText dt;
     
 	// Use this for initialization
 	void Start () {
@@ -29,6 +32,7 @@ public class NodeManager : MonoBehaviour {
         nodeContainer = transform.FindChild("nodes");
         connectionContainer = transform.FindChild("connections");
 
+        dt = GetComponentInChildren<DataText>();
 
         for (int i = 0; i < numStartNodes; i++)
         {
@@ -70,26 +74,37 @@ public class NodeManager : MonoBehaviour {
         if (currentNode != null)
         {
             currentNode.setFocus(false);
-            
+            List<Connection> oldC = getConnectionsForNode(currentNode);
+            foreach (Connection oc in oldC) oc.setActive(false);
+
+            dt.setEnabled(false);
         }
 
-        cam.focus(node.transform);
-        node.setFocus(true);
+        cam.focus(transform,20);
         currentNode = node;
-
-        updateFocusConnections();
-
+        removeConnectionsForNode(currentNode);
+        Invoke("lightFocus",1f);
+        
 
     }
 
-    //
-    void updateFocusConnections()
+    void lightFocus()
     {
-        foreach (Connection c in connections)
-        {
-            c.setActive(c.hasNode(currentNode));
-        }
+        currentNode.setFocus(true);
+        addConnectionsForNode(currentNode);
+        Invoke("zoomFocus", 1f);
     }
+
+    void zoomFocus()
+    {
+        dt.setEnabled(true);
+        //dt.transform.LookAt(cam.transform);
+        dt.transform.position = currentNode.transform.position;
+
+        cam.focus(currentNode.transform, 5);
+    }
+
+
 
 
     //Create / Remove
@@ -98,7 +113,7 @@ public class NodeManager : MonoBehaviour {
         Node n = ((GameObject)GameObject.Instantiate(nodePrefab,Random.insideUnitSphere*10,Quaternion.identity)).GetComponent<Node>();
         n.transform.parent = nodeContainer;
         n.transform.localScale = Vector3.zero;
-        n.transform.DOScale(.1f, .5f);
+        n.transform.DOScale(.5f, .5f);
 
         foreach (Node n2 in nodes)
         {
@@ -111,22 +126,18 @@ public class NodeManager : MonoBehaviour {
     void removeNode(Node n)
     {
 
-        List<Connection> connectionsToRemove = getConnectionsForNode(n);
-
-        foreach (Connection c2 in connectionsToRemove)
-        {
-            removeConnection(c2);
-        }
+        removeConnectionsForNode(n);
 
         nodes.Remove(n);
         GameObject.Destroy(n.gameObject);
     }
 
-    void addConnection(Node n1, Node n2)
+    void addConnection(Node n1, Node n2, bool active = false)
     {
         Connection c = ((GameObject)GameObject.Instantiate(connectionPrefab,Random.insideUnitSphere*10,Quaternion.identity)).GetComponent<Connection>();
         c.transform.parent = connectionContainer;
         c.setNodes(n1, n2);
+        c.setActive(active);
 
         connections.Add(c);
     }
@@ -134,7 +145,27 @@ public class NodeManager : MonoBehaviour {
     void removeConnection(Connection c)
     {
         connections.Remove(c);
-        GameObject.Destroy(c.gameObject);
+        c.clean();
+        GameObject.Destroy(c.gameObject,1);
+    }
+
+    void addConnectionsForNode(Node n)
+    {
+        foreach (Node n2 in nodes)
+        {
+            if (n2 == n) continue;
+            if (Random.value < connectionProba) addConnection(n, n2,true);
+        }
+    }
+
+    void removeConnectionsForNode(Node n)
+    {
+        List<Connection> connectionsToRemove = getConnectionsForNode(n);
+
+        foreach (Connection c2 in connectionsToRemove)
+        {
+            removeConnection(c2);
+        }
     }
 
     List<Connection> getConnectionsForNode(Node n)
@@ -148,4 +179,6 @@ public class NodeManager : MonoBehaviour {
 
         return cList;
     }
+
+   
 }

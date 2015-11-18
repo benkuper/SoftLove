@@ -2,6 +2,7 @@ package fr.insa.ihme.emotion.modules;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.zeromq.ZMQ;
@@ -114,7 +115,7 @@ public class FusionMaster implements Runnable {
 						Float disgust = emotionsScores.get("disgust")/historySize*100;
 						Float surprise = emotionsScores.get("surprise")/historySize*100;
 						
-						String json = String.format("{ \"joy\": %f, \"trust\": %f, \"fear\": %f, \"sadness\": %f, \"anger\": %f, \"disgust\": %f, \"surprise\": %f}",
+						String json = String.format(Locale.US, "{ \"joy\": %f, \"trust\": %f, \"fear\": %f, \"sadness\": %f, \"anger\": %f, \"disgust\": %f, \"surprise\": %f}",
 								joy, trust, fear, sadness, anger, disgust, surprise);;
 						System.out.println(json);
 						
