@@ -1,10 +1,11 @@
-
 void setup() {
-  ZMQManager zmq = new ZMQManager();
-  System.out.print(zmq.getConfig());  
+  ZMQManager zmqM = new ZMQManager();
+  AppConfig config = zmqM.getConfig();
+  
   size(640, 360);
-  OSCManager osc = new OSCManager(zmq.getConfig());
-  osc.sendOscMessage("test","test OSC");
+  //OSCManager osc = new OSCManager();
+  
+  //osc.sendOscMessage("test","test OSC");
   
 }
 
