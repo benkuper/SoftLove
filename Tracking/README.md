@@ -2,13 +2,16 @@
 Détection de position, placement en zones, détection de gestes
 
 ## Informations de déploiement
-Utilisation de Visual Studio 2015.
+Utilisation de Visual Studio 2015 : https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx
 
-### Gestion des dépendances : Nugets.
-Installation des packages : "Install Packages"
+### Gestion des dépendances : NuGet.
+https://www.nuget.org/
+
+Téléchargement automatique des dépendances lors de la génération de la solution.
 
 ### SDK Microsoft Kinect
-Télécharger et Installer le SDK 1.8
+Télécharger et Installer le SDK 1.8 : https://www.microsoft.com/en-us/download/details.aspx?id=40278
+
 
 ## Publisher
 
@@ -18,7 +21,7 @@ Pour y souscrire :
 - Port 5555, topic : "position" --> Reçu : "X:Z"
 - Port 5555, topic : "geste" --> TODO
 
-## Architecture
+## Architecture de la solution
 
 |_ src
 
@@ -38,9 +41,9 @@ Pour y souscrire :
 			
 			|_ Zoning/
 			
-					|_ Enums.cs : Divers Enums
+					|_ Enums.cs : Divers Enum
 					
-					|_ Localisation.cs : Classe utilisée pour le placement d'un individue dans une zones
+					|_ Localisation.cs : Classe utilisée pour le placement d'un individu dans une zone
 					
 					|_ Zone.cs : Définition d'une Zone
 					
