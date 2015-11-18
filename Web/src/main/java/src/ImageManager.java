@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,7 +12,7 @@ import org.jsoup.select.Elements;
 
 public class ImageManager {
 
-	public static void imageDownloader(ArrayList<String> res) throws IOException {
+	public static void imageDownloader(ArrayList<String> res, String recherche) throws IOException {
 
 		for(String s : res) {
 			Document doc = Jsoup.parse(WebContentManager.getPage(s));
@@ -27,7 +28,11 @@ public class ImageManager {
 							url = new URL(url.toString().substring(0, url.toString().indexOf("://upload"))+"s"+url.toString().substring(url.toString().indexOf("://upload"), url.toString().indexOf("/thumb"))+url.toString().substring(url.toString().indexOf("/thumb")+6, url.toString().lastIndexOf("/")));
 						}
 						
-						ZMQConnector.sendImage(url.toString());
+						JSONObject obj=new JSONObject();
+						  obj.put("recherche", recherche);
+						  obj.put("urlimage",url.toString());
+						  
+						ZMQConnector.sendImage(obj.toJSONString());
 
 					}
 				}

@@ -77,7 +77,7 @@ public class MainThread extends Thread {
 		    }
 		    
 		    System.out.println("sites retenu pour extraction d'images : "+imgDownload);
-			ImageManager.imageDownloader(imgDownload);
+			ImageManager.imageDownloader(imgDownload, recherche);
 			
 			/* RECHERCHE AMAZON */
 			ArrayList<String> products = new ArrayList<String>();
