@@ -1,0 +1,1 @@
+C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\Accelerometer\Accelerometer.Windows\Accelerometer.Windows.csproj;neutral

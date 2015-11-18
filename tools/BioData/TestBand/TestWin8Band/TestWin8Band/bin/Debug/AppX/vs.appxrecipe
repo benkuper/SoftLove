@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>BENPORTABLE</Machine>
+    <WindowsUser>Ben</WindowsUser>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <TargetOsVersion>6.3</TargetOsVersion>
+    <TargetOsDescription>Windows 8.1</TargetOsDescription>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>113e9e39-fb66-4428-b10b-8b21859bf01f</PackageIdentityName>
+    <IntermediateOutputPath>C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\obj\Debug\</IntermediateOutputPath>
+    <RegisteredManifestChecksum>21B73A2D910938491891E39DF4396A46B036718D2042F3921619F0238351E3D4</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>113e9e39-fb66-4428-b10b-8b21859bf01f_1.0.0.0_neutral__z6xh1x1kg5n3j</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>113e9e39-fb66-4428-b10b-8b21859bf01f_z6xh1x1kg5n3j!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>113e9e39-fb66-4428-b10b-8b21859bf01f</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=Ben</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+    <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-11-18T19:38:19.708</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\bin\Debug\TestWin8Band.exe">
+      <PackagePath>TestWin8Band.exe</PackagePath>
+      <Modified>2015-11-18T19:48:35.545</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.dll">
+      <PackagePath>Microsoft.Band.dll</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Store.dll">
+      <PackagePath>Microsoft.Band.Store.dll</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Windows.dll">
+      <PackagePath>Microsoft.Band.Windows.dll</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\Assets\Logo.scale-100.png">
+      <PackagePath>Assets\Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-07-06T22:09:30.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\Assets\SmallLogo.scale-100.png">
+      <PackagePath>Assets\SmallLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-07-06T22:09:30.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\Assets\SplashScreen.scale-100.png">
+      <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-07-06T22:09:30.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\Assets\StoreLogo.scale-100.png">
+      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2015-07-06T22:09:30.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\bin\Debug\TestWin8Band.xr.xml">
+      <PackagePath>TestWin8Band.xr.xml</PackagePath>
+      <Modified>2015-11-18T19:48:35.502</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\bin\Debug\App.xbf">
+      <PackagePath>App.xbf</PackagePath>
+      <Modified>2015-11-18T18:54:16.845</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\bin\Debug\MainPage.xbf">
+      <PackagePath>MainPage.xbf</PackagePath>
+      <Modified>2015-11-18T19:48:35.508</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Store\Microsoft.Band.Store.xr.xml">
+      <PackagePath>Microsoft.Band.Store\Microsoft.Band.Store.xr.xml</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Store\Sensors\SensorConsentPage.xbf">
+      <PackagePath>Microsoft.Band.Store\Sensors\SensorConsentPage.xbf</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Store\Tiles\AddTilePage.xbf">
+      <PackagePath>Microsoft.Band.Store\Tiles\AddTilePage.xbf</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Windows\Microsoft.Band.Windows.xr.xml">
+      <PackagePath>Microsoft.Band.Windows\Microsoft.Band.Windows.xr.xml</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Windows\Sensors\WindowsSensorConsentPage.xbf">
+      <PackagePath>Microsoft.Band.Windows\Sensors\WindowsSensorConsentPage.xbf</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Windows\Tiles\WindowsAddTilePage.xbf">
+      <PackagePath>Microsoft.Band.Windows\Tiles\WindowsAddTilePage.xbf</PackagePath>
+      <Modified>2015-09-29T19:03:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Ben\Desktop\TestBand\TestWin8Band\TestWin8Band\bin\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2015-11-18T19:48:06.533</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>
