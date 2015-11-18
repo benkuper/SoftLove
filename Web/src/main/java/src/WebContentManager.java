@@ -60,8 +60,8 @@ public class WebContentManager {
 
 	       try{
 
-	    	   while(urls.size() < nbResult) {
-	    		   String adresse= "https://www.google.fr/search?q="+motCle+"&start="+urls.size();
+	    	  // while(urls.size() < nbResult) {
+	    		   String adresse= "https://www.google.fr/search?q="+motCle+"&num="+nbResult;
 	    		   Document doc = Jsoup.parse(WebContentManager.getPage(adresse));
 	    		   System.out.println(doc);
 	    		   Elements test = doc.select("h3.r > a");
@@ -74,7 +74,7 @@ public class WebContentManager {
 						}
 
 					}
-	    	   }
+	    	  // }
 	       }
 		   catch (IOException exception)
 		   {

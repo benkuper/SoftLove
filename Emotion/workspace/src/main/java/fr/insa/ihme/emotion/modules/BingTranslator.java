@@ -28,8 +28,8 @@ public class BingTranslator extends AbstractAPIExecutor {
 
             try {
             	// TODO : inverser la ligne commentée selon si utilisation local avec PublishTextMock ou utilisation sur réseau 
-                //translatedString = Translate.execute(result, targetLanguage); // pour utilisation avec module "Parole"
-            	translatedString = Translate.execute(split[1], targetLanguage); //pour utilisation local
+                translatedString = Translate.execute(result, targetLanguage); // pour utilisation avec module "Parole"
+            	//translatedString = Translate.execute(split[1], targetLanguage); //pour utilisation local
             	
             	publisher.publish(topic, translatedString);
             } catch (Exception e) {

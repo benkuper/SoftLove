@@ -1,40 +1,35 @@
 {
   "listConfig": {
     "Web-images": {
-      "SourceAddress": "tcp://172.18.23.217:6970",
+      "SourceAddress": "tcp://127.0.0.1:6970",
       "SourceTopic": "images",
       "OSC": [
         {
           "OSCAddress": "127.0.0.1",
-          "OSCPort": "12000",
-          "OSCAdressPattern": "/test1"
-        },
-        {
-          "OSCAddress": "127.0.0.2",
-          "OSCPort": "12000",
-          "OSCAdressPattern": "/test2"
+          "OSCPort": "7000",
+          "OSCAdressPattern": "/images"
         }
       ]
     },
     "Web-keywords": {
-      "SourceAddress": "tcp://172.18.23.217:6970",
+      "SourceAddress": "tcp://127.0.0.1:6969",
       "SourceTopic": "keywords",
       "OSC": [
         {
           "OSCAddress": "127.0.0.1",
-          "OSCPort": "12000",
-          "OSCAdressPattern": "/test1"
+          "OSCPort": "7000",
+          "OSCAdressPattern": "/keywords"
         }
       ]
     },
     "Web-amazon": {
-      "SourceAddress": "tcp://172.18.23.217:6970",
+      "SourceAddress": "tcp://127.0.0.1:6971",
       "SourceTopic": "amazon",
       "OSC": [
         {
           "OSCAddress": "127.0.0.1",
-          "OSCPort": "12000",
-          "OSCAdressPattern": "/test1"
+          "OSCPort": "7000",
+          "OSCAdressPattern": "/amazon"
         }
       ]
     },
@@ -81,9 +76,9 @@
           "OSCAdressPattern": "/test1"
         },
 		{
-          "OSCAddress": "127.0.0.1",
-          "OSCPort": "10000",
-          "OSCAdressPattern": "/test1"
+          "OSCAddress": "172.18.18.157",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/parole"
         }
       ]
     },
