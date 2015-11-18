@@ -16,4 +16,12 @@ L'invite de commande indique l'url qu'il faut copier/coller dans le navigateur. 
 Une interface graphique sera développée pour ne pas avoir à faire cette étape
 
 #Explication du code
-TODO
+- fichier Application.java: contient le main de l'application, appelle les méthodes permettant la communication à facebook et la communication entre modules
+- dossier fb: contient les classes utilisées pour la connexion à facebook
+- dossier tfidf: contient les classes utilisées pour connaître les mots clés des posts de l'utilisateur
+- dossier zmq: contient les classes utilisées pour la communication entre les modules
+
+#Librairies externes
+-scribe pour la connexion à facebook
+-ZeroMQ pour la communication entre les modules
+
