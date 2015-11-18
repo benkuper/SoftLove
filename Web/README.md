@@ -55,11 +55,12 @@ Notre code possède des dépendances externes :
 - jeromq en version 0.3.5
 - junit en version 3.8.1 (aucun test junit réalisé à ce jour)
 - com.googlecode.json-simple en version 1.1
+- com.google.apis en version v1-rev51-1.20.0
 
 Nous utilisons également le site http://www.synonymo.fr/ qui s'il est en maintenant ou non accessible me permettra pas au code de renvoyer les mots clés enrichis de synonymes. Cependant cela n'entrave pas le bon déroulement d'une requête.
 
 III/ Paramétrage et lancement
 
-Le paramétrage se fait à l'aide du fichier config.json. Les variables a renseigné sont dans l'ordre : l'IP et port du publisher de mots clés, le nom de son topic (keywords), l'IP  et port du publisher d'images, le nom de son topic (images), l'IP  et port du suscriber de mots clés, le nom de son topic (Parole), l'IP et port du subscriber pour les réseaux sociaux et le nom de son topic (fb/links).
+Le paramétrage se fait à l'aide du fichier config.json. Les variables à renseigner sont dans l'ordre : l'IP et port du publisher de mots clés, le nom de son topic (keywords), l'IP  et port du publisher d'images, le nom de son topic (images), l'IP  et port du suscriber de mots clés, le nom de son topic (Parole), l'IP et port du subscriber pour les réseaux sociaux et le nom de son topic (fb/links).
  
 Le lancement se réalise au moyen d'un IDE en lançant la classe MainWeb.

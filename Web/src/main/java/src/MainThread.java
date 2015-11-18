@@ -17,9 +17,9 @@ public class MainThread extends Thread {
 		ArrayList<String> res;
 		try {
 			/* RECHERCHE WEB */
-			//res = WebContentManager.googleRequest(recherche, 2);
+			res = WebContentManager.googleAPIRequest(recherche, 2);
 			
-			res = new ArrayList<String>();
+			/**res = new ArrayList<String>();
 			res.add("https://fr.wikipedia.org/wiki/Cheval");
 			res.add("https://www.youtube.com/watch?v=9pMGG0CgAD0");
 			res.add("http://jeu.info/chevaux.htm");
@@ -27,7 +27,7 @@ public class MainThread extends Thread {
 			res.add("http://www.cheval-francais.eu/");
 			res.add("http://www.cheval-francais.eu/fr/les-courses-par-date.html");
 			res.add("https://fr.vikidia.org/wiki/Cheval");
-			res.add("http://www.salon-cheval.com/");
+			res.add("http://www.salon-cheval.com/");**/
 			    	
 			ArrayList<String> synonymes = new ArrayList<String>();
 		

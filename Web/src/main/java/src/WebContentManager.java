@@ -1,9 +1,11 @@
 package src;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
@@ -16,8 +18,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class WebContentManager {
 	public static String getPage(String adresse) throws IOException {
@@ -80,6 +80,33 @@ public class WebContentManager {
 		   {
 			   System.out.println ("Erreur lors de la lecture : " + exception.getMessage());
 		   }
+		return urls;
+	}
+	
+	public static ArrayList<String> googleAPIRequest(String motCle, int nbResult) throws IOException {
+		ArrayList<String> urls = new ArrayList<String>();
+		
+		String searchEngineLanguage = "fr";
+		String documentLanguage = "lang_fr";
+		HttpURLConnection conn = null;
+		while(urls.size() < nbResult) {
+		    URL url = new URL("https://www.googleapis.com/customsearch/v1?key=AIzaSyBzgCg7v-tfVZ4-iEx7ZjDALsnKr06wGzU&cx=013036536707430787589:_pqjad5hr1a&q="+motCle+"&alt=json&hl="+searchEngineLanguage+"&lr="+documentLanguage+"&start="+(urls.size()+1));
+	        conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("Accept", "application/json");
+	        BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+	
+	        String output;
+	        while ((output = br.readLine()) != null) {
+	
+	            if(output.contains("\"link\": \"")){                
+	                String link=output.substring(output.indexOf("\"link\": \"")+("\"link\": \"").length(), output.indexOf("\","));
+	                urls.add(link);
+	            }     
+	        }
+		}
+        conn.disconnect(); 
+        System.out.println(urls.toString());
 		return urls;
 	}
 	
