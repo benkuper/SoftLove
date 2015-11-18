@@ -16,6 +16,7 @@ public class ZMQConnector {
 	
 	public static Socket keywords_publisher;
 	public static Socket images_publisher;
+	public static Socket amazon_publisher;
 
 	//private static String IP_KEYWORDS_SUBSCRIBER = "localhost";//"172.18.19.27";
 	//private static String IP_SOCIALNETWORK_SUBSCRIBER = "localhost";//"172.18.20.101";
@@ -31,6 +32,7 @@ public class ZMQConnector {
 
 		System.out.println("@ keywordsPub : "+(String) jsonObject.get("IP_KEYWORDS_PUBLISHER"));
 		System.out.println("@ imagesPub : "+(String) jsonObject.get("IP_IMAGES_PUBLISHER"));
+		System.out.println("@ amazonPub : "+(String) jsonObject.get("IP_AMAZON_PUBLISHER"));
 		System.out.println("keywordsSub : "+(String) jsonObject.get("IP_KEYWORDS_SUBSCRIBER")+" ; topic : "+((String) jsonObject.get("KEYWORDS_SUBSCRIBER_TOPIC")));
 		System.out.println("socialSub : "+(String) jsonObject.get("IP_SOCIALNETWORK_SUBSCRIBER")+" ; topic : "+((String) jsonObject.get("SOCIALNETWORK_SUBSCRIBER_TOPIC")));
         
@@ -38,9 +40,11 @@ public class ZMQConnector {
 
 		keywords_publisher = context.socket(ZMQ.PUB);
 		images_publisher = context.socket(ZMQ.PUB);
+		amazon_publisher = context.socket(ZMQ.PUB);
 
 		keywords_publisher.bind((String) jsonObject.get("IP_KEYWORDS_PUBLISHER"));
 		images_publisher.bind((String) jsonObject.get("IP_IMAGES_PUBLISHER"));
+		amazon_publisher.bind((String) jsonObject.get("IP_AMAZON_PUBLISHER"));
 
 		keywords_subscriber = context.socket(ZMQ.SUB);
 		socialNetwork_subscriber = context.socket(ZMQ.SUB);
@@ -99,4 +103,11 @@ public class ZMQConnector {
         }
         System.out.println("finish");
     }
+
+	public static void sendAmazon(String message) {
+		amazon_publisher.sendMore("amazon");
+		amazon_publisher.send(message);
+		System.out.println("amazon envoyé : " + message);
+		
+	}
 }

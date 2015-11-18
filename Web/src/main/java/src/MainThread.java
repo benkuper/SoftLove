@@ -16,6 +16,7 @@ public class MainThread extends Thread {
 	public void run() {
 		ArrayList<String> res;
 		try {
+			/* RECHERCHE WEB */
 			//res = WebContentManager.googleRequest(recherche, 2);
 			
 			res = new ArrayList<String>();
@@ -42,6 +43,9 @@ public class MainThread extends Thread {
 		    }
 
 		    TFIDFCalculator calculator = new TFIDFCalculator();
+		    
+		    
+		    /*TF-IDF WEB & IMAGES*/
 		    double tfidf;
 		    double valeurMax = -1;
 		    String wikiImg = new String();
@@ -73,6 +77,24 @@ public class MainThread extends Thread {
 		    System.out.println("reponse : " + answer);
 			ImageManager.imageDownloader(imgDownload);
 			ZMQConnector.sendKeywords(recherche+"|"+answer);
+			
+			/* RECHERCHE AMAZON */
+			ArrayList<String> products = new ArrayList<String>();
+			res = WebContentManager.amazonRequest(recherche);
+			
+			if(products.size()>3) {
+				products.subList(0, 3);
+			}
+			
+			for(String s:res) {
+				products.add(WebContentManager.getPage(s));
+			}
+			
+			for(String page : products) {
+				System.out.println(WebContentManager.extractProduct(page));
+				ZMQConnector.sendAmazon(WebContentManager.extractProduct(page));
+			}
+			
 			System.out.println("end of request");
 		} catch (IOException e) {
 			e.printStackTrace();
