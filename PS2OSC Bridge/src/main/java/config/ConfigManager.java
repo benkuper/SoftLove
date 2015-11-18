@@ -6,14 +6,15 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by pierre on 07/11/15.
+ * Class that can serialize or deserialize an AppConfig
+ *
  */
 public class ConfigManager {
 
     public ConfigManager(){
     }
 
-    public void saveConfig(Config config){
+    public void saveConfig(AppConfig config){
         ObjectMapper mapper = new ObjectMapper();
 
         //Object to JSON in file
@@ -24,13 +25,13 @@ public class ConfigManager {
         }
     }
 
-    public Config loadConfig(String fileName){
+    public AppConfig loadConfig(String fileName){
         File file = new File(fileName);
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-           Config loadedConfig = mapper.readValue(file, Config.class);
-            return loadedConfig;
+           AppConfig appConfig = mapper.readValue(file, AppConfig.class);
+            return appConfig;
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,4 +1,4 @@
-import config.Config;
+import config.AppConfig;
 import config.ConfigManager;
 import org.zeromq.ZMQ;
 import subscribers.*;
@@ -9,14 +9,16 @@ import subscribers.*;
 public class ZMQManager {
 
     private ZMQ.Context context;
-    private Config config;
+    private AppConfig config;
 
-    public RechercheWebSubscriber rechercheWeb;
-    public DetectionGesteSubscriber detectionGeste;
-    public RetranscriptionParoleSubscriber retranscriptionParole;
-    public AnalyseTweetsSubscriber analyseTweets;
-    public GestionDialogueSubscriber gestionDialogue;
-    public DetectionEmotionsSubscriber detectionEmotions;
+    public WebImagesSubscriber rechercheWebimgs;
+    public WebImagesSubscriber rechercheWebkey;
+    public TrackingPositionSubscriber detectionGeste;
+    public TrackingZoneSubscriber detectionZone;
+    public Speech2TextSubscriber retranscriptionParole;
+    public FacebookLinksSubscriber analyseTweets;
+    public ChatBotSubscriber gestionDialogue;
+    public EmotionSubscriber detectionEmotions;
 
     public ZMQManager(){
 
@@ -28,29 +30,29 @@ public class ZMQManager {
         context = ZMQ.context(1);
 
         //Initialise les threads subscribers pour chacun des topics
-        System.out.println("Recherche Web : "+config.RechercheWebAdresse+" / "+config.RechercheWebTopic);
-        rechercheWeb = new RechercheWebSubscriber(config.RechercheWebTopic, context,config.RechercheWebAdresse);
+        rechercheWebimgs = new WebImagesSubscriber(config.getConfig("Web-images"),context);
 
-        System.out.println("DetectionGeste : "+config.DetectionGesteAdresse+" / "+config.DetectionGesteTopic);
-        detectionGeste = new DetectionGesteSubscriber(config.DetectionGesteTopic, context,config.DetectionGesteAdresse);
+        rechercheWebkey = new WebImagesSubscriber(config.getConfig("Web-keywords"),context);
 
-        System.out.println("RetranscriptionParole : "+config.RetranscriptionParoleAdresse+" / "+config.RetranscriptionParoleTopic);
-        retranscriptionParole = new RetranscriptionParoleSubscriber(config.RetranscriptionParoleTopic, context,config.RetranscriptionParoleAdresse);
+        detectionGeste = new TrackingPositionSubscriber(config.getConfig("Tracking-geste"),context);
 
-        System.out.println("AnalyseTweets : "+config.AnalyseTweetsAdresse+" / "+config.AnalyseTweetsTopic);
-        analyseTweets = new AnalyseTweetsSubscriber(config.AnalyseTweetsTopic, context,config.AnalyseTweetsAdresse);
+        detectionZone = new TrackingZoneSubscriber(config.getConfig("Tracking-zone"),context);
 
-        System.out.println("GestionDialogue : "+config.GestionDialogueAdresse+" / "+config.GestionDialogueTopic);
-        gestionDialogue = new GestionDialogueSubscriber(config.GestionDialogueTopic, context,config.GestionDialogueAdresse);
+        retranscriptionParole = new Speech2TextSubscriber(config.getConfig("Speech2Text"),context);
 
-        System.out.println("DetectionEmotions : "+config.DetectionEmotionsAdresse+" / "+config.DetectionEmotionsTopic);
-        detectionEmotions = new DetectionEmotionsSubscriber(config.DetectionEmotionsTopic, context,config.DetectionEmotionsAdresse);
+        analyseTweets = new FacebookLinksSubscriber(config.getConfig("Facebook"),context);
+
+        gestionDialogue = new ChatBotSubscriber(config.getConfig("ChatBot"),context);
+
+        detectionEmotions = new EmotionSubscriber(config.getConfig("Emotion"),context);
     }
 
     public void startSubscribers(){
         //Lance les threads
-        rechercheWeb.start();
+        rechercheWebimgs.start();
+        rechercheWebkey.start();
         detectionGeste.start();
+        detectionZone.start();
         retranscriptionParole.start();
         analyseTweets.start();
         gestionDialogue.start();
@@ -66,7 +68,7 @@ public class ZMQManager {
         return config.toString();
     }
 
-    public Config getConfig(){
+    public AppConfig getConfig(){
         return config;
     }
 }

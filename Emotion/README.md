@@ -20,3 +20,5 @@ Selon l'utilisation (localhost, ou non) voir ces deux lignes :
 
 https://github.com/benkuper/SoftLove/blob/master/Emotion/workspace/src/main/java/fr/insa/ihme/emotion/modules/BingTranslator.java#L31
 
+Les clés des API sont à renseigner pour le moment dans le fichier source FinalClient.java (les premières lignes du main)
++ d'info
