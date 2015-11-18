@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -76,8 +77,7 @@ public class KeywordCounter {
 	    return tmp;
 	}
 	
-	public static String extractAnswer(ArrayList<String> pageContent) {
-		String res ="";
+	public static void extractAnswer(String recherche, ArrayList<String> pageContent) {
 		    // O(n)
 		    Map<String, Integer> map = new HashMap<String, Integer>();
 		    for (String str : pageContent) {
@@ -98,16 +98,25 @@ public class KeywordCounter {
 		    }
 
 		    int cpt = 0;
-		    
+
+    		JSONObject obj=new JSONObject();
+    		
 		    // O(n)
 		    Map<Integer, TreeSet<String>> result = treemap.descendingMap();
 		    for (int count : result.keySet()) {
 		        TreeSet<String> set = result.get(count);
 		        for (String word : set) {
-		        	if(cpt< 5) {res += word +" ";cpt++;}
-		            //System.out.println(word + ":" + count);
+		        	if(cpt< 5) {
+		        		cpt++;
+		        		obj=new JSONObject();
+		        		obj.put("terme",word);
+		  			  	obj.put("poids",count);
+		  			  	obj.put("recherche",recherche);
+
+		  				ZMQConnector.sendKeywords(obj.toJSONString());
+		            System.out.println(obj.toJSONString());
+		        	}
 		        }
-		}
-		  return res;
+		}   
 	}
 }

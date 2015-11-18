@@ -163,7 +163,7 @@ public class WebContentManager {
 		return urls;
 	}
 
-	public static String extractProduct(String page) throws FileNotFoundException, UnsupportedEncodingException {
+	public static void extractProduct(String recherche, String page) throws FileNotFoundException, UnsupportedEncodingException {
 		String image = "";
 		String titre = "";
 		String description = "";
@@ -180,12 +180,17 @@ public class WebContentManager {
 		if(!descriptions.isEmpty()) {description = descriptions.get(0).text();}
 		if(!titres.isEmpty()) {titre = titres.get(0).text();}
 		
-		JSONObject obj=new JSONObject();
-		  obj.put("prix",prix);
-		  obj.put("titre",titre);
-		  obj.put("image",image);
-		  obj.put("description",description);
+		if(!titre.equals("") && !prix.equals("")) {
 		
-		return obj.toJSONString();
+			JSONObject obj=new JSONObject();
+			  obj.put("prix",prix);
+			  obj.put("titre",titre);
+			  obj.put("image",image);
+			  obj.put("description",description);
+			  obj.put("recherche",recherche);
+			
+			  System.out.println(obj.toJSONString());
+			ZMQConnector.sendAmazon(obj.toJSONString());
+		}
 	}
 }

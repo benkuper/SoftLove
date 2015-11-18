@@ -44,13 +44,11 @@ public class MainThread extends Thread {
 
 		    TFIDFCalculator calculator = new TFIDFCalculator();
 		    
-		    
 		    /*TF-IDF WEB & IMAGES*/
 		    double tfidf;
 		    double valeurMax = -1;
 		    String wikiImg = new String();
 		    String tfidfImg = new String();
-		    String answer = "";
 		    for(ArrayList<String> cur : docs) {
 		    	tfidf = 0.0;
 		    		
@@ -64,7 +62,6 @@ public class MainThread extends Thread {
 			    if(tfidf > valeurMax) {
 			    	valeurMax = tfidf;
 			    	tfidfImg = res.get(docs.indexOf(cur));
-			    	answer = KeywordCounter.extractAnswer(cur);
 		    	}
 
 				System.out.println("TF-IDF ( " + recherche + " ) pour " + res.get(docs.indexOf(cur)) + " = " + tfidf);
@@ -73,10 +70,14 @@ public class MainThread extends Thread {
 		    if(!wikiImg.isEmpty())
 		    	imgDownload.add(wikiImg);
 		    imgDownload.add(tfidfImg);
+		    
+		    // envoi des keywords
+		    if(!tfidfImg.isEmpty()) {
+		    	KeywordCounter.extractAnswer(recherche,KeywordCounter.extractKeywords(WebContentManager.getTextPage(tfidfImg)));
+		    }
+		    
 		    System.out.println("sites retenu pour extraction d'images : "+imgDownload);
-		    System.out.println("reponse : " + answer);
 			ImageManager.imageDownloader(imgDownload);
-			ZMQConnector.sendKeywords(recherche+"|"+answer);
 			
 			/* RECHERCHE AMAZON */
 			ArrayList<String> products = new ArrayList<String>();
@@ -91,8 +92,8 @@ public class MainThread extends Thread {
 			}
 			
 			for(String page : products) {
-				System.out.println(WebContentManager.extractProduct(page));
-				ZMQConnector.sendAmazon(WebContentManager.extractProduct(page));
+				WebContentManager.extractProduct(recherche, page);
+				
 			}
 			
 			System.out.println("end of request");
