@@ -3,6 +3,8 @@ import config.ConfigManager;
 import org.zeromq.ZMQ;
 import subscribers.*;
 
+import java.io.File;
+
 /**
  * Created by pierre on 07/11/15.
  */
@@ -21,10 +23,24 @@ public class ZMQManager {
     public EmotionSubscriber detectionEmotions;
 
     public ZMQManager(){
+        File f = new File("config.json");
+        if(f.exists() && !f.isDirectory()) {
+            init("config.json");
+        }
+        else{
+            System.err.println("Error : config.json not found in path");
+        }
+    }
 
+    public ZMQManager(String configPath){
+        init(configPath);
+    }
+
+    private void init(String configPath)
+    {
         //Importe la configuration depuis le fichier config.json
         ConfigManager cm = new ConfigManager();
-        config = cm.loadConfig("config.json");
+        config = cm.loadConfig(configPath);
 
         //Initialise ZeroMQ
         context = ZMQ.context(1);
