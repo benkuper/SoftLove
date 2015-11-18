@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{0A80EFDE-AAA3-D137-FCDC-0E6E09B09B78}") = "NeuronNetwork", "Assembly-CSharp-firstpass.csproj", "{65AD89E6-931F-2974-3698-1AB75C047CB6}"
+EndProject
 Project("{0A80EFDE-AAA3-D137-FCDC-0E6E09B09B78}") = "NeuronNetwork", "Assembly-CSharp.csproj", "{E391AFA5-9CA3-D182-1860-B4FBC60D9597}"
 EndProject
 Project("{0A80EFDE-AAA3-D137-FCDC-0E6E09B09B78}") = "NeuronNetwork", "Assembly-CSharp-Editor.csproj", "{7968FBF2-EB84-8E57-A22A-591530D0C3A4}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65AD89E6-931F-2974-3698-1AB75C047CB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65AD89E6-931F-2974-3698-1AB75C047CB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65AD89E6-931F-2974-3698-1AB75C047CB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65AD89E6-931F-2974-3698-1AB75C047CB6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E391AFA5-9CA3-D182-1860-B4FBC60D9597}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E391AFA5-9CA3-D182-1860-B4FBC60D9597}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E391AFA5-9CA3-D182-1860-B4FBC60D9597}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -23,7 +29,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																														GlobalSection(MonoDevelopProperties) = preSolution
+																																																						GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
