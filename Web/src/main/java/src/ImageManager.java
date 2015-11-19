@@ -13,11 +13,10 @@ import org.jsoup.select.Elements;
 public class ImageManager {
 
 	public static void imageDownloader(ArrayList<String> res, String recherche) throws IOException {
-
+		
 		for(String s : res) {
 			Document doc = Jsoup.parse(WebContentManager.getPage(s));
 			Elements imgs = doc.select("img");
-
 			try
 			{
 				for(Element e : imgs) {
@@ -25,7 +24,9 @@ public class ImageManager {
 
 					if(url.toString().startsWith("http://") || url.toString().startsWith("https://")) {
 						if(url.toString().startsWith("http://upload.wikimedia.org/wikipedia/")) {
-							url = new URL(url.toString().substring(0, url.toString().indexOf("://upload"))+"s"+url.toString().substring(url.toString().indexOf("://upload"), url.toString().indexOf("/thumb"))+url.toString().substring(url.toString().indexOf("/thumb")+6, url.toString().lastIndexOf("/")));
+							if(url.toString().contains("/thumb")) {
+								url = new URL(url.toString().substring(0, url.toString().indexOf("://upload"))+"s"+url.toString().substring(url.toString().indexOf("://upload"), url.toString().indexOf("/thumb"))+url.toString().substring(url.toString().indexOf("/thumb")+6, url.toString().lastIndexOf("/")));
+							}
 						}
 						
 						JSONObject obj=new JSONObject();
@@ -33,7 +34,6 @@ public class ImageManager {
 						  obj.put("urlimage",url.toString());
 						  
 						ZMQConnector.sendImage(obj.toJSONString());
-
 					}
 				}
 			}

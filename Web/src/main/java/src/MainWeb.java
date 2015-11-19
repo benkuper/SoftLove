@@ -10,7 +10,7 @@ public class MainWeb {
 	
 	public static void main(String[] args) throws IOException, ParseException {
 		
-		String recherche ="éléphant bleu";
+		String recherche ="cheval blanc";
 		new ZMQConnector();
 		
 		System.out.println("lancement thread profil");
