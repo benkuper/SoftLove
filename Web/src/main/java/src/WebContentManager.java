@@ -86,6 +86,9 @@ public class WebContentManager {
 	public static ArrayList<String> googleAPIRequest(String motCle, int nbResult) throws IOException {
 		ArrayList<String> urls = new ArrayList<String>();
 		
+		motCle=motCle.replace(' ', '+');
+		System.out.println("debug " + motCle);
+		
 		String searchEngineLanguage = "fr";
 		String documentLanguage = "lang_fr";
 		HttpURLConnection conn = null;
@@ -112,6 +115,7 @@ public class WebContentManager {
 	
 	public static ArrayList<String> amazonRequest(String req) throws IOException {
 		ArrayList<String> urls = new ArrayList<String>();
+		//req.replace(' ', '+');
 
 	       try{
 	    		   String adresse= "http://www.amazon.fr/s/field-keywords="+req;
