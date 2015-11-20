@@ -1,0 +1,7 @@
+les librairies sont à installer dans le sketchbook processing (Documents/Processing/libraries)
+
+Utiliser Processing 2.2.1 !!
+
+
+ATTENTION : pour faire marcher KinectZoneTracker en standalone, copier le dossier "SimpleOpenNI" au niveau root ("/" = correspond au dossier "Macintosh HD")
+ 
