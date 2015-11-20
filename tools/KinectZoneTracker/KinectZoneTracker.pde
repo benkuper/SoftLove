@@ -20,7 +20,7 @@ boolean navMode;
 boolean tmpEditMode;
 
 //must be general
-int precisionSteps = 30;
+int precisionSteps = 10;
 int precisionFactor = precisionSteps*precisionSteps;
 boolean altPressed;
 

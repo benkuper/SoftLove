@@ -38,6 +38,15 @@ public class NodeManager : MonoBehaviour {
         {
             addNode();
         }
+
+		OSCMaster.init ();
+		OSCMaster.pingReceived +=  pingReceived;
+	}
+
+	void pingReceived()
+	{
+		Debug.Log ("ping Received, focus Random");
+		focusRandomNode ();
 	}
 
     // Update is called once per frame
@@ -54,7 +63,7 @@ public class NodeManager : MonoBehaviour {
             switch (e.keyCode)
             {
                 case KeyCode.Space:
-                    Node n = focusRandomNode();
+                    focusRandomNode();
                     break;
             }
         }

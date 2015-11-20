@@ -66,7 +66,7 @@ public class Connection : MonoBehaviour {
 
         speed = val ? Random.Range(.5f, 3f) : Random.Range(.1f, .4f);
         if (Random.value > .5f) speed = -speed;
-        lineMat.DOColor(isActive ? activeColor : new Color(1, 1, 1, .1f), 1);
+        lineMat.DOColor(isActive ? activeColor : new Color(1, 1, 1, .4f), 1);
     }
 
     public void clean()
