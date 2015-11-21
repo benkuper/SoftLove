@@ -32,6 +32,7 @@ namespace TestWin8Band
         private App viewModel;
 
         private int heartRate = 0;
+        private int gsr = 0;
 
         OSCClient client;
 
@@ -85,6 +86,12 @@ namespace TestWin8Band
                     else
                     {
 
+                        if (!bandClient.SensorManager.Gsr.IsSupported)
+                        {
+                            this.viewModel.StatusMessage = "Gsr sensor is not supported with your Band version. Microsoft Band 2 is required.";
+                        }
+
+
                         int samplesReceived = 0; // the number of Accelerometer samples received
 
                         // Subscribe to Accelerometer data.
@@ -96,18 +103,31 @@ namespace TestWin8Band
 
                         };
 
-                        while(true)
+                        bandClient.SensorManager.Gsr.ReadingChanged += (s, args) => 
+                        {
+                            gsr = args.SensorReading.Resistance; 
+           
+                       };
+
+                        while (true)
                         {
                             await bandClient.SensorManager.HeartRate.StartReadingsAsync();
+                            await bandClient.SensorManager.Gsr.StartReadingsAsync();
 
-                            // Receive HeartRate data for a while, then stop the subscription.
-                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            await Task.Delay(TimeSpan.FromSeconds(3));
+
                             await bandClient.SensorManager.HeartRate.StopReadingsAsync();
+                            await bandClient.SensorManager.Gsr.StopReadingsAsync();
 
-                            this.viewModel.StatusMessage = string.Format("Done. {0} Accelerometer samples were received, final HR = {1}", samplesReceived,heartRate);
+                            this.viewModel.StatusMessage = string.Format("Heart Rate = {1}\nGST = {2}", heartRate,gsr);
+
                             OSCMessage msg = new OSCMessage("/emotion/heart");
                             msg.Append<int>(heartRate);
                             client.Send(msg);
+
+                            OSCMessage msg2 = new OSCMessage("/emotion/gsr");
+                            msg2.Append<int>(gsr);
+                            client.Send(msg2);
                         }
                     }
                 }
