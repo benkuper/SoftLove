@@ -5,7 +5,6 @@ using System.IO;
 public class DataText : MonoBehaviour {
 
     TextMesh tm;
-    string text;
     string[] lines;
     int numLines;
 
@@ -45,7 +44,6 @@ public class DataText : MonoBehaviour {
 
     void setText(string txt)
     {
-        text = txt;
         lines = txt.Split(new char[] { '\n' });
         numLines = lines.Length;
         start = 0;

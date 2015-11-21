@@ -10,22 +10,22 @@ public class MainWeb {
 	
 	public static void main(String[] args) throws IOException, ParseException {
 		
-		String recherche ="";//cheval";
+		String recherche ="cheval blanc";
 		new ZMQConnector();
 		
 		System.out.println("lancement thread profil");
 		ProfilThread thp = new ProfilThread();
 		thp.start();
 		
-		while(true) {
+		//while(true) {
 
 			System.out.println("begin loop");
 			
-			recherche = ZMQConnector.receiveKeywords();
+			//recherche = ZMQConnector.receiveKeywords();
 			System.out.println("recherche : " + recherche+"\t"+"profil : "+profil);
 		
 			MainThread t = new MainThread(recherche, profil);
 			t.start();
-		}
+		//}
 	}
 }

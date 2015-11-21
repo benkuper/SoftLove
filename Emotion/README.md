@@ -16,6 +16,15 @@ Pour le lancer ça ne marche pas pour l'instant.. enfin si mais sur eclipse. La 
 ## Code
 On utilise zeroMQ pour ls pub/sub et spécifique Unirest pour les requêtes HTTP. Toutes les dépendances sont gérées dans le maven.
 
+Wrapper Java pour l'utilisation de l'API Bing Translator. Avec la dépendance Maven suivante :
+```xml
+  <dependency>
+    <groupId>com.memetix</groupId>
+    <artifactId>microsoft-translator-java-api</artifactId>
+    <version>0.6.2</version>
+    <type>jar</type>
+  </dependency>
+```
 Selon l'utilisation (localhost, ou non) voir ces deux lignes : 
 
 https://github.com/benkuper/SoftLove/blob/master/Emotion/workspace/src/main/java/fr/insa/ihme/emotion/modules/BingTranslator.java#L31
@@ -27,4 +36,4 @@ Les API de [mashape](mashape.com)
  * [loudelement](https://market.mashape.com/loudelement/free-natural-language-processing-service)
 
 L'api BING :
- * []()
+ * [Getting started with the Bing Translator API](http://www.restlessprogrammer.com/2013/03/setting-up-free-bing-translator-api.html)

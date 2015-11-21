@@ -99,15 +99,10 @@ public class FacebookConnector {
     public String getUserprofilePicture(){
         Response response = this.get("v2.5/me/picture?redirect=0");
         String body = response.getBody();
-        // JSONObject obj = new JSONObject(body);
-        // JSONArray arrPost = obj.getJSONArray("data");
-        // for (int j = 0; j < arrPost.length(); j++)
-        // {
-        //     if (arrPost.getJSONObject(j).has("message")){
-        //         strArray[i] += (arrPost.getJSONObject(j).getString("message"));                        
-        //     }
-        // }
-        return body;
+        JSONObject obj = new JSONObject(body);
+        JSONObject picture = obj.getJSONObject("data");
+
+        return picture.getString("url");
     }
 
     // public String getUserAlbumPictures(){
