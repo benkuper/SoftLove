@@ -10,6 +10,8 @@ using SoftLove.Communication;
 using SoftLove.Exceptions;
 using System.Threading;
 
+using SoftLove.Acquisition;
+
 namespace SoftLove.Zoning
 {
     class Localisation
@@ -62,28 +64,6 @@ namespace SoftLove.Zoning
             set { pub = value; }
         }
 
-        /// <summary>
-        /// Données du skeletons
-        /// </summary>
-        private Skeleton[] skelData;
-
-        public Skeleton[] SkelData
-        {
-            get { return skelData; }
-            set { skelData = value; }
-        }
-
-        /// <summary>
-        /// Kinect
-        /// </summary>
-        private KinectSensor sensor;
-
-        public KinectSensor Sensor
-        {
-            get { return sensor; }
-            set { sensor = value; }
-        }
-
         private string nomZoneDefaut;
 
         public string ZoneDefaut
@@ -92,6 +72,13 @@ namespace SoftLove.Zoning
             set { nomZoneDefaut = value; }
         }
 
+        private SkeletonAcquisition skeletonAcquire;
+
+        public SkeletonAcquisition SkeletonAcquire
+        {
+            get { return skeletonAcquire; }
+            set { skeletonAcquire = value; }
+        }
 
 
         public Localisation(string _filename, string _nomZoneDefaut, Publisher _pub)
@@ -99,38 +86,9 @@ namespace SoftLove.Zoning
             Zones = new List<Zone>();
             ReadXml(_filename);
             Pub = _pub;
-            InitSensor();
             Statut = ABSENT;
             Zone = "";
             ZoneDefaut = _nomZoneDefaut;
-        }
-
-        /// <summary>
-        /// Initialisation de la Kinect, activation du tracking de skeleton
-        /// </summary>
-        private void InitSensor()
-        {
-            Sensor = KinectSensor.KinectSensors.Where(s => s.Status == KinectStatus.Connected).FirstOrDefault(); // Init the kinect
-            SkelData = new Skeleton[Sensor.SkeletonStream.FrameSkeletonArrayLength]; // Allocate ST data
-            Sensor.SkeletonStream.Enable();
-            Sensor.SkeletonFrameReady += AcquireSkeletonAndSendPosition; // Get Ready for Skeleton Ready Events
-            Sensor.Start();
-        }
-
-        /// <summary>
-        /// Fonction d'acquisition du skeleton
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AcquireSkeletonAndSendPosition(Object sender, SkeletonFrameReadyEventArgs e)
-        {
-            using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame()) // Open the Skeleton frame
-            {
-                if (skeletonFrame != null && SkelData != null) // check that a frame is available
-                {
-                    skeletonFrame.CopySkeletonDataTo(SkelData); // get the skeletal information in this frame
-                }
-            }
         }
 
 
@@ -138,9 +96,9 @@ namespace SoftLove.Zoning
         {
             try
             {
-                if (SkelData.Length > 0)
+                if (SkeletonAcquire.SkelData.Length > 0)
                 {
-                    var skel = SkelData.Where(u => u.TrackingState == SkeletonTrackingState.Tracked).FirstOrDefault();
+                    var skel = SkeletonAcquire.SkelData.Where(u => u.TrackingState == SkeletonTrackingState.Tracked).FirstOrDefault();
                     if (skel != null)
                     {
                         Pub.SendInfo(Publisher.POSITION, Math.Round(skel.Position.X, 2) + ":" + Math.Round(skel.Position.Z, 2));
@@ -156,9 +114,9 @@ namespace SoftLove.Zoning
         {
             try
             {
-                if (SkelData.Length > 0)
+                if (SkeletonAcquire.SkelData.Length > 0)
                 {
-                    var skel = SkelData.Where(u => u.TrackingState == SkeletonTrackingState.Tracked).FirstOrDefault();
+                    var skel = SkeletonAcquire.SkelData.Where(u => u.TrackingState == SkeletonTrackingState.Tracked).FirstOrDefault();
                     if (skel != null)
                     {
                         if (Statut == ABSENT)

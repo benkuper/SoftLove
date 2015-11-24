@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Text.RegularExpressions;
-using SoftLove.Zoning;
+﻿using SoftLove.Acquisition;
 using SoftLove.Communication;
-
-using ZeroMQ;
+using SoftLove.Factory;
+using SoftLove.GestureBehaviour;
+using SoftLove.Zoning;
+using System;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace SoftLove
 {
@@ -40,8 +37,12 @@ namespace SoftLove
                     break;
 
                 case "2":
-                    Localisation local = new Localisation("sallePAO2.xml", "Y", new Publisher());
-                    local.Launch();
+                    Publisher pub = new Publisher();
+                    SkeletonAcquisition acquire = new SkeletonAcquisition(SensorFactory.GenerateSensor(),
+                                                                        new Localisation("sallePAO2.xml", "Y", pub),
+                                                                        new GBTreatment());
+                    acquire.Launch(); /// L'initialisation se fait automatiquement au lancement si elle n'est pas faite à la main
+                    Console.ReadKey();
                     break;
 
                 case "3":

@@ -91,11 +91,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acquisition\SkeletonAcquisition.cs" />
     <Compile Include="Exceptions\NumberOfPointsException.cs" />
     <Compile Include="Exceptions\IdPublisherException.cs" />
     <Compile Include="Communication\Publisher.cs" />
     <Compile Include="Exceptions\SkeletonNotFoundException.cs" />
     <Compile Include="Exceptions\ZoneFullException.cs" />
+    <Compile Include="Factory\SensorFactory.cs" />
+    <Compile Include="GestureBehaviour\GBTreatment.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -110,6 +113,7 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Zoning\Enums.cs" />
+    <Compile Include="Zoning\Localisation.cs" />
     <Compile Include="Zoning\Zone.cs" />
     <Compile Include="Zoning\ZoneRegister.cs" />
   </ItemGroup>

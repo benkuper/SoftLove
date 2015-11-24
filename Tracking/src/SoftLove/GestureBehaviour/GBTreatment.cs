@@ -8,5 +8,9 @@ namespace SoftLove.GestureBehaviour
 {
     class GBTreatment
     {
+        public GBTreatment()
+        {
+
+        }
     }
 }
