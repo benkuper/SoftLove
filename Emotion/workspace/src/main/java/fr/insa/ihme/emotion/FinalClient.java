@@ -8,10 +8,11 @@ import java.util.logging.Logger;
 
 import fr.insa.ihme.emotion.modules.*;
 
-import org.zeromq.*; 
+import com.memetix.mst.language.Language;
+
+import org.zeromq.*;
 import org.zeromq.ZMQ.Context;
 
-import com.memetix.mst.language.Language;
 
 import fr.insa.ihme.emotion.publisher.PublisherEmotion;
 import fr.insa.ihme.emotion.publisher.PublisherEmotionImpl;
@@ -21,10 +22,23 @@ public class FinalClient {
 	
 	public static void main(String[] args) {
 
-        final String mashapeKey = "";
-        final String bingKey = "";
-        final String bingAppId = "";
+		String mashapeKey = "";
+        String bingKey = "";
+        String bingAppId = "";
 
+		if(args.length >= 3)
+		{
+			mashapeKey = args[0];
+	        bingKey = args[1];
+	        bingAppId = args[2];
+	        System.out.println("Using mashapeKey : \""+mashapeKey+"\"");
+	        System.out.println("Using binKey : \""+bingKey+"\"");
+	        System.out.println("Using bingAppId : \""+bingAppId+"\"");
+		}else
+		{
+			System.out.println("Please provide args : [0:mashapeKey], [1:bingKey],[2:bingAppId]");
+		}
+        
         final String ipSpeechToText = "127.0.0.1";
         final String portSpeechToText = "5656";
         final String topicSpeechToText = "Parole";
