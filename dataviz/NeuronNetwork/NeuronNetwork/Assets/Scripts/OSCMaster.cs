@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityOSC;
+using System;
 
 public class OSCMaster : MonoBehaviour {
 	
@@ -19,8 +20,15 @@ public class OSCMaster : MonoBehaviour {
 		if (isInit)
 			return;
 
+		try{
+
 		server = new OSCServer (9010);
 		server.PacketReceivedEvent += HandlePacketReceivedEvent;
+		}catch(Exception e)
+		{
+			Debug.LogWarning("Could not create server on port 9010.");
+		}
+
 		isInit = true;
 	}
 
@@ -28,6 +36,11 @@ public class OSCMaster : MonoBehaviour {
 	void Start () {
 		init ();
 		instance = this;
+	}
+
+	void OnDestroy()
+	{
+		server.Close ();
 	}
 
 	static void HandlePacketReceivedEvent (OSCPacket packet)

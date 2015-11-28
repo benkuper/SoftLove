@@ -1,0 +1,1 @@
+powershell.exe -command "Add-AppxPackage .\TestWin8Band_1.0.0.2_AnyCPU_Debug.appx" 
