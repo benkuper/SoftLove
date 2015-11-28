@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import fr.insa.ihme.emotion.modules.*;
 
-import org.zeromq.*;
+import org.zeromq.*; 
 import org.zeromq.ZMQ.Context;
 
 import com.memetix.mst.language.Language;

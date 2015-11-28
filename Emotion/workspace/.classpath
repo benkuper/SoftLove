@@ -34,5 +34,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/Documents/Pro/Projects/ClairObscur/SoftLove/Dev/Emotion/workspace/library/commons.collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="D:/Documents/Pro/Projects/ClairObscur/SoftLove/Dev/Emotion/workspace/library/jeromq-0.3.5.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
