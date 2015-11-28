@@ -93,7 +93,7 @@ public class WebContentManager {
 		String documentLanguage = "lang_fr";
 		HttpURLConnection conn = null;
 		while(urls.size() < nbResult) {
-		    URL url = new URL("https://www.googleapis.com/customsearch/v1?key=AIzaSyBzgCg7v-tfVZ4-iEx7ZjDALsnKr06wGzU&cx=013036536707430787589:_pqjad5hr1a&q="+motCle+"&alt=json&hl="+searchEngineLanguage+"&lr="+documentLanguage+"&start="+(urls.size()+1));
+		    URL url = new URL("https://www.googleapis.com/customsearch/v1?key="+MainWeb.googleKey+"&cx=013036536707430787589:_pqjad5hr1a&q="+motCle+"&alt=json&hl="+searchEngineLanguage+"&lr="+documentLanguage+"&start="+(urls.size()+1));
 	        conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("GET");
 	        conn.setRequestProperty("Accept", "application/json");
