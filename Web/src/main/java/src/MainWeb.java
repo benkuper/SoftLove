@@ -8,7 +8,7 @@ import org.json.simple.parser.ParseException;
 public class MainWeb {
 
 	public static String profil = "animal";
-	public static String googleKey;
+	public static String googleKey = "";
 	
 	public static void main(String[] args) throws IOException, ParseException {
 		
@@ -16,9 +16,18 @@ public class MainWeb {
 		new ZMQConnector();
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Veuillez saisir la clÃ© de google API :");
-		googleKey = sc.nextLine();
+		if(args.length > 0) 
+		{
+			googleKey = args[0];
+		}
 		
+		if(googleKey  == "")
+		{
+			System.out.println("Veuillez saisir la cle de google API :");
+			googleKey = sc.nextLine();
+		}
+		
+		System.out.println("Clé google utilisée : \""+googleKey+"\"");
 		System.out.println("lancement thread profil");
 		ProfilThread thp = new ProfilThread();
 		thp.start();
