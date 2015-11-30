@@ -97,7 +97,7 @@ public class FacebookConnector {
     }
 
     public String getUserprofilePicture(){
-        Response response = this.get("v2.5/me/picture?redirect=0");
+        Response response = this.get("v2.5/me/picture?redirect=0&width=9999");
         String body = response.getBody();
         JSONObject obj = new JSONObject(body);
         JSONObject picture = obj.getJSONObject("data");
