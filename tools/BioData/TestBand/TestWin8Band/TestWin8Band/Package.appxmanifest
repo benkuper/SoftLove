@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="113e9e39-fb66-4428-b10b-8b21859bf01f" Publisher="CN=Ben" Version="1.0.0.0" />
+  <Identity Name="com.benkuper.bandOSC2" Publisher="CN=Ben" Version="1.0.0.2" />
   <Properties>
-    <DisplayName>TestWin8Band</DisplayName>
+    <DisplayName>BandOSC2</DisplayName>
     <PublisherDisplayName>Ben</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="TestWin8Band.App">
-      <m2:VisualElements DisplayName="TestWin8Band" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="TestWin8Band" ForegroundText="light" BackgroundColor="#464646">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="BandOSC2.App">
+      <m2:VisualElements DisplayName="BandOSC2" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="Microsoft Band OSC Streamer" ForegroundText="light" BackgroundColor="#464646">
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
       </m2:VisualElements>
     </Application>
