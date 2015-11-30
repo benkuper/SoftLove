@@ -15,10 +15,17 @@ public class MainWeb {
 		String recherche ="cheval blanc";
 		new ZMQConnector();
 		
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Veuillez saisir la clé de google API :");
-		googleKey = sc.nextLine();
-		
+		if(args.length > 0)
+		{
+			googleKey = args[0];
+		}else
+		{
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Veuillez saisir la cle de google API :");
+			googleKey = sc.nextLine();
+		}
+		System.out.println("Using Google API Key : "+googleKey);
+			
 		System.out.println("lancement thread profil");
 		ProfilThread thp = new ProfilThread();
 		thp.start();
