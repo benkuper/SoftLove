@@ -161,7 +161,8 @@ public class Zone
   PVector dragFactor;
   
   PVector averageZonePoint;
-
+  PVector averageZonePointNormalized;
+  
   public Zone(ZoneManager zm, String name, PVector base, PVector size, int threshold, color zoneColor)
   {
     this.name = name;
@@ -176,6 +177,9 @@ public class Zone
     //println("new Zone, threshold :"+threshold);
     isActive = false;
 
+    averageZonePoint = new PVector();
+    averageZonePointNormalized = new PVector();
+    
     dragFactor = new PVector();
   }
 
@@ -257,7 +261,9 @@ public class Zone
     
     boolean newActive = pointCount > threshold;
     averageZonePoint.div(pointCount);
-    
+    averageZonePointNormalized.set(averageZonePoint.x/size.x,
+                                  averageZonePoint.y / size.y,
+                                  averageZonePoint.z / size.z);
     if (newActive != isActive)
     {
       isActive = newActive;
