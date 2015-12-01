@@ -30,6 +30,7 @@ namespace UnityOSC
 	/// </summary>
 	abstract public class OSCPacket
 	{
+
 		#region Member Variables
 		protected List<object> _data;
 		protected byte[] _binaryData;

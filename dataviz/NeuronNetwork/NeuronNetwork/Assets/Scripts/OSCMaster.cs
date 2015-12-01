@@ -7,12 +7,59 @@ public class OSCMaster : MonoBehaviour {
 	
 	static OSCServer server;
 
+    //GENERAL
 	public delegate void PingReceived();
-	#region Delegates
-	public static event PingReceived pingReceived;
-	#endregion
+    public delegate void ConsoleReceived(bool active);
+    public delegate void ClearConsoleReceived();
+    public delegate void LogReceived(string text);
+    public delegate void GlitchReceived(int glitchID, bool active);
+    #region Delegates
+    public static event PingReceived pingReceived;
+    public static event ConsoleReceived consoleReceived;
+    public static event ClearConsoleReceived clearConsoleReceived;
+    public static event LogReceived logReceived;
+	public static event GlitchReceived glitchReceived;
+    #endregion
 
-	static bool isInit;
+    //ZONES
+    public delegate void ZoneReceived(string zoneID, bool active);
+    public delegate void MainZoneReceived(string zoneID);
+    public delegate void ZonePosReceived(string zoneID, Vector3 pos);
+    #region Delegates
+    public static event ZoneReceived zoneReceived;
+    public static event MainZoneReceived mainZoneReceived;
+    public static event ZonePosReceived zonePosReceived;
+    #endregion
+
+    //NEURONS
+    public delegate void NeuronPulseReceived(int neuronID);
+    public delegate void NeuronZoomReceived(int neuronID);
+    #region Delegates
+    public static event NeuronPulseReceived neuronPulseReceived;
+    public static event NeuronZoomReceived neuronZoomReceived;
+    #endregion
+
+    //WEB
+    public delegate void WebSearchReceived(string searchType,string search);
+    #region Delegates
+    public static event WebSearchReceived webSearchReceived;
+    #endregion
+
+    //BIODATA
+    public delegate void HeartRateReceived(int heartRate);
+    #region Delegates
+    public static event HeartRateReceived heartReceived;
+    #endregion
+
+    //Emotion
+    public delegate void EmotionReceived(string type, float value);
+    #region Delegates
+    public static event EmotionReceived emotionReceived;
+    #endregion
+
+
+
+    static bool isInit;
 	public static OSCMaster instance;
 
 	static public void init()
@@ -22,7 +69,7 @@ public class OSCMaster : MonoBehaviour {
 
 		try{
 
-		server = new OSCServer (9010);
+		server = new OSCServer (5555);
 		server.PacketReceivedEvent += HandlePacketReceivedEvent;
 		}catch(Exception e)
 		{
@@ -33,23 +80,84 @@ public class OSCMaster : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		init ();
 		instance = this;
 	}
+
+    void Start()
+    {
+        DataText.log("Receiving OSC on port 5555");
+    }
 
 	void OnDestroy()
 	{
 		server.Close ();
 	}
 
-	static void HandlePacketReceivedEvent (OSCPacket packet)
+	static void HandlePacketReceivedEvent (OSCPacket p)
 	{
-		if (packet.Address.Equals ("/ping")) {
-			if (pingReceived != null)
-				pingReceived ();
-		}
-	}
+        //General
+        if (p.Address.Equals("/ping"))
+        {
+            if (pingReceived != null) pingReceived();
+
+        }else if (p.Address.Equals("/console/active"))
+        {
+            if (consoleReceived != null) consoleReceived((int)p.Data[0] == 1);
+        }else if (p.Address.Equals("/console/clear"))
+        {
+            if (clearConsoleReceived != null) clearConsoleReceived();
+        }
+        else if (p.Address.Equals("/console/log"))
+        {
+            if (logReceived != null) logReceived((string)p.Data[0]);
+        }
+        else if (p.Address.Equals("/glitch"))
+        {
+            if(glitchReceived != null) glitchReceived((int)p.Data[0], (int)p.Data[1] == 1);
+        }
+        //Neuron
+        else if (p.Address.Equals("/neuron/pulse"))
+        {
+            if (neuronPulseReceived != null) neuronPulseReceived(p.Data.Count > 0?(int)p.Data[0]:-1);
+        }
+        else if (p.Address.Equals("/neuron/zoom"))
+        {
+            if (neuronZoomReceived != null) neuronZoomReceived(p.Data.Count > 0 ? (int)p.Data[0] : -1);
+        }
+        //Web
+        else if (p.Address.Equals("/web/search/images"))
+        {
+            if (webSearchReceived != null) webSearchReceived("images",(string)p.Data[0]);
+        }
+        //Zones
+        else if (p.Address.Equals("/tracking/zone"))
+        {
+            if (zoneReceived != null) zoneReceived((string)p.Data[0], (int)p.Data[1] == 1);
+        }
+        else if (p.Address.Equals("/tracking/mainZone"))
+        {
+            if (mainZoneReceived != null) mainZoneReceived((string)p.Data[0]);
+        }
+        else if (p.Address.Equals("/tracking/zonePos"))
+        {
+            if (zonePosReceived != null) zonePosReceived((string)p.Data[0], new Vector3((float)p.Data[1], (float)p.Data[2], (float)p.Data[3]));
+        }
+        //Biodata
+        else if (p.Address.Equals("/heart"))
+        {
+            if (heartReceived != null) heartReceived((int)p.Data[0]);
+        }
+        //Emotion
+        else if(p.Address.Equals("/emotion"))
+        {
+            if (emotionReceived != null) emotionReceived((string)p.Data[0], (float)p.Data[1]);
+        }else
+        {
+            DataText.log("OSC Message not handled : " + p.Address);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
