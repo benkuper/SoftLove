@@ -99,6 +99,9 @@
     <Compile Include="Exceptions\ZoneFullException.cs" />
     <Compile Include="Factory\SensorFactory.cs" />
     <Compile Include="GestureBehaviour\GBTreatment.cs" />
+    <Compile Include="GestureBehaviour\Gestures\HandsTogetherGesture.cs" />
+    <Compile Include="GestureBehaviour\Gestures\HelloGesture.cs" />
+    <Compile Include="GestureBehaviour\IGestureReconizer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

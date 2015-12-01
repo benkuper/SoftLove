@@ -64,6 +64,9 @@ namespace SoftLove.Zoning
             set { pub = value; }
         }
 
+        /// <summary>
+        /// Nom de la zone par défaut (dans le cas de zone non-trouvé)
+        /// </summary>
         private string nomZoneDefaut;
 
         public string ZoneDefaut
@@ -72,6 +75,9 @@ namespace SoftLove.Zoning
             set { nomZoneDefaut = value; }
         }
 
+        /// <summary>
+        /// Module d'acquisition du Skeleton. Obligatoire car ce module tire ses informations depuis le Skeleton
+        /// </summary>
         private SkeletonAcquisition skeletonAcquire;
 
         public SkeletonAcquisition SkeletonAcquire
@@ -80,7 +86,12 @@ namespace SoftLove.Zoning
             set { skeletonAcquire = value; }
         }
 
-
+        /// <summary>
+        /// Instanciation du localisateur
+        /// </summary>
+        /// <param name="_filename"></param>
+        /// <param name="_nomZoneDefaut"></param>
+        /// <param name="_pub"></param>
         public Localisation(string _filename, string _nomZoneDefaut, Publisher _pub)
         {
             Zones = new List<Zone>();
@@ -91,7 +102,9 @@ namespace SoftLove.Zoning
             ZoneDefaut = _nomZoneDefaut;
         }
 
-
+        /// <summary>
+        /// Envoi de la position (topic "postition")
+        /// </summary>
         private void SendPosition()
         {
             try
@@ -110,6 +123,9 @@ namespace SoftLove.Zoning
             }
         }
 
+        /// <summary>
+        /// Envoi de la zone (topic "zone")
+        /// </summary>
         private void SendZone()
         {
             try
@@ -141,6 +157,10 @@ namespace SoftLove.Zoning
             }
         }
 
+        /// <summary>
+        /// Placement du skeleton dans une zone (ou dans zone défaut si non trouvée)
+        /// </summary>
+        /// <param name="_skeleton"></param>
         private void FindZone(Skeleton _skeleton)
         {
             bool zoneTrouvee = false;
@@ -187,7 +207,7 @@ namespace SoftLove.Zoning
         }
 
         /// <summary>
-        /// Lancement
+        /// Lancement du module
         /// </summary>
         public void Launch()
         {

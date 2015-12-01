@@ -3,6 +3,7 @@ using SoftLove.Communication;
 using SoftLove.Factory;
 using SoftLove.GestureBehaviour;
 using SoftLove.Zoning;
+using SoftLove.GestureBehaviour.Gestures;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -38,9 +39,10 @@ namespace SoftLove
 
                 case "2":
                     Publisher pub = new Publisher();
-                    SkeletonAcquisition acquire = new SkeletonAcquisition(SensorFactory.GenerateSensor(),
-                                                                        new Localisation("sallePAO2.xml", "Y", pub),
-                                                                        new GBTreatment());
+                    SkeletonAcquisition acquire = new SkeletonAcquisition(SensorFactory.GenerateSensor());
+                    acquire.GestureRecognizer = new GBTreatment(pub);
+                    acquire.GestureRecognizer.AttachGestureRecognizer(new HandsTogetherGesture());
+                    acquire.GestureRecognizer.AttachGestureRecognizer(new HelloGesture());
                     acquire.Launch(); /// L'initialisation se fait automatiquement au lancement si elle n'est pas faite à la main
                     Console.ReadKey();
                     break;

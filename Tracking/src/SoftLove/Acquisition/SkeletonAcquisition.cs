@@ -43,7 +43,10 @@ namespace SoftLove.Acquisition
         public Localisation Localizer
         {
             get { return localizer; }
-            set { localizer = value; }
+            set {
+                localizer = value;
+                localizer.SkeletonAcquire = this;
+            }
         }
 
         /// <summary>
@@ -54,7 +57,10 @@ namespace SoftLove.Acquisition
         public GBTreatment GestureRecognizer
         {
             get { return gestureRecognizer; }
-            set { gestureRecognizer = value; }
+            set {
+                gestureRecognizer = value;
+                gestureRecognizer.SkeletonAcquire = this;
+            }
         }
 
         /// <summary>
@@ -66,12 +72,14 @@ namespace SoftLove.Acquisition
         public SkeletonAcquisition(KinectSensor _sensor, Localisation _localizer, GBTreatment _gestureRecognizer)
         {
             Sensor = _sensor;
+
             Localizer = _localizer;
             Localizer.SkeletonAcquire = this;
-            // TODO
-            //GestureRecognizer = _gestureRecognizer;
-            //GestureRecognizer.SkeletonAcquire = this;
 
+            GestureRecognizer = _gestureRecognizer;
+            GestureRecognizer.SkeletonAcquire = this;
+
+            SkelData = null;
         }
 
         /// <summary>
@@ -128,7 +136,8 @@ namespace SoftLove.Acquisition
                 }
                 if (GestureRecognizer != null)
                 {
-                    // TODO
+                    Thread gbThread = new Thread(GestureRecognizer.Launch);
+                    gbThread.Start();
                 }
             }
             catch (NullReferenceException)
