@@ -22,13 +22,13 @@
     <AppXManifest Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2015-11-30T10:23:12.930</Modified>
+      <Modified>2015-11-30T11:13:07.163</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\TestWin8Band.exe">
       <PackagePath>TestWin8Band.exe</PackagePath>
-      <Modified>2015-11-30T10:55:29.352</Modified>
+      <Modified>2015-12-02T11:58:33.322</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.dll">
       <PackagePath>Microsoft.Band.dll</PackagePath>
@@ -100,7 +100,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2015-11-30T10:55:11.173</Modified>
+      <Modified>2015-11-30T11:13:07.019</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

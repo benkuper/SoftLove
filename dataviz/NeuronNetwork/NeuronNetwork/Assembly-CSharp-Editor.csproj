@@ -98,6 +98,7 @@
      <Compile Include="Assets\Lib\Colorful\Editor\Startup\CC_StartupWindow.cs" />
      <Compile Include="Assets\Lib\JSON\Editor\JSONChecker.cs" />
      <Compile Include="Assets\Lib\OSC\Editor\OSCHelper.cs" />
+     <Compile Include="Assets\Voxygen\Editor\VoxygenEditor.cs" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Lib\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\Lib\Colorful\Shaders\CC_Convolution3x3.shader" />

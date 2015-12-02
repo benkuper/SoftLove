@@ -18,7 +18,7 @@ public class Emotion : MonoBehaviour {
 
     void emotionReceived(string type, float value)
     {
-        DataText.log("Emotion received : " + type + " > " + value);
+        //DataText.log("Emotion received : " + type + " > " + value);
         EmotionSlider s = getSliderForType(type);
         if (s == null) return;
         s.setValue(value);

@@ -133,7 +133,7 @@ namespace TestWin8Band
                             await bandClient.SensorManager.HeartRate.StartReadingsAsync();
                             if(gsrOK) await bandClient.SensorManager.Gsr.StartReadingsAsync();
 
-                            await Task.Delay(TimeSpan.FromSeconds(3));
+                            await Task.Delay(TimeSpan.FromSeconds(1));
 
                             await bandClient.SensorManager.HeartRate.StopReadingsAsync();
                             if(gsrOK) await bandClient.SensorManager.Gsr.StopReadingsAsync();

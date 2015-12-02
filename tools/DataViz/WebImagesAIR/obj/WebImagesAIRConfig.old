@@ -14,7 +14,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'30-Nov-15'</value>
+      <value>'12/2/2015'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -36,9 +36,12 @@
       <path-element>D:\Documents\Ressources\AS3\greensock-v12-as3</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
+    <library-path append="true">
+      <path-element>D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\DataViz\WebImagesAIR\lib\as3crypto.swc</path-element>
+    </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\DataViz\WebImagesAIR\src\Main.as</path-element>
+    <path-element>D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\DataViz\WebImagesAIR\src\MainVoxygen.as</path-element>
   </file-specs>
   <default-background-color>#000000</default-background-color>
   <default-frame-rate>60</default-frame-rate>

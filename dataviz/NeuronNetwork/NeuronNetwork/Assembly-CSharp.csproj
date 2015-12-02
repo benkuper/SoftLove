@@ -114,6 +114,7 @@
      <Compile Include="Assets\Scripts\OSCMaster.cs" />
      <Compile Include="Assets\Scripts\Zone.cs" />
      <Compile Include="Assets\Scripts\ZoneManager.cs" />
+     <Compile Include="Assets\Voxygen\Voxygen.cs" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Lib\Demigiant\DOTween\readme.txt" />
      <None Include="Assets\Lib\Colorful\Shaders\CC_Convolution3x3.shader" />
