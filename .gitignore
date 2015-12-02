@@ -1,5 +1,5 @@
-DataViz/NeuronNetwork/NeuronNetwork/Library/metadata/
-DataViz/NeuronNetwork/NeuronNetwork/Library/
-*.meta
 DataViz/NeuronNetwork/NeuronNetwork/Temp/
+DataViz/NeuronNetwork/NeuronNetwork/Library
+DataViz/NeuronNetwork/NeuronNetwork/obj
+DataViz/NeuronNetwork/NeuronNetwork/Export
 tools/EmotionKinectFace/application.windows64/
