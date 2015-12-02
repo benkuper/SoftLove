@@ -9,6 +9,9 @@ class Kinect
 
   PImage gridImage;
 
+
+
+
   int depthWidth;
   int depthHeight;
 
@@ -80,7 +83,6 @@ class Kinect
 
         int index = ix + iy * depthWidth;
         PVector p = realWorldMap[index];
-        p.add(calib.calibratedOffset);
         color cp = rgbImage.get(ix, iy);
         boolean pointIsInZone = zm.checkPoint(p);
         if(!noDraw)
@@ -116,24 +118,14 @@ class Kinect
   }
 
 
-  public void mousePressed()
+  void mousePressed()
   {
     calib.mousePressed();
   }
 
-  public void mouseReleased()
+  void mouseReleased()
   {
     calib.mouseReleased();
-  }
-  
-  public void keyPressed()
-  {
-    calib.keyPressed();
-  }
-  
-  public void keyReleased()
-  {
-    calib.keyReleased();
   }
 }
 
@@ -141,9 +133,8 @@ class KinectCalibration
 {
   Kinect kinect;
   SimpleOpenNI context;
-  
-  
-  
+
+
   PVector originPoint = new PVector();
   PVector xPoint = new PVector();
   PVector zPoint = new PVector();
@@ -166,9 +157,6 @@ class KinectCalibration
   public PVector mouseRelativePosition;
   
   PVector[] realWorldSnapshot;
-  
-  PVector calibratedOffset;
-  PVector calibratedOffsetFactor;
 
   public KinectCalibration(Kinect kinect, SimpleOpenNI context)
   {
@@ -187,17 +175,12 @@ class KinectCalibration
     handles = new CalibHandle[] {
       originHandle, xHandle, zHandle
     };
-    
-    calibratedOffset = new PVector();
-    calibratedOffsetFactor = new PVector();
   }
 
   public void draw()
   {
     if (!calibMode) return;
-     
-    calibratedOffset.add(calibratedOffsetFactor);
-    
+
     mouseRelativePosition.x = mouseX - calibPos.x;
     mouseRelativePosition.y = mouseY - calibPos.y;
 
@@ -211,7 +194,6 @@ class KinectCalibration
 
   void mousePressed()
   {
-    if(!calibMode) return;
     mouseRelativePosition.x = mouseX - calibPos.x;
     mouseRelativePosition.y = mouseY - calibPos.y;
 
@@ -224,48 +206,14 @@ class KinectCalibration
 
   void mouseReleased()
   {
-   
     for (CalibHandle ch : handles) ch.mouseReleased();
   }
   
-  public void keyPressed()
-  {
-    if(!calibMode) return;
-    if(kinect.deviceIndex != 0) return;
-    
-    switch(keyCode)
-    {
-      
-      case UP:
-        calibratedOffsetFactor.z = shiftPressed?10:1;
-      break;
-      
-      case DOWN:
-        calibratedOffsetFactor.z = shiftPressed?-10:-1;
-      break;
-      
-       case LEFT:
-        calibratedOffsetFactor.x = shiftPressed?-10:-1;
-      break;
-      
-      case RIGHT:
-        calibratedOffsetFactor.x = shiftPressed?10:1;
-      break;
-      
-     
-    }
-  }
-  
-  public void keyReleased()
-  {
-    calibratedOffsetFactor.set(0,0,0);
-  }
   public void resetCalibration()
   {
      originHandle.pos = new PVector(calibSize.x/2,calibSize.y/2);
      xHandle.pos = new PVector(calibSize.x/2+100,calibSize.y/2);
      zHandle.pos = new PVector(calibSize.x/2,calibSize.y/2-100);
-     calibratedOffset.set(0,0,0);
   }
 
   public void  loadCalibration()
@@ -275,12 +223,10 @@ class KinectCalibration
     String[] oSplit = calibStrings[0].split(";");
     String[] xSplit = calibStrings[1].split(";");
     String[] zSplit = calibStrings[2].split(";");
-    
-    
+
     PVector originPointTemp = new PVector(parseFloat(oSplit[0]), parseFloat(oSplit[1]), parseFloat(oSplit[2]));
     PVector xPointTemp = new PVector(parseFloat(xSplit[0]), parseFloat(xSplit[1]), parseFloat(xSplit[2]));
     PVector zPointTemp = new PVector(parseFloat(zSplit[0]), parseFloat(zSplit[1]), parseFloat(zSplit[2]));
-    
     
     originPoint = originPointTemp;
     xPoint = xPointTemp;
@@ -291,11 +237,6 @@ class KinectCalibration
     context.convertRealWorldToProjective(zPointTemp, zHandle.pos);
     
     calibrate();
-    if(calibStrings.length >= 4)
-    {
-      String[] offsetSplit = calibStrings[3].split(";");
-      calibratedOffset.set(parseFloat(offsetSplit[0]),parseFloat(offsetSplit[1]),parseFloat(offsetSplit[2]));
-    }
   }
   
   public void startCalibration()
@@ -346,11 +287,10 @@ class KinectCalibration
   { 
    // context.resetUserCoordsys();
     
-    String[] calibString = new String[4];
+    String[] calibString = new String[3];
     calibString[0] = fixOPoint.x+";"+fixOPoint.y+";"+fixOPoint.z;
     calibString[1] = fixXPoint.x+";"+fixXPoint.y+";"+fixXPoint.z;
     calibString[2] = fixZPoint.x+";"+fixZPoint.y+";"+fixZPoint.z;
-    calibString[3] = calibratedOffset.x+";"+calibratedOffset.y+";"+calibratedOffset.z;
     
     saveStrings("data/kinect"+kinect.deviceIndex+".txt",calibString);
     
@@ -415,13 +355,12 @@ public class CalibHandle
     dragging = false;
   }
 
-  
   public boolean isOver()
   {
     pos.z = 0;
     float dist = PVector.dist(kc.mouseRelativePosition, pos) ;
     //println("is Over ?"+dist+" / "+kc.mouseRelativePosition+"/"+pos);
-    return dist < radius;
+    return dist < radius *2;
   }
 }
 
