@@ -14,7 +14,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'12/2/2015'</value>
+      <value>'04-Dec-15'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -41,12 +41,12 @@
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\DataViz\WebImagesAIR\src\MainVoxygen.as</path-element>
+    <path-element>D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\DataViz\WebImagesAIR\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#000000</default-background-color>
   <default-frame-rate>60</default-frame-rate>
   <default-size>
-    <width>1280</width>
+    <width>1200</width>
     <height>800</height>
   </default-size>
 </flex-config>

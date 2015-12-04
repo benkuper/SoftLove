@@ -35,7 +35,7 @@ package
 			loader = new Loader();
 			addChild(loader);
 			
-			var url:String = useTBUrl?data.tbUrl:data.url;
+			var url:String = useTBUrl?data.image.thumbnailLink:data.link;
 			
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loaderComplete);
 			loader.load(new URLRequest(url));

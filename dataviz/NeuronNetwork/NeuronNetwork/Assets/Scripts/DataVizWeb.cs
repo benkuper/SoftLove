@@ -6,11 +6,13 @@ public class DataVizWeb : MonoBehaviour {
 
     ImagePlane[] planes;
 
+ 
 
-    //string apiKey = "AIzaSyBzgCg7v-tfVZ4-iEx7ZjDALsnKr06wGzU";
-	//string baseLinksAPIURL = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=";
-	string baseImageAPIURL = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=";
+    const string apiKey = "AIzaSyBzgCg7v-tfVZ4-iEx7ZjDALsnKr06wGzU";
+    const string cx = "002534967567206735624:20dlqzadhkw";
 
+    string baseImageAPIURL = "https://www.googleapis.com/customsearch/v1?key=" + apiKey + "&cx=" + cx + "&searchType=image&imgSize=medium&fileType=jpeg&alt=json&num=4&start=1&q=";
+		
     void Start()
     {
         OSCMaster.webSearchReceived += webSearchReceived;
@@ -77,17 +79,19 @@ public class DataVizWeb : MonoBehaviour {
         try
         { 
             JSONObject json = JSONObject.Create(www.text);
-            JSONObject results = json.GetField("responseData").GetField("results");
+            JSONObject results = json.GetField("items");
             int i = 0;
+            Debug.Log(results.Count);
             foreach(JSONObject j in results.list)
             {
-                string url = j.GetField("url").str;
+                string url = j.GetField("link").str;
                 planes[i].setImageURL(url);
                 i++;
             }
         }catch(Exception e)
         {
-            DataText.log("Error retrieving result ("+e.Message+"), www data :" + www.text);
+            Debug.Log(e);//
+            //DataText.log("Error retrieving result ("+e.Message+"), www data :" + www.text);
         }
     }
 }

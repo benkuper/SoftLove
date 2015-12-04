@@ -43,6 +43,7 @@ public class CamControl : MonoBehaviour {
 
         transform.DOMove(targetPos, 1f).SetEase(Ease.InOutQuad);
 
+        OSCMaster.sendFloat("/dataviz/zoom", target != null ? 1 : 0);
       
     }
 

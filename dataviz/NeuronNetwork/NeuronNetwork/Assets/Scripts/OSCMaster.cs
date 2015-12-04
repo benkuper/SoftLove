@@ -2,10 +2,12 @@
 using System.Collections;
 using UnityOSC;
 using System;
+using System.Net;
 
 public class OSCMaster : MonoBehaviour {
 	
 	static OSCServer server;
+    static OSCClient client;
 
     //GENERAL
 	public delegate void PingReceived();
@@ -34,7 +36,9 @@ public class OSCMaster : MonoBehaviour {
     //NEURONS
     public delegate void NeuronPulseReceived(int neuronID);
     public delegate void NeuronZoomReceived(int neuronID);
+    public delegate void NodeSizeReceived(float size);
     #region Delegates
+    public static event NodeSizeReceived nodeSizeReceived;
     public static event NeuronPulseReceived neuronPulseReceived;
     public static event NeuronZoomReceived neuronZoomReceived;
     #endregion
@@ -69,14 +73,18 @@ public class OSCMaster : MonoBehaviour {
 
 		try{
 
-		server = new OSCServer (5555);
-		server.PacketReceivedEvent += HandlePacketReceivedEvent;
-		}catch(Exception e)
+		    server = new OSCServer (5555);
+		    server.PacketReceivedEvent += HandlePacketReceivedEvent;
+            isInit = true;
+        }
+        catch(Exception e)
 		{
-			Debug.LogWarning("Could not create server on port 9010.");
+			Debug.LogWarning("Could not create server on port 5555.");
 		}
 
-		isInit = true;
+        client = new OSCClient(IPAddress.Loopback, 7776, true);
+
+		
 	}
 
 	// Use this for initialization
@@ -87,13 +95,22 @@ public class OSCMaster : MonoBehaviour {
 
     void Start()
     {
-        DataText.log("Receiving OSC on port 5555");
+        if (isInit) DataText.log("Receiving OSC on port 5555");
+        else DataText.log("Error with OSC init on port 5555");
     }
 
 	void OnDestroy()
 	{
 		server.Close ();
 	}
+
+
+    public static void sendFloat(string address, float value)
+    {
+        OSCMessage msg = new OSCMessage(address);
+        msg.Append<float>(value);
+        client.Send(msg);
+    }
 
 	static void HandlePacketReceivedEvent (OSCPacket p)
 	{
@@ -125,6 +142,9 @@ public class OSCMaster : MonoBehaviour {
         else if (p.Address.Equals("/neuron/zoom"))
         {
             if (neuronZoomReceived != null) neuronZoomReceived(p.Data.Count > 0 ? (int)p.Data[0] : -1);
+        }else if(p.Address.Equals("/neuron/nodeSize"))
+        {
+            if (nodeSizeReceived != null) nodeSizeReceived((float)p.Data[0]);
         }
         //Web
         else if (p.Address.Equals("/web/search/images"))

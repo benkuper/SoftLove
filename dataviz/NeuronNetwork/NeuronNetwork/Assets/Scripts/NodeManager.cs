@@ -45,7 +45,13 @@ public class NodeManager : MonoBehaviour {
 		OSCMaster.init ();
         OSCMaster.neuronPulseReceived += neuronPulseReceived;
         OSCMaster.neuronZoomReceived += neuronZoomReceived;
+        OSCMaster.nodeSizeReceived += nodeSizeReceived;
 	}
+
+    private void nodeSizeReceived(float size)
+    {
+        foreach (Node n in nodes) n.setBaseScale(size);
+    }
 
     private void neuronZoomReceived(int neuronID)
     {
@@ -110,7 +116,8 @@ public class NodeManager : MonoBehaviour {
 
         //CancelInvoke("zoomCurrentNode");
         //if (focus) Invoke("zoomCurrentNode", 1f);
-        if(focus) zoomCurrentNode();
+        if (focus) zoomCurrentNode();
+        else dezoom();
         return rn;
     }
 
@@ -157,8 +164,6 @@ public class NodeManager : MonoBehaviour {
     {
         Node n = ((GameObject)GameObject.Instantiate(nodePrefab,Random.insideUnitSphere*universeSize,Quaternion.identity)).GetComponent<Node>();
         n.transform.parent = nodeContainer;
-        n.transform.localScale = Vector3.zero;
-        n.transform.DOScale(.5f, .5f);
         n.posSpeed = Random.Range(.05f, .1f);
         n.posRadius = Random.Range(1f, 1f);
         n.rotSpeed = Random.Range(.01f, .02f);

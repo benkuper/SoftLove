@@ -12,6 +12,7 @@ public class Node : MonoBehaviour {
 
     Material mat;
 
+    float scaleSeed;
     
     public Color focusColor;
 
@@ -19,12 +20,18 @@ public class Node : MonoBehaviour {
 	void Start () {
         initPos = transform.position;
 
-        transform.localScale = Vector3.one * Random.Range(.2f, .7f);
+        scaleSeed = Random.Range(.2f, .7f);
+        setBaseScale(.5f);
         transform.rotation = Random.rotation;
         opened = false;
         mat = GetComponent<Renderer>().material;
         setFocus(false);
 	}
+
+    public void setBaseScale(float baseScale)
+    {
+       transform.localScale = Vector3.one * baseScale * scaleSeed;
+    }
 	
 	// Update is called once per frame
 	void Update () {

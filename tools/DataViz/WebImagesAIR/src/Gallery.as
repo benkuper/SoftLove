@@ -64,8 +64,8 @@ package
 			var targetSize:Number = 220;
 			var loader:ThumbnailLoader = new ThumbnailLoader(data);
 			container.addChild(loader);
-			loader.x = targetSize / 2 + (container.numChildren % 6) * targetSize;
-			loader.y = targetSize / 2 + Math.floor(container.numChildren / 6) * targetSize;
+			loader.x = targetSize / 2 + (container.numChildren % 5) * targetSize;
+			loader.y = targetSize / 2 + Math.floor(container.numChildren / 5) * targetSize;
 		}
 		
 		

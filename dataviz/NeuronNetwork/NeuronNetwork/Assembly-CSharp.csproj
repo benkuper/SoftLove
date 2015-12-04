@@ -45,10 +45,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DataVizWeb.cs" />
-     <Compile Include="Assets\Emotion.cs" />
-     <Compile Include="Assets\EmotionSlider.cs" />
-     <Compile Include="Assets\ImagePlane.cs" />
      <Compile Include="Assets\Lib\Colorful\Components\CC_AnalogTV.cs" />
      <Compile Include="Assets\Lib\Colorful\Components\CC_Base.cs" />
      <Compile Include="Assets\Lib\Colorful\Components\CC_BleachBypass.cs" />
@@ -107,8 +103,12 @@
      <Compile Include="Assets\Scripts\CameraOrbit.cs" />
      <Compile Include="Assets\Scripts\Connection.cs" />
      <Compile Include="Assets\Scripts\DataText.cs" />
+     <Compile Include="Assets\Scripts\DataVizWeb.cs" />
+     <Compile Include="Assets\Scripts\Emotion.cs" />
+     <Compile Include="Assets\Scripts\EmotionSlider.cs" />
      <Compile Include="Assets\Scripts\HeartMonitor.cs" />
      <Compile Include="Assets\Scripts\HeartTrail.cs" />
+     <Compile Include="Assets\Scripts\ImagePlane.cs" />
      <Compile Include="Assets\Scripts\Node.cs" />
      <Compile Include="Assets\Scripts\NodeManager.cs" />
      <Compile Include="Assets\Scripts\OSCMaster.cs" />

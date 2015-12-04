@@ -23,3 +23,4 @@ D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\DataViz\NeuronNetwork\NeuronN
 D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\DataViz\NeuronNetwork\NeuronNetwork\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\DataViz\NeuronNetwork\NeuronNetwork\obj\Debug\Assembly-CSharp.dll
 D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\DataViz\NeuronNetwork\NeuronNetwork\obj\Debug\Assembly-CSharp.pdb
+D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\DataViz\NeuronNetwork\NeuronNetwork\Temp\bin\Debug\Assembly-UnityScript-firstpass.dll
