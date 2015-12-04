@@ -42,7 +42,7 @@ public class HeartMonitor : MonoBehaviour {
     void setHeartRate(int value)
     {
         heartRate = value;
-        tm.text = "Heart Rate\n" + value + " bpm";
+        tm.text = "Pouls :\n" + value + " bpm";
     }
 
     void pulse()
