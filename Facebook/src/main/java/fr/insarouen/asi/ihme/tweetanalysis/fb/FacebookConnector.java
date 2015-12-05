@@ -63,7 +63,7 @@ public class FacebookConnector {
             for (int j = 0; j < arrPost.length(); j++)
             {
                 if (arrPost.getJSONObject(j).has("message")){
-                    sb.append(arrPost.getJSONObject(j).getString("message"));                        
+                    sb.append(arrPost.getJSONObject(j).getString("message")).append("\n");                        
                 }
             }
         }
