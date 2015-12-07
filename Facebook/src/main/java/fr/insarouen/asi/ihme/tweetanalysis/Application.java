@@ -44,15 +44,14 @@ public class Application implements Observer {
                 // list sorting
                 Collections.sort(wwords, new Comparator<WeightedWord>() {
                     public int compare(WeightedWord w1, WeightedWord w2) {
-                        return  new Double(w1.getScore()).compareTo(new Double(w2.getScore()));
+                        return (-1) * new Double(w1.getScore()).compareTo(new Double(w2.getScore()));
                     }
                 });
 
                 System.out.println("Done. Here's a top 10");
                 keywords = wordsToList(wwords);
-                for(WeightedWord word : wwords) {
-                    this.sender.send("fb/picture",fbConnector.getUserprofilePicture());
-                }
+                this.sender.send(ZMQTOPIC_FBKEYWORDS, keywords);
+                this.sender.send(ZMQTOPIC_FBPICTURE,  fbConnector.getUserprofilePicture());
 
             } catch(Exception ex) {
                 System.out.println("Well this didn't work for some reason. Maybe there's nothing to get.");
@@ -109,7 +108,7 @@ public class Application implements Observer {
             // list sorting
             Collections.sort(wwords, new Comparator<WeightedWord>() {
                 public int compare(WeightedWord w1, WeightedWord w2) {
-                    return  new Double(w1.getScore()).compareTo(new Double(w2.getScore()));
+                    return (-1) * new Double(w1.getScore()).compareTo(new Double(w2.getScore()));
                 }
             });
 

@@ -36,9 +36,9 @@ public class OSCManager
   { 
     OscMessage msg = new OscMessage( "/tracking/averagePos");
     msg.add(z.name);
-    msg.add(z.averageZonePoint.x);
-    msg.add(z.averageZonePoint.y);
-    msg.add(z.averageZonePoint.z);
+    msg.add(z.averageZonePointNormalized.x);
+    msg.add(z.averageZonePointNormalized.y);
+    msg.add(z.averageZonePointNormalized.z);
     sendToRemotes(msg); 
   }
   

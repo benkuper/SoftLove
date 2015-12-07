@@ -19,6 +19,8 @@ using System.Threading.Tasks;
 using UnityOSC;
 using System.Net;
 using Windows.Networking.Sockets;
+using Windows.Storage;
+
 
 // Pour en savoir plus sur le modèle d'élément Page vierge, consultez la page http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -35,7 +37,10 @@ namespace TestWin8Band
         private int gsr = 0;
 
         OSCClient client;
+        String ip;
+        String port;
 
+        StorageFile file;
         public MainPage()
         {
             this.InitializeComponent();
@@ -43,13 +48,22 @@ namespace TestWin8Band
 
             this.viewModel.StatusMessage = "Test";
 
-            client = new OSCClient("127.0.0.1", "7776", true);
+            ip = "127.0.0.1";
+            port = "7776";
         }
 
-        
+        private void updateClient()
+        {
+            if (client != null) client.Close();
+            client = new OSCClient(ip, port, true);
+
+            this.viewModel.StatusMessage = string.Format("Client set to {0}:{1}\n", ip, port);
+        }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+
+            updateClient();
             this.viewModel.StatusMessage = "Running ...";
 
             try
@@ -85,13 +99,6 @@ namespace TestWin8Band
                     }
                     else
                     {
-
-                        if (!bandClient.SensorManager.Gsr.IsSupported)
-                        {
-                            this.viewModel.StatusMessage = "Gsr sensor is not supported with your Band version. Microsoft Band 2 is required.";
-                        }
-
-
                         int samplesReceived = 0; // the number of Accelerometer samples received
 
                         // Subscribe to Accelerometer data.
@@ -103,44 +110,69 @@ namespace TestWin8Band
 
                         };
 
-                        bandClient.SensorManager.Gsr.ReadingChanged += (s, args) => 
+
+                        bool gsrOK = false;
+                        if (bandClient.SensorManager.Gsr.IsSupported)
                         {
-                            gsr = args.SensorReading.Resistance; 
-           
-                       };
+
+                            bandClient.SensorManager.Gsr.ReadingChanged += (s, args) =>
+                            {
+                                gsr = args.SensorReading.Resistance;
+
+                            };
+                            gsrOK = true;
+                        }
+                        else
+                        {
+                            this.viewModel.StatusMessage = "Gsr sensor is not supported with your Band version. Microsoft Band 2 is required.";
+                        }
+                       
 
                         while (true)
                         {
                             await bandClient.SensorManager.HeartRate.StartReadingsAsync();
-                            await bandClient.SensorManager.Gsr.StartReadingsAsync();
+                            if(gsrOK) await bandClient.SensorManager.Gsr.StartReadingsAsync();
 
-                            await Task.Delay(TimeSpan.FromSeconds(3));
+                            await Task.Delay(TimeSpan.FromSeconds(1));
 
                             await bandClient.SensorManager.HeartRate.StopReadingsAsync();
-                            await bandClient.SensorManager.Gsr.StopReadingsAsync();
+                            if(gsrOK) await bandClient.SensorManager.Gsr.StopReadingsAsync();
 
-                            this.viewModel.StatusMessage = string.Format("Heart Rate = {1}\nGST = {2}", heartRate,gsr);
+                            this.viewModel.StatusMessage = string.Format("Sending to {0}:{1}\nHeart Rate = {2}\nGSR = {3}",client.ClientIPAddress,client.Port, heartRate,gsr);
 
                             OSCMessage msg = new OSCMessage("/emotion/heart");
                             msg.Append<int>(heartRate);
                             client.Send(msg);
 
-                            OSCMessage msg2 = new OSCMessage("/emotion/gsr");
-                            msg2.Append<int>(gsr);
-                            client.Send(msg2);
+                            if (gsrOK)
+                            {
+                                OSCMessage msg2 = new OSCMessage("/emotion/gsr");
+                                msg2.Append<int>(gsr);
+                                client.Send(msg2);
+                            }
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                this.viewModel.StatusMessage = ex.ToString();
+                this.viewModel.StatusMessage = ex.StackTrace.ToString();
             }
         }
 
-        private void textBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        private void ipTF_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ip = ipTF.Text;
+        }
 
+        private void portTF_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            port = portTF.Text;
+       }
+
+        private void setClientBT_Click(object sender, RoutedEventArgs e)
+        {
+            updateClient();
         }
     }
 }

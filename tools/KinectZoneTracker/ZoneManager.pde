@@ -15,6 +15,7 @@ public class ZoneManager
 
   public void draw()
   {
+    if(kinectCalibMode) return;
     for (Zone z : zones) z.draw();
   }
 
@@ -49,6 +50,7 @@ public class ZoneManager
   println("Zones saved");
   }
   
+  /*
   public void addZone()
   {
     zones.add(new Zone(this, "Zone "+(zones.size()+1), new PVector(0,100,0), new PVector(100,100,100), 300, colors[zones.size()%colors.length]));
@@ -59,7 +61,7 @@ public class ZoneManager
   {
     if(zones.size() > 1) zones.remove(zones.size()-1);
   }
-
+*/
 
   public void update()
   {
@@ -161,7 +163,8 @@ public class Zone
   PVector dragFactor;
   
   PVector averageZonePoint;
-
+  PVector averageZonePointNormalized;
+  
   public Zone(ZoneManager zm, String name, PVector base, PVector size, int threshold, color zoneColor)
   {
     this.name = name;
@@ -169,18 +172,24 @@ public class Zone
     this.size = size;
     this.midSize = PVector.mult(size,.5f);
     rawThreshold = threshold;
-    this.threshold = rawThreshold/precisionFactor; // depends on stepping (square proportional)
+    
     this.zoneColor= zoneColor;
     this.zm = zm;
     
     //println("new Zone, threshold :"+threshold);
     isActive = false;
 
+    averageZonePoint = new PVector();
+    averageZonePointNormalized = new PVector();
+    
     dragFactor = new PVector();
   }
 
   public void draw()
   {
+    
+    //update everyframe
+    this.threshold = rawThreshold/precisionFactor; // depends on stepping (square proportional)
     
     if(editing)
     {
@@ -226,7 +235,8 @@ public class Zone
     box(size.x, size.y, size.z);
     fill(zoneColor);
     rotateX(PI);
-    text(name+" : "+pointCount, 0, -size.y/2-40, 0);
+    textSize(10+(size.x+size.y+size.z)/30);
+    text(name+" : "+pointCount+ "/"+threshold, 0, -size.y/2-40, 0);
     popStyle();
     popMatrix();
   }
@@ -257,7 +267,9 @@ public class Zone
     
     boolean newActive = pointCount > threshold;
     averageZonePoint.div(pointCount);
-    
+    averageZonePointNormalized.set(averageZonePoint.x/size.x,
+                                  averageZonePoint.y / size.y,
+                                  averageZonePoint.z / size.z);
     if (newActive != isActive)
     {
       isActive = newActive;
@@ -266,7 +278,6 @@ public class Zone
     
     if(isActive)
     {
-      println(averageZonePoint);
       pushMatrix();
       translate(base.x,base.y,base.z);
       translate(averageZonePoint.x,averageZonePoint.y,averageZonePoint.z);
@@ -309,9 +320,24 @@ public class Zone
     
     if(editing)
     {
+      switch(key)
+      {
+        case '-':
+        case 'y':
+          threshold--;
+          rawThreshold = threshold*precisionFactor;
+          break;
+          
+          case '+':
+          case 't':
+          threshold++;
+          rawThreshold = threshold*precisionFactor;
+          break; 
+      }
+      
       switch(keyCode)
       {
-        
+        /*
         case UP:
         if(altPressed) dragFactor.y = 10;
         else dragFactor.z = 10;
@@ -329,6 +355,9 @@ public class Zone
         case RIGHT:
         dragFactor.x = 10;
         break;
+        */
+        
+         
       }
     }
   }

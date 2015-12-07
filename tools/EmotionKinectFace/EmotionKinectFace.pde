@@ -25,6 +25,8 @@ int remotePort;
 int[] emotions;
 String[] emotionLabels = new String[]{"Tracked","Happy","Engaged","2","3","4","5","6","7"};
 
+Spout spout;
+
 void setup() {
   size(640,480, P2D);
 
@@ -36,7 +38,7 @@ void setup() {
   kinect.enableColorImg(true);
 
   //for face detection base on the infrared Img
-  kinect.enableInfraredImg(true);
+  kinect.enableDepthImg(true);
 
   //enable face detection
   kinect.enableFaceDetection(true);
@@ -58,6 +60,10 @@ void setup() {
   remoteLoc = new NetAddress(remoteIP,remotePort);
   
   emotions = new int[9];
+  frameRate(30);
+  
+   spout = new Spout();
+  spout.initSender("KinectFace", width, height);
 }
 
 void draw() {
@@ -78,7 +84,7 @@ void draw() {
   //draw face information obtained by the infrared frame
   pushMatrix();
   //translate(640*0.5f, 0.0f);
-  image(kinect.getInfraredImage(), 0,0);
+  image(kinect.getDepthImage(), 0,0);
   getFaceMapInfraredData();
   popMatrix();
 
@@ -87,6 +93,8 @@ void draw() {
   text("frameRate "+frameRate, 50, 50);
   
   text("Sending OSC to "+remoteIP+":"+remotePort,10,height-30);
+  
+   spout.sendTexture();
 }
 
 public void getFaceMapInfraredData() {
@@ -147,7 +155,8 @@ public void getFaceMapInfraredData() {
 
 void setEmotion(int type, int val)
 {
-   if(emotions[type] == val) return;
+  //println("set emotion "+emotionLabels[type]+" > "+val);
+  //if(emotions[type] == val) return;
    
    emotions[type] = val;
    String emoLabel = emotionLabels[type];

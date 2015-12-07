@@ -1,0 +1,307 @@
+fileFormatVersion: 2
+guid: 23b4ea77c3465d8429fecc0ec1b88521
+timeCreated: 1447753050
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: border1
+    100002: border2
+    100004: border3
+    100006: border4
+    100008: border5
+    100010: border6
+    100012: border7
+    100014: border8
+    100016: //RootNode
+    100018: loopCubeInner
+    400000: border1
+    400002: border2
+    400004: border3
+    400006: border4
+    400008: border5
+    400010: border6
+    400012: border7
+    400014: border8
+    400016: //RootNode
+    400018: loopCubeInner
+    2300000: border1
+    2300002: border2
+    2300004: border3
+    2300006: border4
+    2300008: border5
+    2300010: border6
+    2300012: border7
+    2300014: border8
+    2300016: loopCubeInner
+    3300000: border1
+    3300002: border2
+    3300004: border3
+    3300006: border4
+    3300008: border5
+    3300010: border6
+    3300012: border7
+    3300014: border8
+    3300016: loopCubeInner
+    4300000: border2
+    4300002: border1
+    4300004: border6
+    4300006: border5
+    4300008: border4
+    4300010: border3
+    4300012: border8
+    4300014: border7
+    4300016: loopCubeInner
+    7400000: Ferme
+    7400002: Ouvert
+    7400004: Ouverture
+    7400006: Fermeture
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Ferme
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: border1
+        weight: 1
+      - path: border2
+        weight: 1
+      - path: border3
+        weight: 1
+      - path: border4
+        weight: 1
+      - path: border5
+        weight: 1
+      - path: border6
+        weight: 1
+      - path: border7
+        weight: 1
+      - path: border8
+        weight: 1
+      - path: loopCubeInner
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Ouvert
+      takeName: Take 001
+      firstFrame: 38
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: border1
+        weight: 1
+      - path: border2
+        weight: 1
+      - path: border3
+        weight: 1
+      - path: border4
+        weight: 1
+      - path: border5
+        weight: 1
+      - path: border6
+        weight: 1
+      - path: border7
+        weight: 1
+      - path: border8
+        weight: 1
+      - path: loopCubeInner
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Ouverture
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: border1
+        weight: 1
+      - path: border2
+        weight: 1
+      - path: border3
+        weight: 1
+      - path: border4
+        weight: 1
+      - path: border5
+        weight: 1
+      - path: border6
+        weight: 1
+      - path: border7
+        weight: 1
+      - path: border8
+        weight: 1
+      - path: loopCubeInner
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Fermeture
+      takeName: Take 001
+      firstFrame: 42
+      lastFrame: 66
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: border1
+        weight: 1
+      - path: border2
+        weight: 1
+      - path: border3
+        weight: 1
+      - path: border4
+        weight: 1
+      - path: border5
+        weight: 1
+      - path: border6
+        weight: 1
+      - path: border7
+        weight: 1
+      - path: border8
+        weight: 1
+      - path: loopCubeInner
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

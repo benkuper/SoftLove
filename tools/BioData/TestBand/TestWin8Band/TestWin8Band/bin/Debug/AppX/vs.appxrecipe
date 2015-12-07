@@ -2,33 +2,33 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Machine>BENPORTABLE</Machine>
-    <WindowsUser>Ben</WindowsUser>
+    <WindowsUser>bkupe</WindowsUser>
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
     <TargetOsVersion>6.3</TargetOsVersion>
     <TargetOsDescription>Windows 8.1</TargetOsDescription>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
     <PackageArchitecture>neutral</PackageArchitecture>
-    <PackageIdentityName>113e9e39-fb66-4428-b10b-8b21859bf01f</PackageIdentityName>
+    <PackageIdentityName>com.benkuper.bandOSC2</PackageIdentityName>
     <IntermediateOutputPath>D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\obj\Debug\</IntermediateOutputPath>
-    <RegisteredManifestChecksum>21B73A2D910938491891E39DF4396A46B036718D2042F3921619F0238351E3D4</RegisteredManifestChecksum>
-    <RegisteredPackageMoniker>113e9e39-fb66-4428-b10b-8b21859bf01f_1.0.0.0_neutral__z6xh1x1kg5n3j</RegisteredPackageMoniker>
-    <RegisteredUserModeAppID>113e9e39-fb66-4428-b10b-8b21859bf01f_z6xh1x1kg5n3j!App</RegisteredUserModeAppID>
-    <RegisteredPackageID>113e9e39-fb66-4428-b10b-8b21859bf01f</RegisteredPackageID>
+    <RegisteredManifestChecksum>874A071984081E8513DFEB9B874078C1590684D9CB55931E21A7FEDA39B2D858</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>com.benkuper.bandOSC2_1.0.0.2_neutral__z6xh1x1kg5n3j</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>com.benkuper.bandOSC2_z6xh1x1kg5n3j!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>com.benkuper.bandOSC2</RegisteredPackageID>
     <RegisteredPackagePublisher>CN=Ben</RegisteredPackagePublisher>
-    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+    <RegisteredVersion>1.0.0.2</RegisteredVersion>
     <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
   </PropertyGroup>
   <ItemGroup>
     <AppXManifest Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2015-11-21T15:09:38.596</Modified>
+      <Modified>2015-11-30T11:13:07.163</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\TestWin8Band.exe">
       <PackagePath>TestWin8Band.exe</PackagePath>
-      <Modified>2015-11-21T15:06:26.137</Modified>
+      <Modified>2015-12-02T11:58:33.322</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.dll">
       <PackagePath>Microsoft.Band.dll</PackagePath>
@@ -64,7 +64,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\TestWin8Band.xr.xml">
       <PackagePath>TestWin8Band.xr.xml</PackagePath>
-      <Modified>2015-11-18T19:48:35.502</Modified>
+      <Modified>2015-11-30T10:55:11.016</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
@@ -72,7 +72,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2015-11-21T15:06:26.083</Modified>
+      <Modified>2015-11-30T10:55:29.297</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\Microsoft Band SDK and Samples for Windows\Samples\packages\Microsoft.Band.1.3.10929\lib\netcore451\Microsoft.Band.Store\Microsoft.Band.Store.xr.xml">
       <PackagePath>Microsoft.Band.Store\Microsoft.Band.Store.xr.xml</PackagePath>
@@ -100,7 +100,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Pro\Projects\ClairObscur\SoftLove\Dev\tools\BioData\TestBand\TestWin8Band\TestWin8Band\bin\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2015-11-21T15:09:38.446</Modified>
+      <Modified>2015-11-30T11:13:07.019</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

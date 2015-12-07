@@ -15,7 +15,7 @@ public class Connection : MonoBehaviour {
     
     public float speed = 1;
 
-    float _lineWidth = .02f;
+    float _lineWidth = .07f;
 
    
 
@@ -61,7 +61,7 @@ public class Connection : MonoBehaviour {
         {
             lineMat.color = Color.white;
             lineWidth = .2f;
-            DOTween.To(() => this.lineWidth, w => this.lineWidth = w, .02f, 1f);
+            DOTween.To(() => this.lineWidth, w => this.lineWidth = w, .04f, 1f);
         }
 
         speed = val ? Random.Range(.5f, 3f) : Random.Range(.1f, .4f);
