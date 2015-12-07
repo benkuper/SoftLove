@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/processing/app/code/jackson-annotations-2.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/processing/app/code/jackson-core-2.6.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/processing/app/code/jackson-databind-2.6.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/processing/app/code/jeromq-0.3.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/processing/app/code/oscP5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/processing/app/code/ZMQManager.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

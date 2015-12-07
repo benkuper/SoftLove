@@ -1,0 +1,119 @@
+{
+  "listConfig": {
+    "Web-images": {
+      "SourceAddress": "tcp://172.18.23.217:6970",
+      "SourceTopic": "images",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        },
+        {
+          "OSCAddress": "127.0.0.2",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test2"
+        }
+      ]
+    },
+    "Web-keywords": {
+      "SourceAddress": "tcp://172.18.23.217:6970",
+      "SourceTopic": "keywords",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    },
+    "Web-amazon": {
+      "SourceAddress": "tcp://172.18.23.217:6970",
+      "SourceTopic": "amazon",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    },
+    "Tracking-position": {
+      "SourceAddress": "tcp://172.18.17.201:5555",
+      "SourceTopic": "position",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    },
+    "Tracking-geste": {
+      "SourceAddress": "tcp://172.18.17.201:5555",
+      "SourceTopic": "geste",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    },
+    "Tracking-zone": {
+      "SourceAddress": "tcp://172.18.17.201:5555",
+      "SourceTopic": "zone",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    },
+    "Speech2Text": {
+      "SourceAddress": "tcp://172.18.19.27:5656",
+      "SourceTopic": "Parole",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    },
+    "Facebook": {
+      "SourceAddress": "tcp://172.18.20.101:5563",
+      "SourceTopic": "fb/links",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    },
+    "ChatBot": {
+      "SourceAddress": "tcp://172.18.20.21:8090",
+      "SourceTopic": "Chatbot",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "12000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    },
+    "Emotion": {
+      "SourceAddress": "tcp://127.0.0.1:6665",
+      "SourceTopic": "emotion/fusion/json",
+      "OSC": [
+        {
+          "OSCAddress": "127.0.0.1",
+          "OSCPort": "7000",
+          "OSCAdressPattern": "/test1"
+        }
+      ]
+    }
+  }
+}

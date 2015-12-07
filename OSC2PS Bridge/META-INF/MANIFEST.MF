@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: Main
+Class-Path: jackson-annotations-2.6.0.jar jackson-core-2.6.3.jar jackson-databind-2.6.3.jar jeromq-0.3.5.jar oscP5.jar
+
+
