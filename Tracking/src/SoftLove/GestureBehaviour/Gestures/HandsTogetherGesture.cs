@@ -30,7 +30,8 @@ namespace SoftLove.GestureBehaviour.Gestures
                 if (skeleton.Length > 0)
                 {
                     var skel = skeleton.Where(u => u.TrackingState == SkeletonTrackingState.Tracked).FirstOrDefault();
-                    if (skel != null) {
+                    if (skel != null)
+                    {
                         return (Math.Abs(
                             skel.Joints[JointType.HandRight].Position.Y -
                             skel.Joints[JointType.HandLeft].Position.Y) +

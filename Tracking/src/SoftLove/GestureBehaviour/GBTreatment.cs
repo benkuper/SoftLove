@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Kinect;
 using SoftLove.Acquisition;
+using System.Threading;
 
 using SoftLove.Communication;
 
@@ -79,15 +80,11 @@ namespace SoftLove.GestureBehaviour
                 if (recognizer.IsRecognized(SkeletonAcquire.SkelData))
                 {
                     string newInfo = recognizer.GetInfo();
-                    if(newInfo != LastInfo)
+                    if (newInfo != LastInfo)
                     {
-                        LastInfo = newInfo;
+                        LastInfo = newInfo;  // Un geste ne peut donc être produit qu'une seule fois, il est nécessaire de produire un autre geste pour envoyer un nouveau geste
                         Pub.SendInfo(Publisher.GESTE, LastInfo);
                     }
-                }
-                else
-                {
-                    LastInfo = "";
                 }
             }
         }
@@ -101,7 +98,6 @@ namespace SoftLove.GestureBehaviour
             Recognizers.Add(_gR);
         }
 
-
         /// <summary>
         /// Lancement
         /// </summary>
@@ -110,6 +106,7 @@ namespace SoftLove.GestureBehaviour
             while (true)
             {
                 SendGesture();
+                Thread.Sleep(500);
             }
         }
     }
