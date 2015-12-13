@@ -92,7 +92,7 @@ public class NodeManager : MonoBehaviour {
     //Navigation
     Node activeNode(int index,bool focus)
     {
-        DataText.log("Activate node " + index + ", set focus : " + focus);
+        //DataText.log("Activate node " + index + ", set focus : " + focus);
 
         Node rn = null;
         if (index == -1)
@@ -104,7 +104,7 @@ public class NodeManager : MonoBehaviour {
             if (index <= nodes.Count) rn = nodes[index-1];
             else
             {
-                DataText.log("Node Manager : Node " + index + "does not exists");
+                //DataText.log("Node Manager : Node " + index + "does not exists");
             }
         }else
         {

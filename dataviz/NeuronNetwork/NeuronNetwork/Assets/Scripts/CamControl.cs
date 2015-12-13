@@ -54,7 +54,7 @@ public class CamControl : MonoBehaviour {
 
     private void pingReceived()
     {
-        DataText.log("Ping !");
+        //DataText.log("Ping !");
         pingMat.color = Color.white;
         pingMat.DOColor(Color.black, .3f);
     }

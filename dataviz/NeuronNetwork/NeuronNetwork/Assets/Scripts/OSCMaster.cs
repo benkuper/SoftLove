@@ -175,7 +175,7 @@ public class OSCMaster : MonoBehaviour {
             if (emotionReceived != null) emotionReceived((string)p.Data[0], (float)p.Data[1]);
         }else
         {
-            DataText.log("OSC Message not handled : " + p.Address);
+            //DataText.log("OSC Message not handled : " + p.Address);
         }
     }
 	

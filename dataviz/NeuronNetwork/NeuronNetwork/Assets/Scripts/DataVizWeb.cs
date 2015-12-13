@@ -66,7 +66,7 @@ public class DataVizWeb : MonoBehaviour {
 
     void searchImages(string search)
     {
-        DataText.log("Searching images for : " + search);
+        //DataText.log("Searching images for : " + search);
         string searchURL = baseImageAPIURL + search.Replace(" ","%20");
         StartCoroutine("searchImagesCoroutine", searchURL);
     }
