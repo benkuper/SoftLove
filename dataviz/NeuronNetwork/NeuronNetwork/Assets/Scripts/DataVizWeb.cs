@@ -11,11 +11,14 @@ public class DataVizWeb : MonoBehaviour {
     const string apiKey = "AIzaSyBzgCg7v-tfVZ4-iEx7ZjDALsnKr06wGzU";
     const string cx = "002534967567206735624:20dlqzadhkw";
 
-    string baseImageAPIURL = "https://www.googleapis.com/customsearch/v1?key=" + apiKey + "&cx=" + cx + "&searchType=image&imgSize=medium&fileType=jpeg&alt=json&num=4&start=1&q=";
-		
+    string baseImageAPIURL = "https://www.googleapis.com/customsearch/v1?key=" + apiKey + "&cx=" + cx + "&searchType=image&imgSize=medium&fileType=jpeg&alt=json&num=8&start=1&q=";
+
+    int currentPlaneIndex = 0;
+
     void Start()
     {
         OSCMaster.webSearchReceived += webSearchReceived;
+        OSCMaster.webSearchOpacityReceived += webSearchOpacityReceived;
         planes = GetComponentsInChildren<ImagePlane>();
     }
 
@@ -62,11 +65,16 @@ public class DataVizWeb : MonoBehaviour {
         }
     }
 
+    private void webSearchOpacityReceived(float alpha)
+    {
+        foreach (ImagePlane p in planes) p.setAlpha(alpha);
+    }
+
 
 
     void searchImages(string search)
     {
-        //DataText.log("Searching images for : " + search);
+        Debug.Log("Searching images for : " + search);
         string searchURL = baseImageAPIURL + search.Replace(" ","%20");
         StartCoroutine("searchImagesCoroutine", searchURL);
     }
@@ -80,13 +88,19 @@ public class DataVizWeb : MonoBehaviour {
         { 
             JSONObject json = JSONObject.Create(www.text);
             JSONObject results = json.GetField("items");
-            int i = 0;
-            Debug.Log(results.Count);
-            foreach(JSONObject j in results.list)
+            
+            if (results != null)
             {
-                string url = j.GetField("link").str;
-                planes[i].setImageURL(url);
-                i++;
+                Debug.Log(results.Count);
+                foreach (JSONObject j in results.list)
+                {
+                    string url = j.GetField("link").str;
+                    planes[currentPlaneIndex % planes.Length].setImageURL(url);
+                    currentPlaneIndex++;
+                }
+            }else
+            {
+                Debug.Log("Not Json : " + www.text);
             }
         }catch(Exception e)
         {

@@ -10,6 +10,7 @@ public class ImagePlane : MonoBehaviour {
     Material mat;
 
     WWW www;
+    public float alpha;
 
     // Use this for initialization
     void Start()
@@ -81,5 +82,11 @@ public class ImagePlane : MonoBehaviour {
     {
         CancelInvoke("glitchLoop");
         mat.mainTexture = currentTexture;
+    }
+
+    public void setAlpha(float val)
+    {
+        alpha = val;
+        mat.color = new Color32((byte)(mat.color.r*255), (byte)(mat.color.g*255), (byte)(mat.color.b*255), (byte)(alpha*255));
     }
 }

@@ -45,8 +45,10 @@ public class OSCMaster : MonoBehaviour {
 
     //WEB
     public delegate void WebSearchReceived(string searchType,string search);
+    public delegate void WebSearchOpacityReceived(float alpha);
     #region Delegates
     public static event WebSearchReceived webSearchReceived;
+    public static event WebSearchOpacityReceived webSearchOpacityReceived;
     #endregion
 
     //BIODATA
@@ -154,6 +156,10 @@ public class OSCMaster : MonoBehaviour {
         else if (p.Address.Equals("/web/search/images"))
         {
             if (webSearchReceived != null) webSearchReceived("images",(string)p.Data[0]);
+        }
+        else if (p.Address.Equals("/web/search/opacity"))
+        {
+            if (webSearchOpacityReceived != null) webSearchOpacityReceived((float)p.Data[0]);
         }
         //Zones
         else if (p.Address.Equals("/tracking/zone"))
