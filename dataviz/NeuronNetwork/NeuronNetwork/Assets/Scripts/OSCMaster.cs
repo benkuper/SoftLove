@@ -83,6 +83,7 @@ public class OSCMaster : MonoBehaviour {
 		}
 
         client = new OSCClient(IPAddress.Loopback, 7776, true);
+        OSCPacket.stringDecoding = System.Text.Encoding.UTF8;
 
 		
 	}
@@ -112,8 +113,10 @@ public class OSCMaster : MonoBehaviour {
         client.Send(msg);
     }
 
+
 	static void HandlePacketReceivedEvent (OSCPacket p)
 	{
+        Debug.Log("received message "+p.Address);
         //General
         if (p.Address.Equals("/ping"))
         {
@@ -128,6 +131,7 @@ public class OSCMaster : MonoBehaviour {
         }
         else if (p.Address.Equals("/console/log"))
         {
+            Debug.Log((string)p.Data[0]);
             if (logReceived != null) logReceived((string)p.Data[0]);
         }
         else if (p.Address.Equals("/glitch"))

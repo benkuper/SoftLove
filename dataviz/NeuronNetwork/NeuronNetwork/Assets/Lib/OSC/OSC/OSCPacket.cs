@@ -31,12 +31,16 @@ namespace UnityOSC
 	abstract public class OSCPacket
 	{
 
+        public static Encoding stringDecoding = Encoding.ASCII;
+
 		#region Member Variables
 		protected List<object> _data;
 		protected byte[] _binaryData;
 		protected string _address;
 		protected long _timeStamp;
 		#endregion
+
+        
 		
 		#region Properties
 		public string Address
@@ -192,7 +196,7 @@ namespace UnityOSC
 				int count = 0;
 				for (int index = start; data[index] != 0; index++)	count++;
 
-				msgvalue = Encoding.ASCII.GetString(data, start, count);
+				msgvalue = stringDecoding.GetString(data, start, count);
 				start += count + 1;
 				start = ((start + 3) / 4) * 4;
 			}
