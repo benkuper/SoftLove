@@ -79,14 +79,18 @@ void draw()
 {
   background(0);
   
-  float camZ = ((height/2.0) / tan(PI*60.0/360.0));
-  perspective(PI/3.0, width/height, camZ/10f, camZ*500f) ;
-  
+ 
   SimpleOpenNI.updateAll();
   for(Kinect k : kinects) 
   {
     k.calib.draw();
   }
+  
+  //draw after calib
+  
+  float camZ = ((height/2.0) / tan(PI*60.0/360.0));
+  perspective(PI/3.0, width/height, camZ/10f, camZ*500f) ;
+  
   
   //View nav handling
   if(viewRotating)
