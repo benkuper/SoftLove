@@ -167,7 +167,7 @@ public class WebContentManager {
 		return urls;
 	}
 
-	public static void extractProduct(String recherche, String page) throws FileNotFoundException, UnsupportedEncodingException {
+	public static void extractProduct(String recherche, String page, String url) throws FileNotFoundException, UnsupportedEncodingException {
 		String image = "";
 		String titre = "";
 		String description = "";
@@ -192,6 +192,7 @@ public class WebContentManager {
 			  obj.put("image",image);
 			  obj.put("description",description);
 			  obj.put("recherche",recherche);
+			  obj.put("pageurl",url);
 			
 			  System.out.println(obj.toJSONString());
 			ZMQConnector.sendAmazon(obj.toJSONString());

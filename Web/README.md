@@ -63,4 +63,4 @@ III/ Paramétrage et lancement
 
 Le paramétrage se fait à l'aide du fichier config.json. Les variables à renseigner sont dans l'ordre : l'IP et port du publisher de mots clés, le nom de son topic (keywords), l'IP  et port du publisher d'images, le nom de son topic (images), l'IP  et port du suscriber de mots clés, le nom de son topic (Parole), l'IP et port du subscriber pour les réseaux sociaux et le nom de son topic (fb/links).
  
-Le lancement se réalise au moyen d'un IDE en lançant la classe MainWeb.
+Le lancement se réalise au moyen d'un IDE en lançant la classe MainWeb ou en lançant le fichier execWeb.jar en ligne de commande (java -jar execWeb.jar).
