@@ -9,7 +9,7 @@ ZoneManager zm;
 OSCManager oscManager;
 
 //View navigation
-float distance = 700;
+float distance = 3000;
 boolean viewDragging;
 boolean viewRotating;
 PVector dragOffset;
@@ -55,8 +55,6 @@ void setup()
   rotateOffset = new PVector(-23.0,-173.0);
   dragOffset = new PVector(29.0,152.0);
   
-  
-  
   hint(DISABLE_DEPTH_TEST);
 }
 
@@ -81,6 +79,9 @@ void draw()
 {
   background(0);
   
+  float camZ = ((height/2.0) / tan(PI*60.0/360.0));
+  perspective(PI/3.0, width/height, camZ/10f, camZ*500f) ;
+  
   SimpleOpenNI.updateAll();
   for(Kinect k : kinects) 
   {
@@ -93,8 +94,6 @@ void draw()
     rotateOffset.x += mouseX-initMousePos.x;
     rotateOffset.y += mouseY-initMousePos.y;
     initMousePos.set(mouseX,mouseY);
-    
-    
   }
   
   if(viewDragging)
@@ -118,6 +117,7 @@ void draw()
   zm.checkActiveZones();
   
   popMatrix();
+  perspective();
   textSize(12);
   pushStyle();
   
@@ -151,6 +151,7 @@ void draw()
      text("Help (H to toggle)",10,150);   
    }
 
+ 
   text("Params :",0,height-100);
   if(zonesAreExclusives) fill(255,255,0);
    else fill(200);
