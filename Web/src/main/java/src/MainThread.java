@@ -90,10 +90,10 @@ public class MainThread extends Thread {
 			for(String s:res) {
 				products.add(WebContentManager.getPage(s));
 			}
-			
+			int count = 0;
 			for(String page : products) {
-				WebContentManager.extractProduct(recherche, page);
-				
+				WebContentManager.extractProduct(recherche, page, res.get(count));
+				count++;
 			}
 			
 			System.out.println("end of request");
