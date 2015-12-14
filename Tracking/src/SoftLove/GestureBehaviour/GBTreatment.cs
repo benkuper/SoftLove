@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Kinect;
 using SoftLove.Acquisition;
 using System.Threading;
+using SoftLove.GestureBehaviour.Gestures;
 
 using SoftLove.Communication;
 
@@ -98,11 +99,32 @@ namespace SoftLove.GestureBehaviour
             Recognizers.Add(_gR);
         }
 
+        private bool ContainsStandSit()
+        {
+            foreach (IGestureRecognizer classe in Recognizers)
+            {
+                if (classe is StandSitGesture) return true;
+            }
+            return false;
+        }
+
+        private StandSitGesture GetStandSitGesture()
+        {
+            foreach (IGestureRecognizer classe in Recognizers)
+            {
+                if (classe is StandSitGesture) return (StandSitGesture)classe;
+            }
+            return null;
+        }
+
         /// <summary>
         /// Lancement
         /// </summary>
         public void Launch()
         {
+            if (this.ContainsStandSit()){
+                GetStandSitGesture().InitPosition(SkeletonAcquire);
+            }
             while (true)
             {
                 SendGesture();

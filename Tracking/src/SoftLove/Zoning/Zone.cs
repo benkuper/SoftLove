@@ -89,7 +89,7 @@ namespace SoftLove.Zoning
         {
             if(Points.Count != 2)
             {
-                throw new NumberOfPointsException("Number of points must be 2 if you want to store a zone");
+                throw new NumberOfPointsException("Le nombre de points doit-être de 2 si vous voulez enregistrer une zone");
             }
             var xmlZone = XmlDoc.CreateElement("zone");
             xmlZone.SetAttribute("id",ID);

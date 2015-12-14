@@ -18,6 +18,11 @@ namespace SoftLove.GestureBehaviour.Gestures
             return "Hello";
         }
 
+        /// <summary>
+        /// Reconnaissance du mouvement "hello"
+        /// </summary>
+        /// <param name="skeleton"></param>
+        /// <returns></returns>
         public bool IsRecognized(Skeleton[] skeleton)
         {
             try
