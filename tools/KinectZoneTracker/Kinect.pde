@@ -2,6 +2,7 @@ class Kinect
 {
   public PVector[] realWorldMap;
   public PImage rgbImage;
+  public PImage depthImage;
   KinectCalibration calib;
 
   SimpleOpenNI  context;
@@ -50,7 +51,8 @@ class Kinect
   {    
     realWorldMap = context.depthMapRealWorld();
     rgbImage = context.rgbImage();
-
+    depthImage = context.depthImage();
+    
     int numPoints = realWorldMap.length;
 
     pushMatrix();
@@ -169,9 +171,12 @@ class KinectCalibration
   
   PVector calibratedOffset;
   PVector calibratedOffsetFactor;
+  
+  public boolean showDepth;
 
   public KinectCalibration(Kinect kinect, SimpleOpenNI context)
   {
+    this.showDepth = false;
     this.kinect = kinect;
     this.context = context;
     calibrated = false;
@@ -203,7 +208,7 @@ class KinectCalibration
 
     pushMatrix();
     translate(calibPos.x, calibPos.y);
-    image(kinect.rgbImage, 0, 0, calibSize.x, calibSize.y);
+    image(showDepth?kinect.depthImage:kinect.rgbImage, 0, 0, calibSize.x, calibSize.y);
     for (CalibHandle ch : handles) ch.draw();
     popMatrix();
   }

@@ -231,6 +231,10 @@ void keyPressed(KeyEvent e)
     kinectCalibMode = !kinectCalibMode;
     break;
     
+    case 'd':
+    for(Kinect k:kinects) k.calib.showDepth = !k.calib.showDepth;
+    break;
+    
     case 'r':
       for(Kinect k:kinects) k.calib.resetCalibration();
       break;
