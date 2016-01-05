@@ -1,0 +1,6 @@
+[05/01/2016 09:53:55][Bonjour][Je n'ai pas compris, hélas.]
+[05/01/2016 09:54:05][je m'appelle alexandre][Ton prénom est enregistré, alexandre.]
+[05/01/2016 09:54:12][comment je m'appelle ?][Tu t'appelles alexandre.]
+[05/01/2016 09:54:21][je m'appelle clément][Ton prénom est enregistré, clément.]
+[05/01/2016 09:54:28][comment je m'appelle ?][Tu t'appelles clément.]
+[05/01/2016 09:58:07][salut][Bonjour, clément.]

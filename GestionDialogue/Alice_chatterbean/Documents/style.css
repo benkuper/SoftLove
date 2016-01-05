@@ -1,0 +1,45 @@
+p.code
+{
+  font-family: "Courier New", Courier, Monospaced;
+}
+
+font.code
+{
+  font-family: "Courier New", Courier, Monospaced;
+}
+
+
+.tag
+{
+  font-family: "Courier New", Courier, Monospaced;
+  color: blue;
+}
+
+p, td, ul
+{
+  font-family: Arial, Helvetica, "Sans-serif";
+  font-size: 90%;
+}
+
+p.doctitle
+{
+  font-size: 130%;
+}
+
+p.sectitle
+{
+  font-size: 100%;
+  font-weight: bold;
+}
+
+p.item, p.subtitle
+{
+  font-weight: bold;
+}
+
+li.li01
+{
+  list-style-type: circle;
+  position: relative;
+  left: 15px;
+}

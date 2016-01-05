@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<!-- Réponse par défaut -->		
+<category>
+	<pattern>*</pattern>
+	<template>Je n'ai pas compris, hélas.</template>
+</category>
+
+</aiml>

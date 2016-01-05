@@ -1,0 +1,75 @@
+/*
+acceptance.bsh
+
+Acceptance test script for ChatterBean
+
+This script runs ChatterBean in test mode for two different configurations: one using the ListMaster implementation of the Responder interface, and the other using the HashMaster.
+*/
+
+import java.io.*;
+import bitoflife.chatterbean.ChatterBean;
+
+class Piper extends Thread
+{
+  private BufferedReader in;
+  private PrintWriter out;
+  private boolean trailing;
+  
+  public Piper(Reader in, Writer out, boolean trailing)
+  {
+    this.trailing = trailing;
+    this.in = new BufferedReader(in);
+    this.out = new PrintWriter(out, true);
+    setDaemon(true);
+    start();
+  }
+  
+  public void run()
+  {
+    for (String line; (line = in.readLine()) != null;)
+      out.println(line);
+    if (trailing) out.println("");
+  }
+}
+
+boolean assertEquals(BufferedReader expected, BufferedReader actual)
+{
+  boolean ok = true;
+  String response = "";
+  for (int i = 1; (response = actual.readLine()) != null; i++)
+  {
+    String line = "";
+    if((line = expected.readLine()) == null || !line.equals(response))
+    {
+      print("Line " + i + ":\n" +
+            "  expected: " + line + '\n' +
+            "  actual:   " + response);
+      ok = false;
+    }
+  }
+  
+  return ok;
+}
+
+void test(String command)
+{
+  Runtime runtime = Runtime.getRuntime();
+  Process process = runtime.exec(command.split(" "));
+  BufferedReader requests = new BufferedReader(new FileReader("Documents/requests.txt"));
+  StringWriter writer = new StringWriter();
+  Piper in  = new Piper(requests, new OutputStreamWriter(process.getOutputStream()), true);
+  Piper out = new Piper(new InputStreamReader(process.getInputStream()), writer, false);
+  Piper err = new Piper(new InputStreamReader(process.getErrorStream()), new OutputStreamWriter(System.err), false);  
+  process.waitFor();
+
+  BufferedReader expected = new BufferedReader(new FileReader("Documents/responses.txt"));
+  BufferedReader actual   = new BufferedReader(new StringReader(writer.toString()));
+  
+  boolean assert1 = assertEquals(expected, actual);
+  boolean assert2 = assertEquals(new BufferedReader(new FileReader("Documents/gossip.txt")),
+                                 new BufferedReader(new FileReader("Logs/gossip.txt")));
+  if (assert1 && assert2) print("0k");
+}
+
+print("Testing ChatterBean");
+test("java -jar bsh.jar console.bsh");

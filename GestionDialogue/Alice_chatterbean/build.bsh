@@ -1,0 +1,185 @@
+/*
+Copyleft (C) 2006 Hélio Perroni Filho
+xperroni@yahoo.com
+ICQ: 2490863
+
+This file is part of ChatterBean.
+
+ChatterBean is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+ChatterBean is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with ChatterBean (look at the Documentos/ directory); if not, either write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA, or visit (http://www.gnu.org/licenses/gpl.txt).
+*/
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/*
+Attribute Section
+*/
+
+/** the script's help message. */
+final String HELP =
+  "build.bsh - ChatterBean's build script\n\n" +
+  "Usage:\n\n" +
+  "build.bsh [options] <[program] [tests] [jar]>\n\n" +
+  "Where options include:\n\n" +
+  "-help\n" +
+  "Shows this help message.\n\n" +
+  "-toolspath=tools_path/\n" +
+  "Informs the script of the location of the tools.jar file,\n" +
+  "which contains the classes for tools such as javac and jar.";
+
+/** Successful exit code. */
+final int SUCCESS = 0;
+
+/** Exit error code used when a classpath entry is not found on the filesystem. */
+final int CLASSPATH_ENTRY_NOT_FOUND = 1;
+
+/** Exit error code used when the tools.jar file is not found. */
+final int TOOLS_JAR_NOT_FOUND = 2;
+
+/** Filter object used to look for the javac directory. */
+final FilenameFilter guessFilter = new FilenameFilter()
+{
+  public accept(File file, String name)
+  {
+    return name.matches("javac(\\..+)?");
+  }
+};
+
+/** OS-dependent file separator character. */
+final String sep = File.pathSeparator;
+
+/** Class path entries to the java compiler. */
+final String classpath = "bsh.jar"
+                 + sep + "junit.jar"
+                 + sep + "Classes/"
+                 + sep + System.getProperty("java.home") + "/lib/plugin.jar";
+
+/*
+Method Section
+*/
+
+/**
+Returns a map containing the command-line arguments. Arguments in the form <code>name=value</code> are broken into key / value pairs; simple arguments are inserted as keys related to <code>null</code> values.
+
+@return Map of name / value pairs created from the command-line arguments.
+*/
+Map mapArguments()
+{
+  Map arguments = new HashMap();
+  for (int i = 0, n = bsh.args.length; i < n; i++)
+  {
+    String[] pair = bsh.args[i].split("=");
+    if (pair.length == 2)
+      arguments.put(pair[0], pair[1]);
+    else
+      arguments.put(pair[0], null);
+  }
+  
+  return arguments;
+}
+
+/**
+Checks if all the entries in the build class path exist.
+*/
+void checkBuildClassPath()
+{
+  String[] entries = classpath.split(sep);
+  for (int i = 0, n = entries.length; i < n; i++)
+  {
+    String entry = entries[i];
+    File file = new File(entry);
+    if (!file.exists())
+    {
+      System.err.println("Sorry, but the following class path entry was not found:\n");
+      System.err.println(entry + "\n");
+      System.err.println("Please check the value of the classpath variable inside the build.bsh script.");
+      System.err.println("Operation aborted.");
+      System.exit(CLASSPATH_ENTRY_NOT_FOUND);
+    }
+  }
+}
+
+/**
+Guesses the location of the tools.jar file from the value of the <code>PATH</code> environment variable.
+
+@return The path of the tools.jar file, or <code>null</code> if it was unable to find it.
+*/
+public String guessToolsPath()
+{
+  String[] paths = System.getenv("PATH").split(sep);
+  for (int i = 0, n = paths.length; i < n; i++)
+  {
+    File bin = new File(paths[i]);
+    if (!bin.isDirectory()) continue;
+
+    String[] results = bin.list(guessFilter);
+    if (results == null || results.length == 0) continue;
+
+    File tools = new File(bin, "../lib/tools.jar");
+    if (tools.exists())
+      return tools.getAbsolutePath();
+  }
+  
+  return null;
+}
+
+/**
+Compiles a build target.
+
+@param target Build target. A file with the same name and a ".build" extension is expected to exist at the current directory.
+*/
+void compile(String target)
+{
+  String[] arguments = {"-Xlint:all", "-cp", classpath, "-d", "Classes/", "@" + target + ".build"};
+  int result = com.sun.tools.javac.Main.compile(arguments);
+  if (result != 0) System.exit(result);
+}
+
+/*
+Execution Section
+*/
+
+/* Set of name / value pairs created from the command-line arguments. */
+final Map arguments = mapArguments();
+
+if (arguments.size() == 0 || arguments.containsKey("-help"))
+{
+  System.err.println(HELP);
+  System.exit(SUCCESS);
+}
+
+/* Check if all entries in the build class path exist. */
+checkBuildClassPath();
+
+/* Gets the location of the tools.jar file, containing the classes for the java tools. */
+String toolspath = arguments.get("-toolspath");
+if (toolspath == null) toolspath = guessToolsPath();
+if (toolspath == null)
+{
+  System.err.println("Sorry, but I was unable to locate the tools.jar file.");
+  System.err.println("This file is needed to run the Java compiler.");
+  System.err.println("Please specify its location with the \"-toolspath=tools_path/\" option.");
+  System.exit(TOOLS_JAR_NOT_FOUND);
+}
+
+/* Adds the tools.jar file to the class path. */
+addClassPath(toolspath);
+
+/* Compiles the build targets. */
+if (arguments.containsKey("program")) compile("program");
+if (arguments.containsKey("tests")) compile("tests");
+
+/* Creates the JAR file. */
+if (arguments.containsKey("jar"))
+{
+  String[] jar = {"-cvfm", "chatterbean.jar", "chatterbean.manifest.mf",  "-C", "Classes", "bitoflife"};
+  sun.tools.jar.Main.main(jar);
+}

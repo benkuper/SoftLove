@@ -1,0 +1,3 @@
+addClassPath("junit.jar");
+addClassPath("Classes/");
+bitoflife.chatterbean.TestSuite.main(bsh.args);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+  <comment>ChatterBean configuration properties to test the ListMatcher class</comment>
+  <entry key="context">Bots/context.xml</entry>
+  <entry key="splitters">Bots/splitters.xml</entry>
+  <entry key="substitutions">Bots/substitutions.xml</entry>
+  <entry key="categories">Bots/Alice/</entry>
+  <entry key="matcher">bitoflife.chatterbean.ListMatcher</entry>
+</properties>

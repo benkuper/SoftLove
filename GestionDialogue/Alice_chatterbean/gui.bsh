@@ -1,0 +1,13 @@
+import java.io.File;
+
+addClassPath("bsh.jar");
+
+File jar = new File("chatterbean.jar");
+if (jar.exists())
+  addClassPath("chatterbean.jar");
+else
+  addClassPath("Classes/");
+
+String[] args = {"Bots/properties.xml", "gui"};
+if (bsh.args.length > 0) args[0] = bsh.args[0];
+bitoflife.chatterbean.ChatterBean.main(args);

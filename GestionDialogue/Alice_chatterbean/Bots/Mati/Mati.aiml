@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+
+<!-- Attention ! Ecrire les patterns en majuscule et sans ponctuation -->
+
+<!-- Obtention du prénom Mati -->
+<category>
+	<pattern>COMMENT TU T APPELLES</pattern>
+	<template>Je m'appelle <get name="me"/>.</template>
+</category>
+
+<!-- Gestion du nom de l'utilisateur -->
+<category>
+	<pattern>JE M APPELLE *</pattern>
+	<template>Ton prénom est enregistré, <set name="name"><star/></set>.</template>
+</category>
+<category>
+	<pattern>COMMENT JE M APPELLE</pattern>
+	<template>Tu t'appelles <get name="name"/>.</template>
+</category> 
+
+<!-- Gestion de l'âge de l'utilisateur -->
+<category>
+	<pattern>J AI * ANS </pattern>
+	<template>Ton âge est enregistré, tu as <set name="age"><star/></set> ans.</template>
+</category>
+<category>
+	<pattern>QUEL EST MON AGE</pattern>
+	<template>Tu as <get name="age"/> ans.</template>
+</category> 
+
+<category>
+	<pattern>SALUT</pattern>
+	<template>Bonjour, <get name="name"/>.</template>
+</category> 
+</aiml>

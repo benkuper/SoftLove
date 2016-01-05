@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+  <head>
+    <title>ChatterBean: Flexible Alicebot</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <p class="doctitle">
+      ChatterBean: Flexible Alicebot
+    </p>
+    
+    <hr />
+  
+    <p class="sectitle">
+      Table of Contents
+    </p>
+    <ul>
+      <li><a href="#NEWS">Latest News</a></li>
+      <li><a href="#INTRODUCTION">Introduction</a></li>
+      <li><a href="#PLAN">Development Plan: Path to 1.0</a></li>
+      <li><a href="#DEV_FEATURES">Developer-Friendly Features</a></li>
+      <li><a href="#TAGS">Supported AIML Tags</a></li>
+      <li><a href="#INCLUDE">Third-Party Includes</a></li>
+      <li><a href="#USAGE">Download, Building and Usage Information</a></li>
+      <li><a href="#BOTS">Sample Alicebots</a></li>
+      <li><a href="#LICENSE">Licensing Information</a></li>
+      <li><a href="#CREDITS">Credits</a></li>
+    </ul>
+  
+    <hr />
+  
+    <p class="sectitle"><a name="NEWS" />
+      Latest News
+    </p>
+    <p>
+      <b>2006.05.07</b> Version 00.008 is now available. This version implements the following new features:
+    </p>
+    <ul>
+      <li><b>Correct whitespace handling:</b> support for the <code>xml:space</code> attribute has been added. This brings <b>ChatterBean</b> one step closer to full AIML compatibility. </li>
+      <li><b>New applet interface:</b> previous releases of <b>ChatterBean</b> provided an applet class as a proof-of-concept GUI. Version 00.008 improves on this by turning the main <code>bitoflife.chatterbean.ChatterBean</code> class itself into a Java Applet, which encloses an Alicebot. Support for embedding the applet into web pages has been added, through a set of recognized named parameters that allows proper configuration of the underlying bot.</li>
+      <li><b>AJAX-ready:</b> an interesting feature of the applet interface is its ability to interact with Javascript code on the web page through its API. This, combined with the new support for the javascript tag (see below), allows <b>ChatterBean</b> to be easily embedded in an AJAX application. A proof-of-concept application is provided <a href="http://www.geocities.com/phelio/chatterbean/ifurita.zip">here</a>.</li>
+      <li><b>Support for the <a class="tag">&lt;javascript&gt;</a> tag:</b> in the past, I refused to support the <a class="tag">&lt;javascript&gt;</a> tag, under the rationale that the BeanShell-backed <a class="tag">&lt;system&gt;</a> tag already provided all the scripting power an Alicebot would need. While the argument in favor of BeanShell still holds, I realized that the <a class="tag">&lt;javascript&gt;</a> tag could be used as an interface between an applet-enclosed bot and the underlying browser. Current support is still limited, in that an Alicebot can only reach Javascript environment features and top-level user-defined functions, but it is well enough to add a nice AJAX-like responsiveness to a web bot.</li>
+      <li><b>Unified Context properties:</b> up until now, the <code>bitoflife.chatterbean.Context</code> class provided separate support for managing predicates and bot predicates. This support has now been unified around a single system of properties. Where, in order to get the value of the <code>dateFormat</code> predicate, you'd previously call:
+
+<pre>
+String predicate = context.predicate("dateFormat");
+</pre>
+
+      You now must call:
+
+<pre>
+String predicate = (String) context.property("predicate.dateFormat");
+</pre>
+
+      Similarly, to get the value of the <code>id</code> bot predicate, where you'd previously call:
+
+<pre>
+String id = context.botPredicate("id");
+</pre>
+
+      You now must call:
+
+<pre>
+String id = (String) context.property("bot.id");
+</pre>
+
+      What is the advantage? So long you respect the use of <code>predicate.</code> and <code>bot.</code> prefixed names for predicates and bot predicates, any object can be bound to an Alicebot's context through a property. For example, at loading time the <code>bitoflife.chatterbean.ChatterBean</code> class bounds a Javascript interpreter to its enclosing Alicebot through a context property named <code>javascript.interpreter</code>; later, the javascript tag can recover the interpreter instance from the context and use it to interpret its contents. In the near future, this will allow the use of non-string values with predicates and bot predicates as well (currently they must be set to string values only).</li>
+      <li><b>Property change listener interface:</b> another novel feature of the <code>bitoflife.chatterbean.Context</code> class is the ability to register event listeners that fire in response of changings in specific properties. This has been used to provide a more flexible, elegant treatment to the problem of updating the random seed and the converstaion topic in response to changes in context properties.</li>
+      <li><b>Better development-time portability:</b> since the beggining of the <b>ChatterBean</b> project, one of my main goals has been to provide a developer-friendly distribution. I refrained from using IDE's such as Eclipse to avoid locking the project into any specific environment, deciding instead to go with <code>javac</code>'s own build files and a bit of BeanShell scripts to ensure platform portability. However, as some people pointed out, this solution was not as platform-independent as I hoped. This version solves those portability issues, providing an improved micro-development environment heavily based on BeanShell.</li>
+      <li><b>Small fixes and code changes:</b> as always, there has been some minor bug fixes and adjustements to the code base:</li>
+      <li class="li01">The architecture of Category matchers created around the <code>bitoflife.chatterbean.Matcher</code> interface has been dropped in favour of a unique <code>bitoflife.chatterbean.Graphmaster</code> class. The old way was meant to facilitate the implementation of more dynamic category bases, since it was my early understanding that it would be hard to implement category exclusion into the Graphmaster algorithm; however, I've come to realize that my concerns were unjustified, and there was no reason to keep more than one category matcher class.</li>
+      <li class="li01">The behaviour of  the <a class="tag">&lt;input&gt;</a> has changed: now index (1) refers to the input to the category being matched, and not the one before it. I reasoned that this would be a more complete, useful interpretation of the AIML standard than the previous one.</i>
+      <li class="li01">Both the <a class="tag">&lt;javascript&gt;</a> and the <a class="tag">&lt;system&gt;</a> tags now return the result of the last evaluated expression (if it evaluates to something) if the <code>result</code> variable is set to <code>null</code>. This makes for a cleaner syntax where simple expressions are concerned.</li>
+      <li class="li01">A new environment variable, <code>match</code>, has been added to the context of the BeanShell interpreter. It contains the <code>bitoflife.chatterbean.Match</code> object representing the current matching operation. Since this object also contains a reference to the Alicebot itself, this allows a bot to manipulate its own interpreter according to the inputs it gets.</li>
+    </ul>
+    <p>
+      <b>2005.11.07</b> Version 00.007 is now available. This version implements the <a href="http://www.alicebot.org/TR/2005/WD-aiml/#section-transformational-elements">transformational elements</a>, making it the first <b>ChatterBean</b> release to support the full set of AIML 1.0.1 tags. A lot of work is yet to be done before the project reaches standard compliance (for one thing, correct whitespace handling is yet to be implemented), let alone fulfill its stated objectives. Still, an important milestone has been reached.
+    </p>
+    <p>
+      As you probably guessed, another change in this release is a new version number system. From now on, every release will have a <i>series number</i> and a <i>version number</i>. Version numbers are assigned sequentially within a series, while series numbers follow this convention:
+    </p>
+    <ul>
+      <li>00: Alpha series;</li>
+      <li>01: Beta series;</li>
+      <li>02: Production series.</li>
+    </ul>
+    <p>
+      Whether the series number will keep advancing after <b>ChatterBean</b> upgrades to production status is not yet decided.
+    </p>
+    <p>
+      <b>2005.07.17</b> - Version 0.7.5 Alpha is now available. This version implements the <a href="http://www.alicebot.org/TR/2005/WD-aiml/#section-atomic-template-elements">atomic template elements</a> <a class="tag">&lt;input&gt;</a>, <a class="tag">&lt;thatstar&gt;</a> and <a class="tag">&lt;topicstar&gt;</a>; the <a href="http://www.alicebot.org/TR/2005/WD-aiml/#section-conditional-elements">conditional elements</a> <a class="tag">&lt;random&gt;</a> and <a class="tag">&lt;condition&gt;</a>; the <a href="http://www.alicebot.org/TR/2005/WD-aiml/#section-capture-elements">capture element</a> <a class="tag">&lt;gossip&gt;</a>; and the <a href="http://www.alicebot.org/TR/2005/WD-aiml/#section-covert-elements">covert element</a> <a class="tag">&lt;learn&gt;</a>. This leaves only the <a href="http://www.alicebot.org/TR/2005/WD-aiml/#section-transformational-elements">transformational elements</a> to implement before <b>ChatterBean</b> supports the full set of AIML 1.0.1 tags. Also, a new approach to filling the contents of matched wildcards has been implemented, which greatly improves the quality and stability of the wildcard matching mechanism. 
+    </p>
+    <p>
+      <b>2005.05.17</b> - Version 0.7.0 Alpha is now available. This version implements many new tags, including the long-awaited <a class="tag">&lt;topic&gt;</a> tag; this makes 07.0 Alpha the first version of <b>ChatterBean</b> to implement the complete match path. For a complete list of implemented tags, together with important notes, see the section on <a href="#TAGS">Supported AIML Tags</a>. Also, a customized XML file (<code>context.xml</code>) has been created to store both predicate defaults and bot predicate values.
+    </p>
+    <p>
+      <b>2005.05.09</b> - Version 0.6.5 Alpha is now available. Changes in this version include:
+    </p>
+    <ul>
+      <li>The XML parsing architecture introduced in the previous version has been adopted to the parsing of splitter and substitution files, eliminating the older architecture based on the <code>Loader</code> class (which by the way has been removed);</li>
+      <li>The AIML parser has been refactored to employ a new reflexive protocol on deciding what class to create each time it reads a tag from an AIML source;</li>
+      <li>Property files used to hold default values for predicates and configuration options for the application now employ the new XML format, instead of the old name/value plain text format;</li>
+      <li>The <a class="tag">&lt;that&gt;</a> tag, both in its pattern and template-side version, has been implemented;</li>
+      <li>A new parser architecture makes it easier to create new chatterbot instances;</li>
+      <li>Package architecture has been modified: the <code>bitoflife.chatterbean.test</code> and <code>bitoflife.chatterbean.mother</code> packages have been eliminated, their classes moved to the same packages of their respective framework classes; and the <code>bitoflife.chatterbean.xml</code> package has been renamed <code>bitoflife.chatterbean.parser</code>, to better reflect its current use.</li>
+    </ul>
+    <p>
+      For more details, read the new section on <a href="#DEV_FEATURES">Developer-Friendly Features</a>.
+    </p>
+    <p>
+      Another change, probably more appealing for AIML end-users, is that from now on <b>ChatterBean</b> will be distributed in two versions: source-code and binary. The later takes the form of a jar file that can be executed from the command-line, opening a very simple graphical user interface. See the section on <a href="#USAGE">Download, Building and Usage Information</a> for more details.
+    </p>
+    <p>
+      <b>2005.04.03</b> - Version 0.5.0 Alpha is now available. This release gets much closer, feature and architecture-wise, to my vision of a developer-friendly AIML engine. Changes include:
+    </p>
+    <ul>
+      <li>Full compliance to the Java 5 standards for generics;</li>
+      <li>A new architecture for XML parsers;</li>
+      <li>A new, more customizable architecture for Responders;</li>
+      <li>Implementation of the <a class="tag">&lt;get&gt;</a> and <a class="tag">&lt;set&gt;</a> tags, together with load-time setting of predicates;</li>
+      <li>The creation of the <code>ChatterBean</code> class, a highly customizable class to gather the components of the framework into a coherent application.</li>
+    </ul>
+    <p>
+      By the way, I have decided to leave the "bug" mentioned in the last release -- by which punctuations don't appear in the contents of <a class="tag">&lt;star&gt;</a> tags -- unchanged, since there are situations where you don't want the punctuation to be present.
+    </p>
+    <p>
+      <b>2005.03.25</b> - Version 0.1.3 Alpha is now available. Along with several bugfixes and some improvements, this release brings a new, platform-independent set of scripts for building, testing and running the application (see the list below for more details). Besides, I have changed the application's name from <b>ProgramJ</b> to <b>ChatterBean,</b> in order to avoid confusion with <a href="http://j-alice.org/">J-Alice</a>, another AIML engine project.
+    </p>
+    <p class="subtitle">
+      Change Log
+    </p>
+    <ul>
+      <li><b>ChatterBean</b> is now a Java 5 application. It is not yet fully compliant to the new standards, but that will be taken care of in the next release;</li>
+      <li>The <a href="http://www.junit.org/">jUnit</a> jar file has been added to the distribution package, so you won't have to bother about installing it yourself anymore;</li>
+      <li>Corrected a misunderstanding about the behaviour of wildcards, which would allow only two different wildcards at a Pattern;</li>
+      <li>A new class, <code>CategoryBuilder</code>, has been pulled off the <code>CategoriesLoader</code> class (responsible for loading AIML files). The new architecture makes it easier to add new tag handlers;</li>
+      <li>Found and solved a bug that would produce invalid behaviour for templates of the form <code>"some text <a class="tag">&lt;srai&gt;</a>something<a class="tag">&lt;/srai&gt;</a> some more text"</code>;</li>
+      <li>Implemented the <a class="tag">&lt;system&gt;</a> tag, which passes its contents (after doing any appropriate preprocessing) to be executed by a <a href="http://www.beanshell.org/">BeanShell</a> interpreter;</li>
+      <li>Corrected the order in which input normalisations are done -- the previous version would split the user input before applying substitutions. However this introduced a bug where ending punctuation is lost from the unnormalised input. This too will be dealt with in the next release;</li>
+      <li>The set of files that illustrated <b>ChatterBean</b>'s use in a JSP page has been removed from the distribution package. They will probably return in the future, but right now there is little point in keeping them, since they are not validated by the test sets, and the next releases are very likely to brake them;</li>
+      <li>The old set of Bash scripts to do operations such as compilation an running the application has been substituted by a set of BeanShell scripts. Besides, a small jar executable has been provided, that will allow users to easily run these scripts in any machine. See the section <a href="#USAGE">Download, Building and Usage Information</a> for more details.</li>
+    </ul>
+    <p>
+      <b>2005.02.07</b> - Version 0.1.2 Alpha is now available. This release provides several bugfixes, a new, constant-time implementation for the <b>Responder</b> interface (the <b>HashMaster</b> class) and a new way for passing startup-time configuration parameters, using property files, instead of the old <b>configuration.txt</b> unformatted text format. It still implements a very restricted subset of AIML, and is not as well documented as it should; but at least the architecture got to a point where major changes are unlikely (although the API interface may still change some).
+    </p>
+
+    <hr />
+
+    <p class="sectitle"><a name="INTRODUCTION" />
+      Introduction
+    </p>
+    <p>
+      <b>ChatterBean</b> is an <a href="http://www.pandorabots.com/pandora/pics/wallaceaimltutorial.html">AIML</a> interpreter (also known as "Alicebot") written in pure Java. Its ultimate objectives are:
+    </p>
+    <ul>
+      <li>To be fully compliant to the current (1.0.1 at the moment of this writing) AIML standard;</li>
+      <li>Implement a simple, easily customisable, <a href="file:///jHome/System/Java/1.5.0-02/docs/guide/beans/index.html">JavaBeans</a>-compliant plug-in architecture;</li>
+      <li>To be as self-contained as possible. Ideally, a <b>ChatterBean</b> release should compile and run on any machine with an appropriate version of the JDK installed, regardless of the underlying operating system and without depend on anything not provided in the distribution package itself;</li>
+      <li>Rely on the Java API as much as possible for writing concise code, easy to understand and modify;</li>
+      <li>Provide thorough API documentation through the Javadoc tool, complemented by code comments wherever convenient;</li>
+      <li>Provide a robust set of tests, both "white box" (or "unit tests", in the eXtreme Programming jargon) and "black box" ("acceptance tests"), that ensure the program works as expected, and that modifications have not broken it in any known way;</li>
+      <li>Provide a highly controlable application framework. It must be possible to construct, configure and control an instance of the AIML interpreter entirely through the API;</li>
+      <li>Keep a limited set of features. Because <b>ChatterBean</b> is intended to be convenient to client developers, it cannot avoid providing some sort of user interface, even if only as an example; however, support for remote communication protocols, access to databases and other "advanced" features will be left for the client developer to implement.</li>
+    </ul>
+    <p>
+      <b>ChatterBean</b> is free software, licensed under the GPL. All the usual claims about help wanted and no guarantees apply.
+    </p>
+
+    <hr />
+
+    <p class="sectitle"><a name="PLAN" />
+      Development Plan: Path to 1.0
+    </p>
+    <p>
+      The following list underlines the tasks that must be completed in order for <b>ChatterBean</b> to reach version 1.0. They are organised in order of priority, which gives a general idea of what will be done first, although some intermingling can occur (for example, some refactoring is very likely to be done before all the AIML tags are implemented).
+    </p>
+    <ul>
+      <li>Implement the complete AIML tag set;</li>
+      <li>Implement an XML Schema to validate the AIML files;</li>
+      <li>Perform a full review of the AIML standard, making sure the implementation is 100% compliant;</li>
+      <li>Strengthen the unit and acceptance tests by including more use scenarios (specially ones involving invalid input), and deal with any bugs or inadequacies found;</li>
+      <li>Refactor the application classes into a simpler, JavaBeans-compliant plug-in architecture;</li>
+      <li>Properly document all the classes.</li>
+    </ul>
+
+    <hr />
+
+    <p class="sectitle"><a name="DEV_FEATURES" />
+      Developer-Friendly Features
+    </p>
+    <p>
+      One of the main directives of the <b>ChatterBean</b> project is that the implementation must be easy to customize or assimilate by other systems. This section lists the currently available features that have been developed for this purpose.
+    </p>
+    <p class="subtitle">
+      Automated Tests
+    </p>
+    <p>
+      <b>ChatterBean</b>'s test engine can be a great help for developers wanting to experiment with the implementation: if anything is to unexpectedly break after a modification, either the unit tests or the acceptance tests will probably spot it. They also serve as examples of use for the classes of the API, illustrating common scenarios.
+    </p>
+    <p>
+      The black-box ("acceptance") tests are implemented as a <a href="http://www.beanshell.org/">BeanShell</a> script that drives <b>ChatterBean</b>'s console interface, feeding it with a pre-determined set of requests, recording the responses and comparing them with the expected ones. Should any output differ from what is expected, the expected and actual responses are printed, together with the line of the expected response in the responses file. For example:
+    </p>
+    <pre>
+      $ java -jar bsh.jar acceptance.bsh
+      Testing ChatterBean
+      Line 6:
+        expected: Yes, I am an AliceBot.
+        actual:   Yes, I am an ALICE Bot.
+    </pre>
+    <p>
+      If no differences are found, the script simply prints "0k".
+    </p>
+    <pre>
+      $ java -jar bsh.jar acceptance.bsh
+      Testing ChatterBean
+      0k
+    </pre>
+    <p>
+      The white-box ("unit") tests are implemented with the help of the <a href="http://www.junit.org/">jUnit</a> unit testing framework. Tests are collected into test classes, which follow a naming convention: <code>FooTest</code> is the name of the test class which contains the tests for the <code>Foo</code> class. Occasionally, there will also be a <code>FooMother</code> class, which is responsible for creating instances of the framework class for the respective test class. Test classes and mother classes are always located in the same package of their respective framework class.
+    </p>
+    <p>
+      Not all framework classes have test classes: some of them are too simple to warrant tests, or are better tested through their wrappers.
+    </p>
+    <p class="subtitle">
+      Encapsulation and Easy Instantiation
+    </p>
+    <p>
+      <b>ChatterBean</b>'s framework is conveniently encapsulated within the <code>ChatterBean</code> class. Creating a fully configured AliceBot can be as easy as instantiating a class:
+    </p>
+    <pre>
+      AliceBot bot = <b>new</b> ChatterBean("relative_path_to/configuration_properties.xml");
+      String response = bot.respond("Good night, Alice.");
+    </pre>
+    <p class="subtitle">
+      Plug-in Architecture
+    </p>
+    <p>
+      Because <b>ChatterBean</b> is constituted of many small classes exchanging messages among each other, it is easy to tap into the flow of execution and customize its behaviour, by writing specialized classes and connecting them in place. For example, imagine you want your Alicebot to fetch and persist predicates in a data base. This could be easily accomplished by writing a specialized Context class:
+    </p>
+    <pre>
+      /**
+      This is not intended as a proper example of JDBC use; this class is only
+      meant to illustrate the possibilities of customization provided by the
+      ChatterBean framework.
+      */
+      <b>public class</b> DBContext <b>extends</b> Context
+      {
+        <b>private</b> Connection con = DriverManager.getConnection("jdbc:odbc:con", "user", "pass");
+      
+        <b>public</b> Object property(String name)
+        {
+          Statement stmt = con.createStatement();
+          ResultSet rs = stmt.executeQuery("SELECT VALUE FROM PROPERTIES WHERE NAME = '" + predicate + "'");
+          return rs.getString("VALUE");
+        }
+      
+        <b>public</b> void property(String name, Object value)
+        {
+          Statement stmt = con.createStatement();
+          stmt.executeUpdate("UPDATE PROPERTIES SET VALUE = '" + value + " WHERE NAME = '" + name + "'");
+        }
+      }
+    </pre>
+    <p>
+      Now you can connect an instance of this class to your AliceBot:
+    </p>
+    <pre>
+      AliceBot bot = <b>new</b> ChatterBean("relative_path_to/configuration_properties.xml");
+      bot.setContext(new DBContext());
+    </pre>
+    <p>
+      Alternatively, you can create an instance of the <code>ChatterBeanParser</code> class, configure it to use your context class, and then use it to create a new AliceBot:
+    </p>
+    <pre>
+      ChatterBeanParser parser = <b>new</b> ChatterBeanParser();
+      parser.setContextClass(DBContext.class);
+      AliceBot bot = parser.parse("relative_path_to/configuration_properties.xml");
+    </pre>
+    <p class="subtitle">
+      Reflexive AIML Parsing Framework
+    </p>
+    <p>
+      In the <b>ChatterBean</b> framework, the result of parsing an AIML file is an object tree, with objects representing each parsed tag and its contents. The classes used to build that tree are located inside the <code>bitoflife.chatterbean.aiml</code> package; every time <b>ChatterBean</b>'s AIML parser reads a tag, it uses reflection to create an instance of a class with the same name of the tag, feed it with attributes and, perhaps, add children objects to it. For example, every time the parser reads a <a class="tag">&lt;category&gt;</a> tag, it creates an instance of the <code>bitoflife.chatterbean.aiml.Category</code> class. The parser code simply assumes that, for every tag it reads, there will be a class with the same name inside the <code>bitoflife.chatterbean.aiml</code> package; there is no program code telling it what tags are valid or not.
+    </p>
+    <p>
+      This design makes it possible to easily add new tags to the known set, simply by writing new classes into the <code>bitoflife.chatterbean.aiml</code> package. Valid tag classes follow these guidelines:
+    </p>
+    <ul>
+      <li>Every tag class has a constructor that takes a single argument, an instance of the <code>org.xml.sax.Attributes</code> class. This constructor must be used to get any attributes the tag might have;</li>
+      <li>Tags that appear inside the <a class="tag">&lt;template&gt;</a> tag must inherit from <code>bitoflife.chatterbean.aiml.TemplateElement</code>;</li>
+      <li>All other tags must implement the <code>bitoflife.chatterbean.aiml.AIMLElement</code> interface.</li>
+    </ul>
+    <p>
+      For examples of this protocol, read the source code of the tag classes inside the <code>bitoflife.chatterbean.aiml</code> package.
+    </p>
+  
+    <hr />
+  
+    <p class="sectitle"><a name="TAGS" />
+      Supported AIML Tags
+    </p>
+    <p>
+      This is the list of AIML tags supported by <b>ChatterBean</b> at the moment of its latest release. Support for the remaining tags will be added over the next releases.
+    </p>
+    <ul><li><a name="TAGS_AIML" /><a class="tag">&lt;aiml&gt;</a> <a href="#TAGS_AIML_NOTE">[1]</a></li>
+      <li><a class="tag">&lt;bot&gt;</a></li>
+      <li><a class="tag">&lt;category&gt;</a></li>
+      <li><a class="tag">&lt;condition&gt;</a></li>
+      <li><a name="TAGS_DATE" /><a class="tag">&lt;date&gt;</a> <a href="#TAGS_DATE_NOTE">[2]</a></li>
+      <li><a class="tag">&lt;formal&gt;</a></li>
+      <li><a class="tag">&lt;get&gt;</a></li>
+      <li><a name="TAGS_GOSSIP" /><a class="tag">&lt;gossip&gt;</a> <a href="#TAGS_GOSSIP_NOTE">[3]</a></li>
+      <li><a name="TAGS_ID" /><a class="tag">&lt;id&gt;</a> <a href="#TAGS_ID_NOTE">[4]</a></li>
+      <li><a class="tag">&lt;input&gt;</a></li>
+      <li><a name="TAGS_JAVASCRIPT" /><a class="tag">&lt;javascript&gt;</a> <a href="#TAGS_JAVASCRIPT_NOTE">[5]</a></li>
+      <li><a class="tag">&lt;learn&gt;</a></li>
+      <li><a class="tag">&lt;lowercase&gt;</a></li>
+      <li><a class="tag">&lt;pattern&gt;</a></li>
+      <li><a class="tag">&lt;random&gt;</a></li>
+      <li><a class="tag">&lt;sentence&gt;</a></li>
+      <li><a class="tag">&lt;set&gt;</a></li>
+      <li><a class="tag">&lt;size&gt;</a></li>
+      <li><a class="tag">&lt;sr&gt;</a></li>
+      <li><a class="tag">&lt;srai&gt;</a></li>
+      <li><a class="tag">&lt;star&gt;</a></li>
+      <li><a name="TAGS_SYSTEM" /><a class="tag">&lt;system&gt;</a> <a href="#TAGS_SYSTEM_NOTE">[6]</a></li>
+      <li><a class="tag">&lt;template&gt;</a></li>
+      <li><a class="tag">&lt;that&gt;</a> (Pattern-side and Template-side)</li>
+      <li><a class="tag">&lt;thatstar&gt;</a></li>
+      <li><a class="tag">&lt;think&gt;</a></li>
+      <li><a class="tag">&lt;topic&gt;</a></li>
+      <li><a class="tag">&lt;topicstar&gt;</a></li>
+      <li><a class="tag">&lt;uppercase&gt;</a></li>
+      <li><a class="tag">&lt;version&gt;</a></li>
+    </ul>
+    
+    <p><a name="TAGS_AIML_NOTE" />
+      <a href="#TAGS_AIML">[1]</a> <a href="http://www.alicebot.org/TR/2005/WD-aiml/#section-forward-compatible-processing">Forward-compatible processing</a> is not yet implemented, so the value of the version attribute won't make any difference to the interpreter. Hopefully this will be fixed before a new version of the AIML standard comes out.
+    </p>
+    <p><a name="TAGS_DATE_NOTE" />
+      <a href="#TAGS_DATE">[2]</a> The format of the date is defined by the value of the <code>dateFormat</code> predicate, which must be a valid <a href="http://java.sun.com/j2se/1.5.0/docs/api/java/text/SimpleDateFormat.html">Java date and time pattern string</a>. This makes it possible to change the date format at runtime (after the bot learns the country the user lives in, for example).
+    </p>
+    <p><a name="TAGS_GOSSIP_NOTE" />
+      <a href="#TAGS_GOSSIP">[3]</a> If the <code>output</code> bot predicate contains a file path, the current implementation of this tag writes the results of processing its contents to that file; if the bot predicate contains a directory path, the results will be written into a file named <code>gossip-&lt;value of the <a class="tag">&lt;id&gt;</a> tag&gt;.txt</code>, which will be created if it doesn't already exist.
+    </p>
+    <p><a name="TAGS_ID_NOTE" />
+      <a href="#TAGS_ID">[4]</a> The current implementation of this tag returns the value of the <code>id</code> bot predicate, if it is defined; otherwise, it will return the value of the Context object's hash code.
+    </p>
+    <p><a name="TAGS_JAVASCRIPT_NOTE" />
+      <a href="#TAGS_JAVASCRIPT">[5]</a> As implemented, this tag executes code in the context of the <code>window</code> Javascript object of an underlying browser. This limit valid invokations to standard environment features (such as the <code>alert()</code> function) and top-level user-defined functions, but it is well enough to add a nice AJAX-like responsiveness to web bots.
+    </p>
+    <p><a name="TAGS_SYSTEM_NOTE" />
+      <a href="#TAGS_SYSTEM">[6]</a> As implemented by <b>ChatterBean</b>, this tag passes the result of processing its contents to a <a href="http://www.beanshell.org">BeanShell</a> script interpreter, and returns the contents of the <code>result</code> enviroment variable (or the value of the last expression, if it evaluates to something and <code>result</code> was not set). Not only this implementation makes the tag more portable, it gives the botmaster access to a powerful Java scripting environment.
+    </p>
+    
+    <hr />
+
+    <p class="sectitle"><a name="INCLUDE" />
+      Third-Party Includes
+    </p>
+    <p>
+      The <b>ChatterBean</b> distribution package includes the following third-party, GPL software as a convenience to its users. Independent release copies, together with source code files, can be found at their respective project home pages:
+    </p>
+    <ul><li><a href="http://www.beanshell.org/">BeanShell</a> - A scripting environment and framework for the Java language.</li>
+      <li><a href="http://www.junit.org/">jUnit</a> - Java implementation of the xUnit testing framework.</li>
+    </ul>
+  
+    <hr />
+  
+    <p class="sectitle"><a name="USAGE" />
+      Download, Building and Usage Information
+    </p>
+    <ul>
+      <li><a href="chatterbean.bin.00.008.zip">Download ChatterBean 00.008 Binary Distribution</a></li>
+      <li><a href="chatterbean.src.00.008.zip">Download ChatterBean 00.008 Source Distribution</a></li>
+    </ul>
+    <p>
+      <b>ChatterBean</b> is currently distributed in two versions: binary and source. The former is more convenient for end-users who just want to play with an AIML chatterbot on their local machines, while the later is aimed at developers who want to study and play with the implementation.
+    </p>
+    <p>
+      <b>ChatterBean</b> is a Java 5 application, so you'll need release 1.5.0 or later of either the Java Run-Time Environment (if you just intend to run the binary version) or the Java Development Kit (if you want to build it from source). For details, go to <a href="http://java.sun.com/">Sun's Java Homepage</a>.
+    </p>
+    <p class="subtitle">
+      Binary Version
+    </p>
+    <p>
+      If all you want is to run an AIML chatterbot on your local machine, you can download <b>ChatterBean</b>'s <a href="chatterbean.bin.00.008.zip">binary-only version</a>. Unpack the ZIP file to a convenient directory, open a command-line prompt and type:
+    </p>
+    <p class="code">
+      java -cp bsh.jar -jar chatterbean.bin.00.008.jar path_to/properties.xml
+    </p>
+    <p>
+      Where <code>path_to/properties.xml</code> is the path to the configuration file of the bot you intend to run. If you need an example, look in the <a href="#BOTS">Sample Alicebots</a> section.
+    </p>
+    <p class="subtitle">
+      Source Version
+    </p>
+    <p>
+      If you are a developer interested in studying an AIML interpreter or embedding AIML features into your application, then you can download <b>ChatterBean</b>'s <a href="chatterbean.src.00.008.zip">source version</a>. Create a new directory to host the application, then download and unpack the distribution package into it. The base directory contains some BeanShell scripts that automate the most common tasks related to <b>ChatterBean;</b> you can run these scripts with the help of the <code>bsh.jar</code> executable JAR file. Opening a command prompt inside the program's installation directory, you can type:
+    </p>
+    <ul>
+      <li><code>java -jar bsh.jar build.bsh program tests</code> - to compile the source files (you can omit the "tests" keyword to skip the compilation of the test classes);</li>
+      <li><code>java -jar bsh.jar unit.bsh</code> - to run the unit tests;</li>
+      <li><code>java -jar bsh.jar acceptance.bsh</code> - to run the acceptance tests;</li>
+      <li><code>java -jar bsh.jar console.bsh</code> - to run <b>ChatterBean</b> in command-line interactive mode. To exit, simply type ENTER on an empty line;</li>
+      <li><code>java -jar bsh.jar gui.bsh</code> - to run <b>ChatterBean</b> in GUI interactive mode;</li>
+      <li><code>java -jar bsh.jar build.bsh program jar</code> - to compile the source files and build the binary JAR file.</li>
+    </ul>
+    <p>
+      The purpose of <code>bsh.jar</code> is allowing users to run <b>ChatterBean</b>'s distribution scripts regardless the OS they use. If you have any problems with it, please <a href="mailto:xperroni@yahoo.com">contact me</a>.
+    </p>
+
+    <hr />
+  
+    <p class="sectitle"><a name="BOTS" />
+      Sample Alicebots
+    </p>
+    <ul>
+      <li><a href="http://www.geocities.com/phelio/chatterbean/ifurita.zip">Ifurita</a> - A proof-of-concept AJAX-ready Alicebot. Ifurita is a character from a 90's japanese animation series, <i>El Hazard: The Wanderers</i> &mdash; a cute, clumsy "demon goddess" (android). Her features include:</li>
+      <li class="li01">The ability to learn new responses from the user (tell her "this is not a good answer" when you get something unsactisfatory) and save them as a cookie for later retrieval:</li>
+      <li class="li01">When asked to do so, Ifurita opens an external web page in the underlying inline frame. She can also do so as part of the response for user inputs;</li>
+      <li class="li01">The picture showing her face can change as part of her response.</li>
+    </ul>
+  
+    <hr />
+  
+    <p class="sectitle"><a name="LICENSE" />
+      Licensing Information
+    </p>
+    <p>
+      Copyleft &copy; 2005-2006 H&eacute;lio Perroni Filho<br />
+      <a href="mailto:xperroni@yahoo.com">xperroni@yahoo.com</a><br />
+      ICQ: 2490863
+    </p>
+    <p>
+      <b>ChatterBean</b> is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+    </p>
+    <p>
+      <b>ChatterBean</b> is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+    </p>
+    <p>
+      You should have received a copy of the GNU General Public License along with <b>ChatterBean</b> (look at the Programj/Alpha/Documents/ directory of the program archive); if not, either write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA, or visit (<a href="http://www.gnu.org/licenses/gpl.txt">http://www.gnu.org/licenses/gpl.txt</a>).
+    </p>
+  
+    <hr />
+  
+    <p class="sectitle"><a name="CREDITS" />
+      Credits
+    </p>
+    <p>
+      AIML was developed by Dr. Richard S. Wallace and the A.L.I.C.E. Foundation. For more information on AIML, visit <a href="http://www.alicebot.org/">the A.L.I.C.E. homepage</a>.
+    </p>
+    
+    <hr />
+    
+    <table width="100%">
+      <tr>
+        <td>
+          © 2005 Hélio Perroni Filho (<a href="mailto:xperroni@yahoo.com">xperroni@yahoo.com</a>).<br />
+        </td>
+        <td align="right">
+          <a href="http://validator.w3.org/check?uri=referer">
+            <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" />
+          </a>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,85 @@
+The wildcard-filling problem
+
+One of the major improvements in the last ChatterBean release was a sounder strategy to normalize sentences, keeping information that is later used to determine the value of matched pattern wildcards. In some ways this remains an open problem; so, as I wipe the dust and get the project running again, it seems a good idea to bring it under discussion. The "wildcard-filling problem", as I call it, can be enunciated like this:
+
+When a sentence is normalized, a great deal of information is lost: type case, accentuation, punctuation and other non-alphanumeric characters are all wiped away. While this makes pattern-matching a lot easier, it also presents a problem when it comes to pattern wildcards. We want the wildcard to be filled with a fragment of the original, unformatted sentence, and we want that fragment to be "equivalent" to the fragment of the normalized version that was actually matched. So, for example, if we have a category like this:
+
+<category>
+  <pattern>I AM *</pattern>
+  <template>Nice to meet you, <star/>.</template>
+</category>
+
+We want the bot to behave like this:
+
+User: I am Jean-Marie.
+Bot: Nice to meet you, Jean-Marie.
+
+Instead of this:
+
+User: I am Jean-Marie.
+Bot: Nice to meet you, JEAN MARIE.
+
+Our problem, then, is how to relate a fragment of a normalized sentence to its original form. In some way or another, we need to keep track of the transformations a sentence goes through, and use this information to find our way back from the normalized sentence to its originator.
+
+So far, my solution has been to transform the original sentence in an object with three attributes:
+
+* A quasi-original sentence, with extra spaces and terminating punctuation removed;
+* The normalized sentence;
+* A list of "mappings", integer indexes relating portions of the normalized sentence to the equivalents on its original form.
+
+So, if we have a sentence:
+
+" D'you know wher   my um brella is? "
+
+And a set of substitutions:
+
+((" D'you ", " Do you "),
+ (" wher ", " where "),
+ (" um brella ", " umbrella "))
+
+After applying the substitutions and normalizations to the sentence, I would have an object like this:
+
+(" D'you know wher my um brella is ",
+ (1, NULL, 7, 12, 17, 20, 30, 33)
+ " DO YOU KNOW WHERE MY UMBRELLA IS ")
+ 
+Now what does that integer list mean, and how did I get it?
+
+The mapping list is created after the quasi-original sentence, containing the indexes of the space characters in the senence string. During normalization, the list is modified according to three rules:
+
+* If a substitution removes a space character from the sentence string, its corresponding index is also removed from the list;
+* If a substitution adds a space character to the sentence string, the special value NULL is inserted between the indexes of the space characters that surrounded the original, unseparated string fragment;
+* Otherwise, no change is made to the list.
+
+Note that, in the end, the mapping list will have as many entries as there are spaces in the normalized sentence.
+
+Later, when a wildcard is matched by a fragment of the normalized sentence, the equivalent unformatted fragment is recovered as follows:
+
+1. Let m be the number of spaces from the begining of the sentence to the begining of the matched fragment, and n be the number of spaces from the begining of the sentence to the end of the matched fragment;
+2. If mappings[m] is non-NULL, then make i = mappings[m], where i is the begining of the matched fragment in the quasi-original sentence; otherwise, subtract one from the value of m and check condition 2 again;
+3. If mappings[n] is non-NULL, then make j = mappings[n], where j is the end of the matched fragment in the quasi-original sentence; otherwise, subtract one from the value of m and check condition 3 again;
+4. Return substring(quasi_original, i, j).
+
+Let's say our example original sentence is matched by a pattern like this:
+
+DO * KNOW WHERE MY * IS
+
+The wildcards match the fragments " YOU " and " UMBRELLA ".
+
+* Following the algorithm above for the fragment " YOU ", we get:
+
+1. m = 2 and n = 3;
+2. mappings[2] = NULL; mappings[2 - 1] = 1;
+3. mappings[3] = 7;
+4. substring(quasi_original, 1, 7) = " D'you ".
+
+* Following the algorithm above for the fragment " UMBRELLA ", we get:
+
+1. m = 6 and n = 7;
+2. mappings[6] = 20;
+3. mappings[7] = 30;
+4. substring(quasi_original, 20, 30) = " um brella ".
+
+The main problem with this solution is how to get to the object from the original sentence string. Keeping the mapping list in sync with the normalization process can be a real pain, not to mention performance-costly; besides, I have found no way to correctly update the list when a substitution adds more than one space to the sentence (on the up side, I could not think on a good example of this, so it must be a pretty rare occurrence). Finally, the creation rules are promptly defeated by space groups on the input string, thus creating the need of a pre-processing step -- and special care must be taken not to add extra spaces with each substitution.
+
+Despite these lower-level problems, I sill think that on a higher abstract level my solution is relatively simple and ellegant, and that in time I will be able to iron out any implementation shortcomings. But of course, if anyone has a simpler and/or more efficient alternative, I would be glad to know.
