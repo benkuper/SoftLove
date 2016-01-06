@@ -11,13 +11,15 @@ import org.scribe.model.*;
 import org.scribe.oauth.*;
 import java.awt.Desktop;
 import java.net.URI;
-
-
+import java.io.FileReader;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.*;
 
 
 public class Application implements Observer {
     public Application(){
-
     }
 
     public void doTraitement(String code){
@@ -27,7 +29,7 @@ public class Application implements Observer {
                 System.out.println(fbConnector.getPostLiked());
                 System.out.println(fbConnector.getUserprofilePicture());
             } catch(Exception ex) {
-                System.out.println("Well this didn't work for some reason. Maybe there's nothing to get.");
+                System.out.println("Error while getting the user likes and profile picture.");
             }
 
             System.out.println();
@@ -58,30 +60,53 @@ public class Application implements Observer {
             }
 
 
-            zmqrFbLikes = new ZMQReceiver(5563, ZMQTOPIC_FBLIKES);
-            zmqrFbPicture = new ZMQReceiver(5563, ZMQTOPIC_FBPICTURE);
-            zmqrFbKeywords = new ZMQReceiver(5563, ZMQTOPIC_FBKEYWORDS);
-            zmqrFbDefault = new ZMQReceiver(5563, ZMQTOPIC_FBDEFAULT);
+    }
+
+    public void setObserver() throws FileNotFoundException, IOException, ParseException{
+        try{
+            FileReader reader = new FileReader("config.json");
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+
+            zmqrFbLikes = new ZMQReceiver(Integer.parseInt((String) jsonObject.get("FBLIKES_SUBSCRIBER_PORT")), ZMQTOPIC_FBLIKES);
+            zmqrFbPicture = new ZMQReceiver(Integer.parseInt((String) jsonObject.get("FBPICTURE_SUBSCRIBER_PORT")), ZMQTOPIC_FBPICTURE);
+            zmqrFbKeywords = new ZMQReceiver(Integer.parseInt((String) jsonObject.get("FBKEYWORD_SUBSCRIBER_PORT")), ZMQTOPIC_FBKEYWORDS);
+            zmqrFbDefault = new ZMQReceiver(Integer.parseInt((String) jsonObject.get("FBDATA_SUBSCRIBER_PORT")), ZMQTOPIC_FBDEFAULT);
 
             zmqrFbLikes.addObserver(this);
             zmqrFbPicture.addObserver(this);
             zmqrFbKeywords.addObserver(this);
             zmqrFbDefault.addObserver(this);
 
+            String keywords = "";
+
+            String[] data = (fbConnector.getLikedPosts());
+            List<String> rawWords = FacebookPostTokenizer.tokenize(data);
+            List<String> lemmas = NounVerbFilter.filter(rawWords);
+            String[] lemmasArray = lemmas.toArray(new String[0]);
+            List<WeightedWord> wwords = StopwordsFilter.filter(new TFIDFCalculator().getScores(lemmasArray));
+
+            // list sorting
+            Collections.sort(wwords, new Comparator<WeightedWord>() {
+                public int compare(WeightedWord w1, WeightedWord w2) {
+                    return (-1) * new Double(w1.getScore()).compareTo(new Double(w2.getScore()));
+                }
+            });
+
+            keywords = wordsToList(wwords);
+            this.sender.send(ZMQTOPIC_FBKEYWORDS, keywords);
+            this.sender.send(ZMQTOPIC_FBPICTURE,  fbConnector.getUserprofilePicture());
+
             this.emitter = new ZMQEmitter(5565, ZMQTOPIC_FBDEFAULT);
 
-            try {
-                emitter.set(ZMQTOPIC_FBLIKES, fbConnector.getPostLiked());
-                emitter.set(ZMQTOPIC_FBPICTURE, fbConnector.getUserprofilePicture());
-                emitter.set(ZMQTOPIC_FBKEYWORDS, keywords);
-            } catch(Exception ex) {
-                ex.printStackTrace();
-                System.out.println("exception caught while setting emitter default values");
-            }
-
-
+            emitter.set(ZMQTOPIC_FBLIKES, fbConnector.getPostLiked());
+            emitter.set(ZMQTOPIC_FBPICTURE, fbConnector.getUserprofilePicture());
+            emitter.set(ZMQTOPIC_FBKEYWORDS, keywords);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+            System.out.println("exception caught while setting emitter default values");
+        }
     }
-
 
     public void update(Observable obs, Object arg) {
         System.out.println("RECEIVED DATA");
@@ -160,17 +185,10 @@ public class Application implements Observer {
 
     public void themain() {
         try {    
-            System.setProperty("http.proxyHost", "cachemad.insa-rouen.fr");
-            System.setProperty("http.proxyPort", "3128");
-    
-            System.setProperty("https.proxyHost", "cachemad.insa-rouen.fr");
-            System.setProperty("https.proxyPort", "3128");
-    
-            System.out.println("Proxy set");
 
             System.setProperty("treetagger.home", System.getProperty("user.dir") + "/treetagger");
     
-            System.out.println("TreeHugger properties set: home = " + System.getProperty("treetagger.home"));
+            System.out.println("TreeHugger configurés: home = " + System.getProperty("treetagger.home"));
     
             System.out.println("Setting Facebook Model...");
             fbConnector = new FacebookConnector();
@@ -180,33 +198,33 @@ public class Application implements Observer {
             // Obtain the Authorization URL
             System.out.println("Fetching the Authorization URL...");
             String authorizationUrl = fbConnector.getAuthorizationUrl();
-            System.out.println("Got the Authorization URL!");
-            System.out.println("Now go and authorize here:");
+            System.out.println("Récupération de l'URL d'authorisation effectuée!");
+            System.out.println("Maintenant accepte l'application, et copie le code :");
             System.out.println(authorizationUrl);
-            System.out.println("And paste the authorization code here");
+            System.out.println("Copie maintenant le code d'authentification ici");
             System.out.print(">>");
             Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
             desktop.browse(new URI(authorizationUrl));
             String code = in.nextLine();
             this.doTraitement(code);
+            this.setObserver();
         } catch(Exception ex) {
             ex.printStackTrace();
-            System.out.println("exception caught ;_;");
+            System.out.println("Exception caught");
         }
     }
 
     private String wordsToList(List<WeightedWord> wwords) {
-
-                int nbLeft = 50;
-                String keywords = "";
-                String prefix = "";
-                for(WeightedWord word : wwords) {
-                    keywords += prefix + word.getWord();
-                    prefix = ";";
-                    System.out.println("" + (51 - nbLeft) + " : " + word.getWord() + " - " + word.getScore() * wwords.size());
-                    nbLeft --;
-                    if(nbLeft <= 0) break;
-                }
-                return keywords;
+        int nbLeft = 50;
+        String keywords = "";
+        String prefix = "";
+        for(WeightedWord word : wwords) {
+            keywords += prefix + word.getWord();
+            prefix = ";";
+            System.out.println("" + (51 - nbLeft) + " : " + word.getWord() + " - " + word.getScore() * wwords.size());
+            nbLeft --;
+            if(nbLeft <= 0) break;
+        }
+        return keywords;
     }
 }

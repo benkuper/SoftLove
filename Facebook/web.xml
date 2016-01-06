@@ -7,7 +7,7 @@
 
   <servlet>
     <servlet-name>facebook</servlet-name>
-    <servlet-class>main.java.fr.insarouen.asi.ihme.tweetanalysis.web.FacebookServlet</servlet-class>
+    <servlet-class>fr.insarouen.asi.ihme.tweetanalysis.web.FacebookServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>facebook</servlet-name>

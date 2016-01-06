@@ -17,8 +17,10 @@ public class NounVerbFilter {
             tt.setModel("french.par");
             tt.setHandler(new TokenHandler<String>() {
                 public void token(String token, String pos, String lemma) {
-                    if(wordPosAccept.contains(pos)) {
-                        results.add(lemma.toLowerCase());
+                    if (lemma.length()>2){
+                        if(wordPosAccept.contains(pos)) {
+                            results.add(lemma.toLowerCase());
+                        }
                     }
                 }
             });

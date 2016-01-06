@@ -41,8 +41,6 @@ public class FacebookConnector {
         OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_BASE_URL + where);
         this.fbSrv.signRequest(this.accessToken, request);
         return request.send();
-        //System.out.println(response.getCode());
-        //System.out.println(response.getBody());
     }
 
     public String getPostLiked(){
